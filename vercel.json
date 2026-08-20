@@ -7,6 +7,10 @@
     {
       "source": "/styles.css",
       "destination": "/submission/styles.css"
+    },
+    {
+      "source": "/README.md",
+      "destination": "/submission/README.md"
     }
   ]
 }
