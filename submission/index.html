@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Benoz.AI Senior Full Stack Developer take-home submission: architecture review, cross-field validation, architecture decisions, and AI workflow."
+    >
+    <title>Benoz.AI Take-Home Submission</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+      <div class="shell hero">
+        <div>
+          <p class="eyebrow">Senior Full Stack Developer · Take-Home Exercise</p>
+          <h1>Benoz.AI platform foundation</h1>
+          <p class="lede">
+            A focused review and extension of an existing configurable validation platform,
+            with explicit architecture tradeoffs and a documented AI-assisted workflow.
+          </p>
+          <div class="status-list" aria-label="Submission status">
+            <span>AI-assisted</span>
+            <span>Independently reviewed</span>
+            <span>36/36 tests passing</span>
+          </div>
+        </div>
+        <aside class="summary-card" aria-label="Submission summary">
+          <p class="summary-label">Submission contents</p>
+          <ol>
+            <li>Architecture handover review</li>
+            <li>Cross-field validation extension</li>
+            <li>Three architecture decisions</li>
+            <li>AI usage and six transcript exports</li>
+          </ol>
+        </aside>
+      </div>
+    </header>
+
+    <nav class="section-nav" aria-label="Submission sections">
+      <div class="shell nav-inner">
+        <a href="#part-1">Part 1</a>
+        <a href="#part-2">Part 2</a>
+        <a href="#part-3">Part 3</a>
+        <a href="#part-4">Part 4</a>
+        <a href="../README.md">README</a>
+        <a href="../lib/validate.js">Validation code</a>
+      </div>
+    </nav>
+
+    <main id="main-content">
+      <section id="part-1" class="content-section shell" aria-labelledby="part-1-title">
+        <div class="section-heading">
+          <p class="part-label">Part 1</p>
+          <h2 id="part-1-title">Architecture handover review</h2>
+          <p>
+            I reviewed the handover against the three live-client scenarios, prioritizing
+            failures demonstrated by the described behavior over risks that are only possible.
+            Five issues warrant action; several other choices are proportionate at the current
+            scale.
+          </p>
+          <a class="source-link" href="../review/architecture-review.md">Read the source review</a>
+        </div>
+
+        <div class="stack">
+          <article class="finding">
+            <div class="finding-title">
+              <h3>1. Sensitive clinic fields can be returned to reception</h3>
+              <span class="severity severity-critical">Critical</span>
+            </div>
+            <p>
+              The shared list handler selects every column and returns the result directly.
+              Row-Level Security limits which tenant's rows a caller can access, but it does not
+              control which fields within an authorized row are returned. Client C requires
+              reception to see patient and appointment details but not clinical notes. As
+              described, an authorized reception user listing referrals can therefore receive
+              sensitive clinical information they are not permitted to view. This is Critical
+              because it is a direct data disclosure, not merely missing defense in depth.
+            </p>
+            <h4>What I would do</h4>
+            <p>
+              I would replace <code>SELECT *</code> responses with explicit server-side projections or
+              serializers that apply role-aware field visibility, with sensitive fields denied
+              by default. Tests should assert exact response shapes for reception and clinical
+              roles. RLS should remain because tenant isolation and field authorization protect
+              different boundaries.
+            </p>
+          </article>
+
+          <article class="finding">
+            <div class="finding-title">
+              <h3>2. The shared deployment conflicts with Client C's infrastructure requirement</h3>
+              <span class="severity severity-critical">Critical</span>
+            </div>
+            <p>
+              All clients currently share one database and nothing is siloed, while Client C's
+              regulator requires clinic-controlled infrastructure. Logical row isolation cannot
+              meet an infrastructure-control requirement. Even moving the clinic to a database
+              dedicated inside Benoz-controlled infrastructure would not necessarily transfer
+              control to the clinic. The current deployment therefore creates stated regulatory
+              exposure.
+            </p>
+            <h4>What I would do</h4>
+            <p>
+              I would treat this deployment as unsupported for Client C until the Part 3 platform
+              decision resolves the requirement. That decision and its commercial tradeoff do
+              not belong in this review.
+            </p>
+          </article>
+
+          <article class="finding">
+            <div class="finding-title">
+              <h3>3. The audit log is not tenant-scoped</h3>
+              <span class="severity severity-serious">Serious</span>
+            </div>
+            <p>
+              The centralized <code>audit_log</code> schema has actor, action, entity identifiers,
+              and an optional JSON payload, but no <code>tenant_id</code>. The handover
+              intentionally treats it as an administrative store outside the tenant-facing model.
+              Consequently, a tenant-specific audit query or access policy cannot scope a log row
+              directly; it must resolve each entity through operational tables. That is a
+              concrete auditability and isolation gap for Client C, which expects audits. The
+              handover does not establish what <code>payload</code> contains or any tenant-facing
+              log read path, so I would not claim a proven data leak.
+            </p>
+            <h4>What I would do</h4>
+            <p>
+              I would add and backfill <code>tenant_id</code>, apply explicit access policy, and define
+              payload minimization/redaction rules. Audit writes should remain coupled to the
+              business write. Migration and historical backfill are the main costs.
+            </p>
+          </article>
+
+          <article class="finding">
+            <div class="finding-title">
+              <h3>4. Inline notification delivery creates retry ambiguity</h3>
+              <span class="severity severity-serious">Serious</span>
+            </div>
+            <p>
+              The create path performs the database insert, calls an external provider, and only
+              then returns success. If the insert succeeds but the provider fails or times out,
+              the record exists while the caller receives an error; retrying can duplicate the
+              record or notification. The example also sends Client A's SMS on creation, although
+              the requirement says to send it when the report becomes <code>Resolved</code>.
+            </p>
+            <h4>What I would do</h4>
+            <p>
+              I would commit the record or status transition and its notification event atomically
+              through the existing outbox, then return durable acceptance. Delivery should be
+              asynchronous and observable. This changes the response from “message delivered” to
+              “work accepted,” but removes the ambiguous partial success.
+            </p>
+          </article>
+
+          <article class="finding">
+            <div class="finding-title">
+              <h3>5. Outbox deduplication can suppress legitimate events</h3>
+              <span class="severity severity-serious">Serious</span>
+            </div>
+            <p>
+              Consumers deduplicate on <code>(event_type, entity_id)</code>, while the example
+              publishes <code>application.status_changed</code>. Two valid transitions for one
+              application—such as <code>under_review</code> and later <code>approved</code>—share
+              that key. The approval event can be mistaken for a retry and skipped, suppressing
+              the required decision email.
+            </p>
+            <h4>What I would do</h4>
+            <p>
+              I would give each logical outbox event a stable unique event ID and use it for delivery
+              idempotency. External side effects may also need a business idempotency key. A
+              unique event ID prevents distinct events from collapsing; it does not guarantee an
+              external provider never duplicates an action.
+            </p>
+          </article>
+        </div>
+
+        <div class="two-column-notes">
+          <article class="note-card">
+            <h3>Suspicious but reasonable</h3>
+            <p>
+              The RLS policy shows <code>USING</code> without an explicit <code>WITH CHECK</code>,
+              but for an all-commands PostgreSQL policy an omitted <code>WITH CHECK</code> inherits
+              the <code>USING</code> expression. That omission alone is not a write-isolation
+              defect. I would still verify role ownership, policy coverage, tenant-context
+              lifecycle, and integration tests rather than infer that the snippet proves the
+              entire implementation safe.
+            </p>
+            <p>
+              JSONB for sparse custom fields is proportionate because all clients request
+              frequent field changes and a fourth client's shape is unknown. Stable domain fields
+              remain relational; frequently queried custom values may later need targeted indexes
+              or promotion to columns.
+            </p>
+            <p>
+              The transactional outbox is also sound: committing the state change and event
+              together prevents lost work across the database/broker boundary. The defects are
+              its incomplete use and overly broad consumer key, not the pattern.
+            </p>
+            <p>
+              Finally, Client A's burst of about 4,000 reports in an afternoon does not by itself
+              justify a distributed datastore or search service. PostgreSQL with appropriate
+              indexes is a reasonable baseline until measurements or actual search requirements
+              show otherwise.
+            </p>
+          </article>
+          <article class="note-card accent-card">
+            <h3>Fix first</h3>
+            <p>
+              I would fix referral field visibility first. It is a direct, repeatable disclosure of
+              sensitive patient data, and the narrow server-side projection can be deployed
+              immediately. It is required regardless of the eventual platform-isolation choice
+              and need not wait for Part 3. The infrastructure conflict has broader strategic
+              impact, and the audit-log gap requires schema migration, backfill, and a payload
+              policy; both remain urgent, but neither should delay containing the active
+              response-level exposure.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="part-2" class="content-section section-tint" aria-labelledby="part-2-title">
+        <div class="shell">
+          <div class="section-heading">
+            <p class="part-label">Part 2</p>
+            <h2 id="part-2-title">Cross-field validation</h2>
+            <p>
+              The existing CommonJS validator now supports a small definition-level
+              <code>rules</code> array. It expresses binary relationships as data without adding
+              client-specific code, dependencies, coercion, or a general rules engine.
+            </p>
+            <div class="source-actions">
+              <a class="source-link" href="../README.md">Read the complete API contract</a>
+              <a class="source-link" href="../lib/validate.js">View the implementation</a>
+              <span class="repository-placeholder" data-repository-url="REPOSITORY_URL_PLACEHOLDER">
+                Public repository URL pending final QA
+              </span>
+            </div>
+          </div>
+
+          <div class="part-two-grid">
+            <article class="code-card">
+              <div class="code-card-header">
+                <h3>Rule format</h3>
+                <span>Definition data</span>
+              </div>
+              <pre><code>{
+  "fields": [
+    {
+      "name": "start_date",
+      "label": "Start date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "name": "end_date",
+      "label": "End date",
+      "type": "date",
+      "required": true
+    }
+  ],
+  "rules": [
+    {
+      "field": "end_date",
+      "operator": "gte",
+      "other_field": "start_date"
+    }
+  ]
+}</code></pre>
+              <p>
+                This declares <code>record.end_date &gt;= record.start_date</code>. A failed rule
+                attaches one error to <code>end_date</code>, the subject in <code>rule.field</code>.
+              </p>
+            </article>
+
+            <div class="contract-list" aria-label="Validation contract summary">
+              <article>
+                <h3>Six explicit operators</h3>
+                <p><code>eq</code>, <code>neq</code>, <code>gt</code>, <code>gte</code>, <code>lt</code>, and <code>lte</code>. No symbolic aliases.</p>
+              </article>
+              <article>
+                <h3>Semantic type checks</h3>
+                <p>Both operands must have the same declared type. Numbers and dates support ordering; scalar text, choice, and Boolean values support equality.</p>
+              </article>
+              <article>
+                <h3>No cascading errors</h3>
+                <p>A rule is skipped when an operand is absent or already has a field-level error. Requiredness remains a field concern.</p>
+              </article>
+              <article>
+                <h3>Configuration fails clearly</h3>
+                <p>Malformed definitions throw synchronous <code>TypeError</code>; bad submitted records return normal validation errors.</p>
+              </article>
+              <article>
+                <h3>JavaScript omission semantics</h3>
+                <p>Missing <code>rules</code>, <code>rules: undefined</code>, and <code>rules: []</code> preserve normal per-field validation.</p>
+              </article>
+              <article class="test-result">
+                <h3>Verified test status</h3>
+                <p><strong>36 passing · 0 failing</strong></p>
+                <p>16 original tests remain unchanged; 20 cross-field tests cover the public contract and a supplied Client B definition.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="part-3" class="content-section shell" aria-labelledby="part-3-title">
+        <div class="section-heading">
+          <p class="part-label">Part 3</p>
+          <h2 id="part-3-title">Three architecture decisions</h2>
+          <p>
+            The choices form one position: customer-controlled deployments determine where
+            scoring runs and change which platform component reaches its operational limit first.
+          </p>
+        </div>
+
+        <div class="stack decision-stack">
+          <article class="decision">
+            <div class="decision-number" aria-hidden="true">01</div>
+            <div>
+              <h3>Isolation</h3>
+              <p>
+                <strong>My choice:</strong> one dedicated deployment per client, installed in
+                infrastructure controlled by that client. Every installation runs the same
+                versioned product, configuration model, test suite, and release artifact. There
+                is no separate pooled tier for cheaper customers.
+              </p>
+              <p>
+                I am assuming “under the clinic's own control” means the customer controls the
+                cloud or environment account, IAM, databases and other data stores, backups,
+                network policy, and operator access. Benoz receives only access the customer
+                explicitly grants and governs. I would confirm that interpretation with the
+                clinic and regulator before committing, but it is the basis for this architecture
+                choice.
+              </p>
+              <p>
+                This is the only single model that satisfies Client C as stated. A shared Benoz
+                platform fails even with strong RLS, and a Benoz-managed dedicated database is
+                still not clinic-controlled. Separate deployments also contain data access,
+                traffic bursts, and infrastructure failures within each customer's boundary.
+              </p>
+              <p>
+                The sacrifice is cost and onboarding speed. Resources and operational work cannot
+                be pooled, creating a meaningful per-client floor for deployments, migrations,
+                monitoring, backups, secrets, and support. A prepared environment might deploy
+                quickly, but Benoz cannot guarantee same-day onboarding because the customer must
+                first provide an approved account, IAM and access, and any required security or
+                procurement approval. <strong>Under this forced choice, I would lose Client A as
+                described.</strong> I would also lose other price-sensitive customers unable to
+                provide or fund a dedicated environment.
+              </p>
+              <p>
+                This does not recreate separate client-specific systems: the code remains one
+                product and client differences remain configuration. What multiplies is the
+                number of installations, not the number of codebases. That moves substantial
+                complexity into fleet operations, which is the scaling consequence addressed in
+                Decision 3.
+              </p>
+              <a class="source-link" href="../docs/decisions/isolation.md">Read Decision 1 source</a>
+            </div>
+          </article>
+
+          <article class="decision">
+            <div class="decision-number" aria-hidden="true">02</div>
+            <div>
+              <h3>Eligibility score</h3>
+              <p>
+                <strong>My choice:</strong> a fixed, tested scoring engine that interprets
+                immutable, versioned declarative configurations inside each customer's
+                deployment. A configuration selects named supported component types, supplies
+                typed parameters, and obtains inputs through defined adapters. It contains no
+                JavaScript, expression strings, loops, or control flow. This is a bounded scoring
+                model, not a general rules language.
+              </p>
+              <p>
+                Each funding round pins one published configuration version so every applicant in
+                that round is judged under the same intended policy. Separately, every evaluation
+                records the configuration ID and hash, configuration schema version,
+                <strong>scoring engine version</strong>, normalized input snapshot and provenance,
+                component results, final score, threshold outcome, decision, and evaluation time.
+                The engine declares which configuration schema versions it supports and refuses
+                an incompatible pair rather than guessing. Primitive semantics are append-only:
+                a material behavior change requires a new primitive version or engine major
+                version, so historical behavior remains identifiable.
+              </p>
+              <p>
+                Registry timeout, unavailability, or data outside an explicit freshness policy
+                leaves eligibility pending for retry or manual handling; it never substitutes turnover
+                <code>0</code>. A legitimate zero-turnover value is preserved, but the ratio
+                component produces an explicit “not computable with zero denominator” outcome and
+                routes the application for policy/manual review rather than relying on
+                <code>Infinity</code> or inventing an automatic rejection. Later registry
+                corrections do not mutate an old evaluation; an authorized rescore creates a new
+                evaluation and retains the prior one.
+              </p>
+              <p>
+                Normal board revisions create a new immutable configuration for a future round.
+                If the board discovers a genuine formula error mid-round, it publishes a new
+                version and records an authorized decision—with who and why—to move the round.
+                Affected applications are rescored, while previous evaluations remain and are
+                marked superseded. Nothing is silently edited or recalculated.
+              </p>
+              <p>
+                Another client uses configuration when its calculation fits existing primitives.
+                A broadly useful deterministic primitive can be added to the shared engine with
+                tests and versioning. Fundamentally different computation belongs in a separate
+                versioned domain module in the same product, or is declined as outside product
+                scope—not added as arbitrary code or a client-specific fork. Technical
+                representability alone would not authorize automated clinical triage; that also
+                requires appropriate product and regulatory approval.
+              </p>
+              <a class="source-link" href="../docs/decisions/eligibility-scoring.md">Read Decision 2 source</a>
+            </div>
+          </article>
+
+          <article class="decision">
+            <div class="decision-number" aria-hidden="true">03</div>
+            <div>
+              <h3>What breaks first</h3>
+              <p>
+                <strong>Component:</strong> the fleet migration and rollout executor—the system
+                responsible for applying application releases, database schema migrations, and
+                rollout state across customer-controlled deployments.
+              </p>
+              <p>
+                I am answering this against the platform topology chosen in Decision 1: at 300
+                clients there are 300 customer-controlled environments, not one 300-tenant
+                database. The handover relies on an administrative PostgreSQL role for migrations
+                and maintenance. Under the chosen model, Benoz cannot assume standing
+                administrative access to every customer database; each environment can have
+                different IAM, network paths, maintenance windows, and approval processes. Safe
+                schema change execution therefore becomes a fleet coordination problem before
+                aggregate database capacity becomes one.
+              </p>
+              <p>
+                The symptoms would be mixed application and schema versions, migrations that
+                stall or partially apply, customers unable to receive critical patches, manual
+                rollback or customer-DBA intervention, and failures reproducible only in
+                particular installations. I would monitor fleet version distribution, rollout
+                lead time and failure rate, migration and rollback failures, patch age, and manual
+                interventions per release.
+              </p>
+              <p>
+                I would first inventory every deployed application/schema version and define
+                supported compatibility windows. Then I would produce one immutable signed
+                artifact, versioned deployment definitions, and idempotent migrations with
+                preflight checks, explicit state, and tested recovery paths. Rollouts would be
+                staged rather than simultaneous and executed by a local customer-approved runner,
+                so the executor does not require standing database credentials.
+              </p>
+              <p>
+                A central control plane may receive only allow-listed operational metadata such as
+                deployment identifier, artifact and schema versions, migration status, health
+                status, and timestamp. It must not receive application records, clinical data,
+                record identifiers, application logs or error payloads containing customer data,
+                or business-event volumes. Egress remains customer-governed, and an installation
+                must continue operating if telemetry is disconnected.
+              </p>
+              <p>
+                If the platform instead remained one shared Benoz-managed deployment, I would
+                investigate the shared PostgreSQL connection pool first. That is a counterfactual,
+                not a second answer.
+              </p>
+              <a class="source-link" href="../docs/decisions/scaling.md">Read Decision 3 source</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="part-4" class="content-section section-tint" aria-labelledby="part-4-title">
+        <div class="shell">
+          <div class="section-heading">
+            <p class="part-label">Part 4</p>
+            <h2 id="part-4-title">AI usage and transcript exports</h2>
+            <p>
+              AI was used to investigate, implement, test, and challenge ideas. Final calls about
+              what to accept, reject, narrow, or leave out remained human decisions and were
+              checked against the supplied source material.
+            </p>
+            <a class="source-link" href="../docs/ai-usage.md">Read the AI usage source</a>
+          </div>
+
+          <div class="ai-grid">
+            <article class="note-card">
+              <h3>Tools and models</h3>
+              <p><strong>Codex</strong> was the primary repository investigation and implementation tool. Its exact model/version is not exposed in the native task export.</p>
+              <p><strong>Claude — exact model/version not exposed in the export.</strong> Claude performed two independent read-only reviews.</p>
+            </article>
+            <article class="note-card">
+              <h3>One suggestion I rejected</h3>
+              <p>
+                Claude Review #1 recommended documenting that an explicit
+                <code>rules: undefined</code> throws. I rejected that resolution because JavaScript
+                integration code can naturally copy an absent JSON property as
+                <code>undefined</code>. The final contract treats it like omission, while
+                <code>null</code>, objects, and strings remain configuration errors.
+              </p>
+            </article>
+            <article class="note-card">
+              <h3>Where AI helped least</h3>
+              <p>
+                AI helped least with ambiguous product and regulatory tradeoffs—especially what
+                clinic-controlled infrastructure means and which customer the forced single-model
+                choice should sacrifice. Models could surface assumptions and consequences, but
+                not determine the regulator's interpretation or Benoz's market priority.
+              </p>
+            </article>
+            <article class="note-card">
+              <h3>What I left out / least confidence</h3>
+              <p>
+                I left out unrelated validator fixes, a general expression engine, implementation
+                of the proposed Part 3 systems, and handover concerns not supported strongly by
+                the supplied material. I am least confident about the exact operational and
+                regulatory boundary of clinic-controlled infrastructure and would confirm account
+                ownership, access, backups, keys, and permitted telemetry before committing.
+              </p>
+            </article>
+          </div>
+
+          <div class="transcript-section">
+            <div>
+              <p class="part-label">Actual conversation exports</p>
+              <h3>Six reviewable transcripts</h3>
+              <p>
+                Completed prompts and responses are preserved in order. Only clearly labeled local-path redactions were applied where required for publication safety.
+              </p>
+            </div>
+            <div class="transcript-grid">
+              <a href="../docs/transcripts/codex-session-01.md"><span>Codex</span>Session 1</a>
+              <a href="../docs/transcripts/codex-session-02.md"><span>Codex</span>Session 2</a>
+              <a href="../docs/transcripts/codex-session-03.md"><span>Codex</span>Session 3</a>
+              <a href="../docs/transcripts/codex-session-04.md"><span>Codex</span>Session 4</a>
+              <a href="../docs/transcripts/claude-review-01.md"><span>Claude</span>Review 1 · Parts 1–2</a>
+              <a href="../docs/transcripts/claude-review-02.md"><span>Claude</span>Review 2 · Part 3</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <p class="footer-title">Benoz.AI Take-Home Exercise</p>
+          <p>Prepared August 20, 2026 · Philippine Time</p>
+        </div>
+        <div class="footer-links">
+          <a href="#main-content">Back to top</a>
+          <a href="../README.md">README</a>
+          <span data-repository-url="REPOSITORY_URL_PLACEHOLDER">Repository link pending</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

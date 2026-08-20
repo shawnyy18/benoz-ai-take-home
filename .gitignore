@@ -1,0 +1,23 @@
+# Local/private working material (never publish)
+private/
+
+# Secrets and local environment configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Dependencies, logs, coverage, and build output
+node_modules/
+coverage/
+dist/
+build/
+*.log
+
+# Operating-system metadata
+.DS_Store
+._*
+
