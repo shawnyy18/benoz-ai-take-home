@@ -1,0 +1,24 @@
+# Private working material
+private/
+
+# Local Vercel and source-control state
+.vercel/
+.git/
+
+# Secrets and local environment files
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Dependencies and generated output
+node_modules/
+coverage/
+dist/
+build/
+
+# Operating-system metadata
+.DS_Store
+._*
