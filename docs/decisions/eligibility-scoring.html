@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Decision 2 — Eligibility Score — Benoz.AI take-home submission.">
+    <title>Decision 2 — Eligibility Score · Benoz.AI Take-Home</title>
+    <link rel="stylesheet" href="../../submission/styles.css">
+    <link rel="stylesheet" href="../../submission/doc.css">
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#doc-main">Skip to content</a>
+
+    <nav class="section-nav" aria-label="Submission">
+      <div class="shell nav-inner">
+        <a href="../../">← Submission</a>
+        <a href="../../#part-1">Part 1</a>
+        <a href="../../#part-2">Part 2</a>
+        <a href="../../#part-3">Part 3</a>
+        <a href="../../#part-4">Part 4</a>
+      </div>
+    </nav>
+
+    <header class="doc-header">
+      <div class="shell">
+        <p class="doc-crumb">Part 3 · Decision 2</p>
+        <h1>Decision 2 — Eligibility Score</h1>
+        <ul class="doc-facts"><li>12 lines</li><li>358 words</li><li>3 KB</li></ul>
+        <p class="doc-raw">
+          <a class="raw-link" href="./eligibility-scoring.md">View raw <code>eligibility-scoring.md</code></a>
+          <span>This page is generated from that file at build time. Nothing is hidden, summarised, or reordered.</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="shell doc-layout doc-layout--solo">
+      
+      <main id="doc-main" class="doc-main">
+        
+        <div class="prose"><p><strong>My choice:</strong> a fixed, tested scoring engine that interprets immutable, versioned declarative configurations inside each customer's deployment. A configuration selects named supported component types, supplies typed parameters, and obtains inputs through defined adapters. It contains no JavaScript, expression strings, loops, or control flow. This is a bounded scoring model, not a general rules language.</p>
+<p>Each funding round pins one published configuration version so every applicant in that round is judged under the same intended policy. Separately, every evaluation records the configuration ID and hash, configuration schema version, scoring engine version, normalized input snapshot and provenance, component results, final score, threshold outcome, decision, and evaluation time. The engine declares which configuration schema versions it supports and refuses an incompatible pair rather than guessing. Primitive semantics are append-only: a material behavior change requires a new primitive version or engine major version, so historical behavior remains identifiable.</p>
+<p>Registry timeout, unavailability, or data outside an explicit freshness policy leaves eligibility pending for retry or manual handling; it never substitutes turnover <code>0</code>. A legitimate zero-turnover value is preserved, but the ratio component produces an explicit “not computable with zero denominator” outcome and routes the application for policy/manual review rather than relying on <code>Infinity</code> or inventing an automatic rejection. Later registry corrections do not mutate an old evaluation; an authorized rescore creates a new evaluation and retains the prior one.</p>
+<p>Normal board revisions create a new immutable configuration for a future funding round. If the board discovers a genuine formula error mid-round, it publishes a new version and records an authorized decision—with who and why—to move the round. Affected applications are rescored, while previous evaluations remain and are marked superseded. Nothing is silently edited or recalculated.</p>
+<p>Another client uses configuration when its calculation fits existing primitives. A broadly useful deterministic primitive can be added to the shared engine with tests and versioning. Fundamentally different computation belongs in a separate versioned domain module in the same product, or is declined as outside product scope—not added as arbitrary code or a client-specific fork. Technical representability alone would not authorize automated clinical triage; that also requires appropriate product and regulatory approval.</p></div>
+        <p class="doc-foot-raw"><a href="./eligibility-scoring.md">View the raw <code>eligibility-scoring.md</code></a> · <a href="../../">Back to the submission</a></p>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <p class="footer-title">Benoz.AI Take-Home Exercise</p>
+          <p>Senior Full Stack Developer · Philippine Time</p>
+        </div>
+        <div class="footer-links">
+          <a href="#doc-main">Back to top</a>
+          <a href="../../">Submission</a>
+          <a href="./eligibility-scoring.md">Raw source</a>
+        </div>
+      </div>
+    </footer>
+    <script src="../../submission/doc.js" defer></script>
+  </body>
+</html>

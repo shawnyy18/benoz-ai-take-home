@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Platform Foundation — Handover Notes — Benoz.AI take-home submission.">
+    <title>Platform Foundation — Handover Notes · Benoz.AI Take-Home</title>
+    <link rel="stylesheet" href="../submission/styles.css">
+    <link rel="stylesheet" href="../submission/doc.css">
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#doc-main">Skip to content</a>
+
+    <nav class="section-nav" aria-label="Submission">
+      <div class="shell nav-inner">
+        <a href="../">← Submission</a>
+        <a href="../#part-1">Part 1</a>
+        <a href="../#part-2">Part 2</a>
+        <a href="../#part-3">Part 3</a>
+        <a href="../#part-4">Part 4</a>
+      </div>
+    </nav>
+
+    <header class="doc-header">
+      <div class="shell">
+        <p class="doc-crumb">Supplied material</p>
+        <h1>Platform Foundation — Handover Notes</h1>
+        <ul class="doc-facts"><li>167 lines</li><li>1,411 words</li><li>9 KB</li></ul>
+        <p class="doc-raw">
+          <a class="raw-link" href="./handover-architecture.md">View raw <code>handover-architecture.md</code></a>
+          <span>This page is generated from that file at build time. Nothing is hidden, summarised, or reordered.</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="shell doc-layout">
+      <aside class="doc-nav" aria-label="Contents"><p class="doc-nav-title">Contents</p><ol class="toc"><li class="toc-l2"><a href="#1-multi-tenancy-data-isolation">1. Multi-tenancy &amp; data isolation</a></li><li class="toc-l3"><a href="#setting-the-tenant-context">Setting the tenant context</a></li><li class="toc-l3"><a href="#the-audit-log">The audit log</a></li><li class="toc-l3"><a href="#database-roles">Database roles</a></li><li class="toc-l2"><a href="#2-request-flow">2. Request flow</a></li><li class="toc-l2"><a href="#3-configuration-custom-fields">3. Configuration &amp; custom fields</a></li><li class="toc-l2"><a href="#4-creating-a-record">4. Creating a record</a></li><li class="toc-l2"><a href="#5-listing-records">5. Listing records</a></li><li class="toc-l2"><a href="#6-background-work">6. Background work</a></li><li class="toc-l2"><a href="#7-data-model-briefly">7. Data model, briefly</a></li><li class="toc-l2"><a href="#8-what-i-didn-t-get-to">8. What I didn't get to</a></li></ol></aside>
+      <main id="doc-main" class="doc-main">
+        
+        <div class="prose"><p><strong>From:</strong> the contractor who built the first version <strong>To:</strong> whoever picks this up next <strong>Status:</strong> three clients live on this (City maintenance, Grant-making foundation, Private clinic). A fourth is signing soon.</p>
+<p>I built this over a few months working solo, so some of it is more &quot;get it working&quot; than &quot;get it perfect.&quot; I've tried to flag the rough edges honestly rather than let you find them the hard way. Read this together with the code — it should match, but I wrote this from memory on my last day so double-check anything that looks off.</p>
+<p>Stack: Node.js/Express API, PostgreSQL, a message broker for background work. Nothing exotic.</p>
+<hr>
+<h2 id="1-multi-tenancy-data-isolation" class="doc-h"><a class="anchor" href="#1-multi-tenancy-data-isolation" aria-label="Link to this section">#</a>1. Multi-tenancy &amp; data isolation</h2>
+<p>Every client's data lives in the same database, same tables, distinguished by a <code>tenant_id</code> column. This is the &quot;pool&quot; model — one schema, shared by everyone, which is what makes it cheap to bring a new client on. All three current clients are in the pool; nothing is siloed.</p>
+<p>Isolation is enforced with Postgres Row-Level Security. Every tenant table has a policy like this:</p>
+<pre data-lang="sql"><code>ALTER TABLE reports ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY tenant_isolation ON reports
+    USING (tenant_id = current_setting('app.current_tenant', true)::uuid);</code></pre>
+<p>The <code>USING</code> clause means a query only ever sees rows belonging to the tenant currently set in the session — so even if a route handler forgets to filter by tenant explicitly, the database backstops it. This is on every tenant-owned table: <code>reports</code>, <code>applications</code>, <code>referrals</code>, <code>contacts</code>, <code>custom_fields</code>, all of it.</p>
+<h3 id="setting-the-tenant-context" class="doc-h"><a class="anchor" href="#setting-the-tenant-context" aria-label="Link to this section">#</a>Setting the tenant context</h3>
+<p>Each request resolves the caller's tenant (from their session/API key) and sets it at the top of the request, before any query runs:</p>
+<pre data-lang="js"><code>async function setTenantContext(client, tenantId) {
+  await client.query(`SET app.current_tenant = '${tenantId}'`);
+}</code></pre>
+<p>This runs once per request, right after auth, using the connection checked out for that request. Everything the request does afterward is scoped correctly by the RLS policy above.</p>
+<h3 id="the-audit-log" class="doc-h"><a class="anchor" href="#the-audit-log" aria-label="Link to this section">#</a>The audit log</h3>
+<p>Every write goes through a <code>logAction()</code> helper that inserts into <code>audit_log</code>:</p>
+<pre data-lang="sql"><code>CREATE TABLE audit_log (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  actor_id uuid NOT NULL,
+  action text NOT NULL,
+  entity_type text NOT NULL,
+  entity_id uuid NOT NULL,
+  occurred_at timestamptz NOT NULL DEFAULT now(),
+  payload jsonb
+);</code></pre>
+<p>I kept this one simpler than the tenant tables — it's an operational/administrative log rather than tenant-facing data, and having everything in one place made it a lot easier to debug across clients while I was the only one building this. <code>entity_id</code> plus <code>entity_type</code> is enough to trace any record back to what happened to it.</p>
+<h3 id="database-roles" class="doc-h"><a class="anchor" href="#database-roles" aria-label="Link to this section">#</a>Database roles</h3>
+<p>Two Postgres roles: <code>app_user</code> for the API (no special privileges, RLS always applies to it) and <code>app_admin</code> for migrations and one-off maintenance scripts, which bypasses RLS. <code>app_admin</code> isn't used in request-serving code — only for schema changes and the odd manual data fix.</p>
+<hr>
+<h2 id="2-request-flow" class="doc-h"><a class="anchor" href="#2-request-flow" aria-label="Link to this section">#</a>2. Request flow</h2>
+<p>Every API request goes: parse → authenticate → set tenant context (Section 1) → authorize (role check) → route handler. The web UI is a client of the same API, no separate backend — this keeps the surface area small enough that one person could build it.</p>
+<p>Auth is a standard JWT-based session, verified by a well-known library rather than anything homegrown. Nothing unusual here.</p>
+<hr>
+<h2 id="3-configuration-custom-fields" class="doc-h"><a class="anchor" href="#3-configuration-custom-fields" aria-label="Link to this section">#</a>3. Configuration &amp; custom fields</h2>
+<p>Each client can add custom fields to their objects (a Report, an Application, a Referral) without a migration — there's a <code>custom_fields jsonb</code> column on each core table, plus a small <code>field_definitions</code> table describing each tenant's custom fields (name, type, required, options). The API reads the field definitions and validates/serializes accordingly. Nothing fancy, but it's covered the &quot;add one more field&quot; requests fine so far.</p>
+<hr>
+<h2 id="4-creating-a-record" class="doc-h"><a class="anchor" href="#4-creating-a-record" aria-label="Link to this section">#</a>4. Creating a record</h2>
+<p>The create path for all three clients follows the same shape (Reports for Client A, Applications for Client B, Referrals for Client C). Using Client A as the example:</p>
+<pre data-lang="js"><code>async function createReport(req, res) {
+  const record = await db.query(
+    `INSERT INTO reports (tenant_id, resident_name, resident_phone, street_address,
+       district, issue_type, description, photo_url, status)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'new')
+     RETURNING *`,
+    [req.tenantId, body.resident_name, body.resident_phone, body.street_address,
+     body.district, body.issue_type, body.description, body.photo_url]
+  );
+
+  // let the resident know we've got it
+  await sendConfirmationSms(record.resident_phone, record.id);
+
+  return res.status(201).json(record);
+}</code></pre>
+<p>Straightforward insert-then-notify. The SMS/email send for the relevant client (SMS for Client A, email for Client B/C) happens right after the insert, before the response goes back, so by the time the caller gets a 201 they know the notification has actually gone out — no separate step that could silently fail without anyone noticing.</p>
+<hr>
+<h2 id="5-listing-records" class="doc-h"><a class="anchor" href="#5-listing-records" aria-label="Link to this section">#</a>5. Listing records</h2>
+<p>Every client needs a paginated list view (the call-centre queue, the applications table, the referral list). One shared handler, parameterized by table:</p>
+<pre data-lang="js"><code>async function listRecords(req, res) {
+  const { offset = 0, limit = 50 } = req.query;
+  const rows = await db.query(
+    `SELECT * FROM ${table} ORDER BY created_at DESC OFFSET $1 LIMIT $2`,
+    [offset, limit]
+  );
+  return res.json(rows);
+}</code></pre>
+<p>Standard offset/limit pagination — the frontend just increments the page number. <code>created_at</code> has a plain index on it, so recent-first ordering is fast. This has held up fine through the storm-day spike on Client A (4,000 reports in an afternoon) — the query itself is cheap, it's the write volume that mattered there, not the read side.</p>
+<hr>
+<h2 id="6-background-work" class="doc-h"><a class="anchor" href="#6-background-work" aria-label="Link to this section">#</a>6. Background work</h2>
+<p>Anything that shouldn't block the request — sending the fourteen-day follow-up email on Client B, alerting the duty nurse on an untriaged urgent referral for Client C, re-indexing search — goes through a queue rather than running inline.</p>
+<p>The write and the enqueue happen in the same database transaction:</p>
+<pre data-lang="js"><code>await client.query('BEGIN');
+await client.query(
+  `UPDATE applications SET status = $1 WHERE id = $2`, [status, id]
+);
+await client.query(
+  `INSERT INTO outbox (event_type, tenant_id, payload) VALUES ($1, $2, $3)`,
+  ['application.status_changed', tenantId, JSON.stringify({ id, status })]
+);
+await client.query('COMMIT');</code></pre>
+<p>A separate relay process polls the <code>outbox</code> table for unpublished rows, pushes them to the broker, and marks them dispatched only once the broker confirms receipt — so a crash between the DB commit and the publish just means the relay picks it up on the next poll, nothing is lost. Handlers on the other end key off an <code>(event_type, entity_id)</code> pair to skip anything they've already processed, and retries are capped (five attempts, backing off, then it lands in a dead-letter table for a human to look at) so a permanently failing handler doesn't spin forever. This part I'm fairly happy with — it's been solid since I put it in.</p>
+<hr>
+<h2 id="7-data-model-briefly" class="doc-h"><a class="anchor" href="#7-data-model-briefly" aria-label="Link to this section">#</a>7. Data model, briefly</h2>
+<ul><li><code>reports</code> (Client A), <code>applications</code> (Client B), <code>referrals</code> (Client C) — the core object per client, each with its own status enum and its own <code>custom_fields jsonb</code>.</li><li><code>contacts</code> — shared contact records (the resident, the applicant org's contact person, the referring physician).</li><li><code>field_definitions</code> — per-tenant custom field metadata (Section 3).</li><li><code>outbox</code> — the event queue (Section 6).</li><li><code>audit_log</code> — the action log (Section 1).</li></ul>
+<p>Nothing here is exotic; it's a fairly conventional relational layout. The <code>custom_fields</code> JSONB column is the only real deviation from &quot;just add columns,&quot; and that was purely to avoid a migration every time a client wants one more field.</p>
+<hr>
+<h2 id="8-what-i-didn-t-get-to" class="doc-h"><a class="anchor" href="#8-what-i-didn-t-get-to" aria-label="Link to this section">#</a>8. What I didn't get to</h2>
+<p>Being straight about the gaps rather than leaving you to discover them:</p>
+<ul><li><strong>Rate limiting isn't built.</strong> Right now nothing stops one client's traffic spike from slowing things down for everyone else on the same database. Hasn't bitten us yet with three clients, but it's a real gap as more come on.</li><li><strong>Entitlements/feature flags aren't built either.</strong> Every tenant currently gets every feature — there's no per-client on/off switch for modules. With three clients I know personally, that's been fine to leave for later; it's more of a nice-to-have for when the product side wants to sell different tiers than something urgent.</li><li><strong>No dedicated search</strong> — list views use the plain SQL queries in Section 5. Fine at current volume; would need a real index (or a search service) if a client wanted free-text search over thousands of records.</li><li><strong>Silo/dedicated-database isolation isn't implemented</strong> — everything's in the shared pool today (Section 1). If a client ever needs their data physically separate, that's new work, not a flag to flip.</li></ul>
+<p>Good luck with it — happy to answer questions for a couple of weeks if anything doesn't add up, after that I'm off this client's Slack.</p></div>
+        <p class="doc-foot-raw"><a href="./handover-architecture.md">View the raw <code>handover-architecture.md</code></a> · <a href="../">Back to the submission</a></p>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <p class="footer-title">Benoz.AI Take-Home Exercise</p>
+          <p>Senior Full Stack Developer · Philippine Time</p>
+        </div>
+        <div class="footer-links">
+          <a href="#doc-main">Back to top</a>
+          <a href="../">Submission</a>
+          <a href="./handover-architecture.md">Raw source</a>
+        </div>
+      </div>
+    </footer>
+    <script src="../submission/doc.js" defer></script>
+  </body>
+</html>

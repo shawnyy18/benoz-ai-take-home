@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Decision 1 — Isolation — Benoz.AI take-home submission.">
+    <title>Decision 1 — Isolation · Benoz.AI Take-Home</title>
+    <link rel="stylesheet" href="../../submission/styles.css">
+    <link rel="stylesheet" href="../../submission/doc.css">
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#doc-main">Skip to content</a>
+
+    <nav class="section-nav" aria-label="Submission">
+      <div class="shell nav-inner">
+        <a href="../../">← Submission</a>
+        <a href="../../#part-1">Part 1</a>
+        <a href="../../#part-2">Part 2</a>
+        <a href="../../#part-3">Part 3</a>
+        <a href="../../#part-4">Part 4</a>
+      </div>
+    </nav>
+
+    <header class="doc-header">
+      <div class="shell">
+        <p class="doc-crumb">Part 3 · Decision 1</p>
+        <h1>Decision 1 — Isolation</h1>
+        <ul class="doc-facts"><li>12 lines</li><li>276 words</li><li>2 KB</li></ul>
+        <p class="doc-raw">
+          <a class="raw-link" href="./isolation.md">View raw <code>isolation.md</code></a>
+          <span>This page is generated from that file at build time. Nothing is hidden, summarised, or reordered.</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="shell doc-layout doc-layout--solo">
+      
+      <main id="doc-main" class="doc-main">
+        
+        <div class="prose"><p><strong>My choice:</strong> one dedicated deployment per client, installed in infrastructure controlled by that client. Every installation runs the same versioned product, configuration model, test suite, and release artifact. There is no separate pooled tier for cheaper customers.</p>
+<p>I am assuming “under the clinic's own control” means the customer controls the cloud or environment account, IAM, databases and other data stores, backups, network policy, and operator access. Benoz receives only access the customer explicitly grants and governs. I would confirm that interpretation with the clinic and regulator before committing, but it is the basis for this architecture choice.</p>
+<p>This is the only single model that satisfies Client C as stated. A shared Benoz platform fails even with strong RLS, and a Benoz-managed dedicated database is still not clinic-controlled. Separate deployments also contain data access, traffic bursts, and infrastructure failures within each customer's boundary.</p>
+<p>The sacrifice is cost and onboarding speed. Resources and operational work cannot be pooled, creating a meaningful per-client floor for deployments, migrations, monitoring, backups, secrets, and support. A prepared environment might deploy quickly, but Benoz cannot guarantee same-day onboarding because the customer must first provide an approved account, IAM and access, and any required security or procurement approval. <strong>Under this forced choice, I would lose Client A as described.</strong> I would also lose other price-sensitive customers unable to provide or fund a dedicated environment.</p>
+<p>This does not recreate separate client-specific systems: the code remains one product and client differences remain configuration. What multiplies is the number of installations, not the number of codebases. That moves substantial complexity into fleet operations, which is the scaling consequence addressed in Decision 3.</p></div>
+        <p class="doc-foot-raw"><a href="./isolation.md">View the raw <code>isolation.md</code></a> · <a href="../../">Back to the submission</a></p>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <p class="footer-title">Benoz.AI Take-Home Exercise</p>
+          <p>Senior Full Stack Developer · Philippine Time</p>
+        </div>
+        <div class="footer-links">
+          <a href="#doc-main">Back to top</a>
+          <a href="../../">Submission</a>
+          <a href="./isolation.md">Raw source</a>
+        </div>
+      </div>
+    </footer>
+    <script src="../../submission/doc.js" defer></script>
+  </body>
+</html>

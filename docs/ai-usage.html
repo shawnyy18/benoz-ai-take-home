@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Part 4 — AI Usage — Benoz.AI take-home submission.">
+    <title>Part 4 — AI Usage · Benoz.AI Take-Home</title>
+    <link rel="stylesheet" href="../submission/styles.css">
+    <link rel="stylesheet" href="../submission/doc.css">
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#doc-main">Skip to content</a>
+
+    <nav class="section-nav" aria-label="Submission">
+      <div class="shell nav-inner">
+        <a href="../">← Submission</a>
+        <a href="../#part-1">Part 1</a>
+        <a href="../#part-2">Part 2</a>
+        <a href="../#part-3">Part 3</a>
+        <a href="../#part-4">Part 4</a>
+      </div>
+    </nav>
+
+    <header class="doc-header">
+      <div class="shell">
+        <p class="doc-crumb">Part 4 · Source</p>
+        <h1>Part 4 — AI Usage</h1>
+        <ul class="doc-facts"><li>47 lines</li><li>637 words</li><li>4 KB</li></ul>
+        <p class="doc-raw">
+          <a class="raw-link" href="./ai-usage.md">View raw <code>ai-usage.md</code></a>
+          <span>This page is generated from that file at build time. Nothing is hidden, summarised, or reordered.</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="shell doc-layout">
+      <aside class="doc-nav" aria-label="Contents"><p class="doc-nav-title">Contents</p><ol class="toc"><li class="toc-l2"><a href="#tools-and-models">Tools and models</a></li><li class="toc-l2"><a href="#how-i-used-ai">How I used AI</a></li><li class="toc-l2"><a href="#one-suggestion-i-rejected">One suggestion I rejected</a></li><li class="toc-l2"><a href="#where-ai-helped-least">Where AI helped least</a></li><li class="toc-l2"><a href="#transcript-exports">Transcript exports</a></li><li class="toc-l2"><a href="#what-i-left-out-least-confidence">What I left out / least confidence</a></li></ol></aside>
+      <main id="doc-main" class="doc-main">
+        
+        <div class="prose"><h2 id="tools-and-models" class="doc-h"><a class="anchor" href="#tools-and-models" aria-label="Link to this section">#</a>Tools and models</h2>
+<ul><li><strong>Codex</strong> was the primary repository investigation and implementation tool. The exact model/version is not exposed in the native task export available to me, so I have not guessed it.</li><li><strong>Claude — exact model/version not exposed in the export.</strong> Claude was used for two independent read-only reviews: first after Parts 1–2, then after the Part 3 workshop.</li></ul>
+<h2 id="how-i-used-ai" class="doc-h"><a class="anchor" href="#how-i-used-ai" aria-label="Link to this section">#</a>How I used AI</h2>
+<p>I used AI to inspect sources and code, generate and challenge options, implement the approved Part 2 design, write tests and documentation, and review architecture decisions. I made the final calls on what to accept, reject, narrow, or leave out—including approving the top-level validation-rule contract, restricting its scope, choosing which independent-review findings to apply, and accepting the commercial sacrifice in Decision 1.</p>
+<div class="table-wrap"><table><thead><tr><th>Stage</th><th>Primary AI</th><th>Purpose</th><th>Human decision</th></tr></thead><tbody><tr><td>Repository audit</td><td>Codex</td><td>Inspect the exercise, starter, tests, and handover</td><td>Prioritized source-supported findings</td></tr><tr><td>Part 1 workshop/finalization</td><td>Codex</td><td>Challenge severity and false positives</td><td>Approved the final issue set and fix-first choice</td></tr><tr><td>Part 2 design</td><td>Codex</td><td>Compare validation contracts</td><td>Selected minimal definition-level binary rules</td></tr><tr><td>Part 2 implementation</td><td>Codex</td><td>Implement, test, and document the contract</td><td>Kept unrelated validator behavior out of scope</td></tr><tr><td>Independent review #1</td><td>Claude</td><td>Challenge Parts 1–2 and README usability</td><td>Accepted, narrowed, or rejected each finding</td></tr><tr><td>Corrective pass</td><td>Codex</td><td>Apply approved review changes</td><td>Rejected Claude's proposed <code>rules: undefined</code> resolution</td></tr><tr><td>Part 3 workshop/finalization</td><td>Codex</td><td>Compare and document the three forced choices</td><td>Approved one coherent platform model and its sacrifices</td></tr><tr><td>Independent review #2</td><td>Claude</td><td>Challenge Part 3 consistency and specificity</td><td>Accepted engine-version, governance, and rollout refinements</td></tr></tbody></table></div>
+<h2 id="one-suggestion-i-rejected" class="doc-h"><a class="anchor" href="#one-suggestion-i-rejected" aria-label="Link to this section">#</a>One suggestion I rejected</h2>
+<p>Claude Review #1 identified <code>{ fields, rules: undefined }</code> as an edge case and recommended documenting that it throws <code>TypeError</code>. I agreed that the behavior needed an explicit decision but rejected that resolution. JavaScript code can naturally copy <code>rules: definition.rules</code> from a parsed document where the property was absent, producing <code>undefined</code>. Treating that as malformed added surprise without protecting against a meaningful configuration error.</p>
+<p>The implemented contract therefore treats explicit <code>undefined</code> like an omitted <code>rules</code> property, while <code>null</code>, objects, and strings still throw <code>TypeError</code>. Focused tests cover both sides of that boundary, and the linked Claude Review #1 export preserves the recommendation in its original context.</p>
+<h2 id="where-ai-helped-least" class="doc-h"><a class="anchor" href="#where-ai-helped-least" aria-label="Link to this section">#</a>Where AI helped least</h2>
+<p>AI helped least with ambiguous product and regulatory tradeoffs—especially what “infrastructure under the clinic's own control” is intended to mean and whether the forced single-platform choice should sacrifice Client A or Client C. Models could expose assumptions and trace technical and commercial consequences, but they could not determine the regulator's interpretation or Benoz's market priority. I therefore stated the control assumption explicitly, chose one model, and documented who that choice loses rather than presenting AI-generated certainty.</p>
+<h2 id="transcript-exports" class="doc-h"><a class="anchor" href="#transcript-exports" aria-label="Link to this section">#</a>Transcript exports</h2>
+<p>The following publication exports preserve the actual conversations in order, with only labeled local-path redactions where needed:</p>
+<ul><li><a href="./transcripts/codex-session-01.md">Codex session 1</a></li><li><a href="./transcripts/codex-session-02.md">Codex session 2</a></li><li><a href="./transcripts/codex-session-03.md">Codex session 3</a></li><li><a href="./transcripts/codex-session-04.md">Codex session 4</a></li><li><a href="./transcripts/claude-review-01.md">Claude Review #1</a></li><li><a href="./transcripts/claude-review-02.md">Claude Review #2</a></li></ul>
+<h2 id="what-i-left-out-least-confidence" class="doc-h"><a class="anchor" href="#what-i-left-out-least-confidence" aria-label="Link to this section">#</a>What I left out / least confidence</h2>
+<p>I deliberately left out unrelated validator fixes such as stricter calendar-date and <code>Infinity</code> handling, a general expression engine, implementation of the proposed Part 3 infrastructure and scoring systems, and lower-confidence handover concerns that the supplied material did not prove. I am least confident about the exact operational and regulatory meaning of clinic-controlled infrastructure because the exercise states the requirement but not the regulator's precise boundary; I would confirm account ownership, operator access, backups, keys, and permitted telemetry before committing to that deployment model.</p></div>
+        <p class="doc-foot-raw"><a href="./ai-usage.md">View the raw <code>ai-usage.md</code></a> · <a href="../">Back to the submission</a></p>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <p class="footer-title">Benoz.AI Take-Home Exercise</p>
+          <p>Senior Full Stack Developer · Philippine Time</p>
+        </div>
+        <div class="footer-links">
+          <a href="#doc-main">Back to top</a>
+          <a href="../">Submission</a>
+          <a href="./ai-usage.md">Raw source</a>
+        </div>
+      </div>
+    </footer>
+    <script src="../submission/doc.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,1391 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Codex main session — publication export 3 of 4 — Benoz.AI take-home submission.">
+    <title>Codex main session — publication export 3 of 4 · Benoz.AI Take-Home</title>
+    <link rel="stylesheet" href="../../submission/styles.css">
+    <link rel="stylesheet" href="../../submission/doc.css">
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#doc-main">Skip to content</a>
+
+    <nav class="section-nav" aria-label="Submission">
+      <div class="shell nav-inner">
+        <a href="../../">← Submission</a>
+        <a href="../../#part-1">Part 1</a>
+        <a href="../../#part-2">Part 2</a>
+        <a href="../../#part-3">Part 3</a>
+        <a href="../../#part-4">Part 4</a>
+      </div>
+    </nav>
+
+    <header class="doc-header">
+      <div class="shell">
+        <p class="doc-crumb">Part 4 · Transcript</p>
+        <h1>Codex main session — publication export 3 of 4</h1>
+        <ul class="doc-facts"><li>19 messages</li><li>2 turns</li><li>2,555 lines</li><li>7,485 words</li><li>52 KB</li></ul>
+        <p class="doc-raw">
+          <a class="raw-link" href="./codex-session-03.md">View raw <code>codex-session-03.md</code></a>
+          <span>This page is generated from that file at build time. Nothing is hidden, summarised, or reordered.</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="shell doc-layout">
+      <aside class="doc-nav" aria-label="Contents"><p class="doc-nav-title">Contents</p><ol class="toc"><li class="toc-turn"><a href="#turn-5">Turn 5</a></li><li class="toc-msg toc-msg--user"><a href="#turn-5-user-1">User</a></li><li class="toc-sub"><a href="#benoz-ai-take-home-phase-5-implement-and-document-cross-fiel">Benoz.AI Take-Home — Phase 5: Implement and Document Cross-Field Validation</a></li><li class="toc-sub"><a href="#approved-design">APPROVED DESIGN</a></li><li class="toc-sub"><a href="#approved-operators">APPROVED OPERATORS</a></li><li class="toc-sub"><a href="#approved-rule-semantics">APPROVED RULE SEMANTICS</a></li><li class="toc-sub"><a href="#approved-type-compatibility">APPROVED TYPE COMPATIBILITY</a></li><li class="toc-sub"><a href="#exact-type-rule">EXACT TYPE RULE</a></li><li class="toc-sub"><a href="#configuration-validation">CONFIGURATION VALIDATION</a></li><li class="toc-sub"><a href="#rules-property-validation"><code>rules</code> PROPERTY VALIDATION</a></li><li class="toc-sub"><a href="#each-rule-must-be-validated">EACH RULE MUST BE VALIDATED</a></li><li class="toc-sub"><a href="#field-references">FIELD REFERENCES</a></li><li class="toc-sub"><a href="#unknown-operators">UNKNOWN OPERATORS</a></li><li class="toc-sub"><a href="#invalid-type-operator-combination">INVALID TYPE/OPERATOR COMBINATION</a></li><li class="toc-sub"><a href="#optional-custom-message">OPTIONAL CUSTOM MESSAGE</a></li><li class="toc-sub"><a href="#default-error-messages">DEFAULT ERROR MESSAGES</a></li><li class="toc-sub"><a href="#validation-execution-model">VALIDATION EXECUTION MODEL</a></li><li class="toc-sub"><a href="#missing-value-behavior">MISSING VALUE BEHAVIOR</a></li><li class="toc-sub"><a href="#invalid-operand-behavior">INVALID OPERAND BEHAVIOR</a></li><li class="toc-sub"><a href="#multiple-rules">MULTIPLE RULES</a></li><li class="toc-sub"><a href="#error-order">ERROR ORDER</a></li><li class="toc-sub"><a href="#implementation-style">IMPLEMENTATION STYLE</a></li><li class="toc-sub"><a href="#client-agnostic-requirement">CLIENT AGNOSTIC REQUIREMENT</a></li><li class="toc-sub"><a href="#tests">TESTS</a></li><li class="toc-sub"><a href="#required-test-areas">REQUIRED TEST AREAS</a></li><li class="toc-sub"><a href="#test-script-discovery">TEST SCRIPT DISCOVERY</a></li><li class="toc-sub"><a href="#readme-very-important">README — VERY IMPORTANT</a></li><li class="toc-sub"><a href="#readme-structure">README STRUCTURE</a></li><li class="toc-sub"><a href="#readme-example">README EXAMPLE</a></li><li class="toc-sub"><a href="#document-the-hidden-test-contract-precisely">DOCUMENT THE HIDDEN-TEST CONTRACT PRECISELY</a></li><li class="toc-sub"><a href="#exception-message-policy">EXCEPTION MESSAGE POLICY</a></li><li class="toc-sub"><a href="#hidden-test-self-check">HIDDEN-TEST SELF-CHECK</a></li><li class="toc-sub"><a href="#boundary-regression-check">BOUNDARY REGRESSION CHECK</a></li><li class="toc-sub"><a href="#quality-review">QUALITY REVIEW</a></li><li class="toc-sub"><a href="#run-verification">RUN VERIFICATION</a></li><li class="toc-sub"><a href="#check-changes">CHECK CHANGES</a></li><li class="toc-sub"><a href="#interview-notes">INTERVIEW NOTES</a></li><li class="toc-sub"><a href="#ai-worklog">AI WORKLOG</a></li><li class="toc-sub"><a href="#final-response">FINAL RESPONSE</a></li><li class="toc-sub"><a href="#part-2-implementation-complete">Part 2 Implementation Complete</a></li><li class="toc-sub"><a href="#stop-condition">STOP CONDITION</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-5-codex-commentary-2">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-5-codex-commentary-3">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-5-codex-commentary-4">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-5-codex-commentary-5">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-5-codex-commentary-6">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-5-codex-commentary-7">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-5-codex-commentary-8">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-5-codex-commentary-9">Codex — commentary</a></li><li class="toc-msg toc-msg--assistant"><a href="#turn-5-codex-final-response-10">Codex — final response</a></li><li class="toc-sub"><a href="#part-2-implementation-complete-2">Part 2 Implementation Complete</a></li><li class="toc-turn"><a href="#turn-6">Turn 6</a></li><li class="toc-msg toc-msg--user"><a href="#turn-6-user-1">User</a></li><li class="toc-sub"><a href="#benoz-ai-take-home-codex-revision-pass-1-after-claude-indepe">Benoz.AI Take-Home — Codex Revision Pass #1 After Claude Independent Review</a></li><li class="toc-sub"><a href="#current-quality-baseline">CURRENT QUALITY BASELINE</a></li><li class="toc-sub"><a href="#source-of-review">SOURCE OF REVIEW</a></li><li class="toc-sub"><a href="#step-1-establish-baseline-again">STEP 1 — ESTABLISH BASELINE AGAIN</a></li><li class="toc-sub"><a href="#step-2-fix-the-readme-contradiction">STEP 2 — FIX THE README CONTRADICTION</a></li><li class="toc-sub"><a href="#step-3-resolve-rules-undefined">STEP 3 — RESOLVE <code>rules: undefined</code></a></li><li class="toc-sub"><a href="#step-4-add-tests-for-that-decision">STEP 4 — ADD TESTS FOR THAT DECISION</a></li><li class="toc-sub"><a href="#step-5-add-one-realistic-supplied-fixture-test">STEP 5 — ADD ONE REALISTIC SUPPLIED-FIXTURE TEST</a></li><li class="toc-sub"><a href="#step-6-re-evaluate-the-audit-log-from-primary-source">STEP 6 — RE-EVALUATE THE AUDIT LOG FROM PRIMARY SOURCE</a></li><li class="toc-sub"><a href="#step-7-decide-whether-audit-log-belongs-in-final-part-1">STEP 7 — DECIDE WHETHER AUDIT LOG BELONGS IN FINAL PART 1</a></li><li class="toc-sub"><a href="#step-8-audit-log-severity">STEP 8 — AUDIT-LOG SEVERITY</a></li><li class="toc-sub"><a href="#step-9-re-evaluate-the-rls-language">STEP 9 — RE-EVALUATE THE RLS LANGUAGE</a></li><li class="toc-sub"><a href="#step-10-improve-suspicious-but-reasonable">STEP 10 — IMPROVE &quot;SUSPICIOUS BUT REASONABLE&quot;</a></li><li class="toc-sub"><a href="#step-11-client-c-infrastructure-finding">STEP 11 — CLIENT C INFRASTRUCTURE FINDING</a></li><li class="toc-sub"><a href="#step-12-fix-first-decision">STEP 12 — FIX-FIRST DECISION</a></li><li class="toc-sub"><a href="#step-13-notification-timing-discrepancy">STEP 13 — NOTIFICATION TIMING DISCREPANCY</a></li><li class="toc-sub"><a href="#step-14-delayed-scheduled-job-observation">STEP 14 — DELAYED/SCHEDULED JOB OBSERVATION</a></li><li class="toc-sub"><a href="#step-15-package-json-transparency">STEP 15 — PACKAGE.JSON TRANSPARENCY</a></li><li class="toc-sub"><a href="#step-16-optional-claude-findings-to-leave-alone">STEP 16 — OPTIONAL CLAUDE FINDINGS TO LEAVE ALONE</a></li><li class="toc-sub"><a href="#step-17-comments-in-implementation">STEP 17 — COMMENTS IN IMPLEMENTATION</a></li><li class="toc-sub"><a href="#step-18-ai-worklog">STEP 18 — AI WORKLOG</a></li><li class="toc-sub"><a href="#step-19-interview-notes">STEP 19 — INTERVIEW NOTES</a></li><li class="toc-sub"><a href="#step-20-run-full-verification">STEP 20 — RUN FULL VERIFICATION</a></li><li class="toc-sub"><a href="#step-21-readme-only-hidden-simulation-again">STEP 21 — README-ONLY HIDDEN SIMULATION AGAIN</a></li><li class="toc-sub"><a href="#output">OUTPUT</a></li><li class="toc-sub"><a href="#1-claude-review-decisions">1. Claude Review Decisions</a></li><li class="toc-sub"><a href="#2-readme-corrections">2. README Corrections</a></li><li class="toc-sub"><a href="#3-rules-undefined-resolution">3. <code>rules: undefined</code> Resolution</a></li><li class="toc-sub"><a href="#4-client-b-fixture-test">4. Client B Fixture Test</a></li><li class="toc-sub"><a href="#5-audit-log-source-verification">5. Audit Log Source Verification</a></li><li class="toc-sub"><a href="#6-part-1-revisions">6. Part 1 Revisions</a></li><li class="toc-sub"><a href="#7-rls-tenant-context-conclusion">7. RLS / Tenant Context Conclusion</a></li><li class="toc-sub"><a href="#8-fix-first-decision">8. Fix-First Decision</a></li><li class="toc-sub"><a href="#9-package-json-explanation">9. package.json Explanation</a></li><li class="toc-sub"><a href="#10-files-changed">10. Files Changed</a></li><li class="toc-sub"><a href="#11-tests">11. Tests</a></li><li class="toc-sub"><a href="#12-hidden-test-simulation">12. Hidden-Test Simulation</a></li><li class="toc-sub"><a href="#13-ai-worklog-update">13. AI Worklog Update</a></li><li class="toc-sub"><a href="#14-remaining-concerns">14. Remaining Concerns</a></li><li class="toc-sub"><a href="#15-recommended-next-phase">15. Recommended Next Phase</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-6-codex-commentary-2">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-6-codex-commentary-3">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-6-codex-commentary-4">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-6-codex-commentary-5">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-6-codex-commentary-6">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-6-codex-commentary-7">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-6-codex-commentary-8">Codex — commentary</a></li><li class="toc-msg toc-msg--assistant"><a href="#turn-6-codex-final-response-9">Codex — final response</a></li><li class="toc-sub"><a href="#1-claude-review-decisions-2">1. Claude Review Decisions</a></li><li class="toc-sub"><a href="#2-readme-corrections-2">2. README Corrections</a></li><li class="toc-sub"><a href="#3-rules-undefined-resolution-2">3. <code>rules: undefined</code> Resolution</a></li><li class="toc-sub"><a href="#4-client-b-fixture-test-2">4. Client B Fixture Test</a></li><li class="toc-sub"><a href="#5-audit-log-source-verification-2">5. Audit Log Source Verification</a></li><li class="toc-sub"><a href="#6-part-1-revisions-2">6. Part 1 Revisions</a></li><li class="toc-sub"><a href="#7-rls-tenant-context-conclusion-2">7. RLS / Tenant Context Conclusion</a></li><li class="toc-sub"><a href="#8-fix-first-decision-2">8. Fix-First Decision</a></li><li class="toc-sub"><a href="#9-package-json-explanation-2">9. package.json Explanation</a></li><li class="toc-sub"><a href="#10-files-changed-2">10. Files Changed</a></li><li class="toc-sub"><a href="#11-tests-2">11. Tests</a></li><li class="toc-sub"><a href="#12-hidden-test-simulation-2">12. Hidden-Test Simulation</a></li><li class="toc-sub"><a href="#13-ai-worklog-update-2">13. AI Worklog Update</a></li><li class="toc-sub"><a href="#14-remaining-concerns-2">14. Remaining Concerns</a></li><li class="toc-sub"><a href="#15-recommended-next-phase-2">15. Recommended Next Phase</a></li></ol></aside>
+      <main id="doc-main" class="doc-main">
+        <div class="doc-intro"><p>Source: native Codex task history for “Audit Benoz.AI starter repository”.</p>
+<p>Scope: completed user and assistant conversation messages in chronological order. Internal reasoning summaries and tool-event metadata are not conversation messages and are not included.</p>
+<p>Integrity: message text is preserved except for the labeled local-path redactions documented in the private redaction log.</p></div>
+        <section class="turn"><h2 class="turn-head" id="turn-5"><span>Turn 5</span></h2>
+<article class="msg msg--user" id="turn-5-user-1">
+  <header class="msg-head">
+    <span class="msg-role">User</span>
+    <a class="msg-anchor" href="#turn-5-user-1" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<h3 id="benoz-ai-take-home-phase-5-implement-and-document-cross-fiel" class="doc-h"><a class="anchor" href="#benoz-ai-take-home-phase-5-implement-and-document-cross-fiel" aria-label="Link to this section">#</a>Benoz.AI Take-Home — Phase 5: Implement and Document Cross-Field Validation</h3>
+<p>Continue from:</p>
+<ul><li>Phase 1 — repository discovery;</li><li>Phase 2 — Part 1 decision workshop;</li><li>Phase 3 — finalized architecture review;</li><li>Phase 4 — cross-field validation API design workshop.</li></ul>
+<p>The Phase 4 design is now <strong>approved</strong>.</p>
+<p>Proceed with implementing Part 2.</p>
+<p>This is the first phase where you may modify:</p>
+<ul><li><code>lib/validate.js</code>;</li><li>test files;</li><li><code>README.md</code>;</li><li><code>package.json</code> only if genuinely necessary for test discovery.</li></ul>
+<p>Do NOT:</p>
+<ul><li>change the approved API casually;</li><li>refactor unrelated validators;</li><li>fix unrelated discovered bugs;</li><li>modify supplied client fixtures;</li><li>begin Part 3;</li><li>invoke Claude;</li><li>build the submission website;</li><li>deploy;</li><li>push;</li><li>publish.</li></ul>
+<hr>
+<h3 id="approved-design" class="doc-h"><a class="anchor" href="#approved-design" aria-label="Link to this section">#</a>APPROVED DESIGN</h3>
+<p>Use a definition-level optional:</p>
+<pre data-lang="json"><code>{
+  &quot;fields&quot;: [],
+  &quot;rules&quot;: []
+}</code></pre>
+<p>Each cross-field rule has:</p>
+<pre data-lang="json"><code>{
+  &quot;field&quot;: &quot;subject_field&quot;,
+  &quot;operator&quot;: &quot;gte&quot;,
+  &quot;other_field&quot;: &quot;dependency_field&quot;,
+  &quot;message&quot;: &quot;Optional custom message&quot;
+}</code></pre>
+<p><code>message</code> is optional.</p>
+<p>No alternative rule syntax should be supported.</p>
+<p>Do not add aliases such as:</p>
+<pre data-lang="text"><code>&gt;=
+&lt;=
+==
+&gt;
+&lt;</code></pre>
+<p>The public operators are only the documented names.</p>
+<hr>
+<h3 id="approved-operators" class="doc-h"><a class="anchor" href="#approved-operators" aria-label="Link to this section">#</a>APPROVED OPERATORS</h3>
+<p>Exactly:</p>
+<pre data-lang="text"><code>eq
+neq
+gt
+gte
+lt
+lte</code></pre>
+<p>Operators are case-sensitive.</p>
+<hr>
+<h3 id="approved-rule-semantics" class="doc-h"><a class="anchor" href="#approved-rule-semantics" aria-label="Link to this section">#</a>APPROVED RULE SEMANTICS</h3>
+<p>For:</p>
+<pre data-lang="json"><code>{
+  &quot;field&quot;: &quot;end_date&quot;,
+  &quot;operator&quot;: &quot;gte&quot;,
+  &quot;other_field&quot;: &quot;start_date&quot;
+}</code></pre>
+<p>the semantic relationship is:</p>
+<pre data-lang="text"><code>record.end_date &gt;= record.start_date</code></pre>
+<p><code>field</code> is:</p>
+<ul><li>the left-hand operand;</li><li>the subject being constrained;</li><li>the field that receives the error.</li></ul>
+<p><code>other_field</code> is the dependency/right-hand operand.</p>
+<hr>
+<h3 id="approved-type-compatibility" class="doc-h"><a class="anchor" href="#approved-type-compatibility" aria-label="Link to this section">#</a>APPROVED TYPE COMPATIBILITY</h3>
+<p>Use semantic comparisons, never generic JavaScript coercion.</p>
+<h4 id="number" class="doc-h"><a class="anchor" href="#number" aria-label="Link to this section">#</a><code>number</code></h4>
+<p>Support:</p>
+<pre data-lang="text"><code>eq
+neq
+gt
+gte
+lt
+lte</code></pre>
+<p>Use numeric comparison.</p>
+<p>Do not coerce strings to numbers.</p>
+<hr>
+<h4 id="date" class="doc-h"><a class="anchor" href="#date" aria-label="Link to this section">#</a><code>date</code></h4>
+<p>Support:</p>
+<pre data-lang="text"><code>eq
+neq
+gt
+gte
+lt
+lte</code></pre>
+<p>A date cross-field comparison runs only if both operands have already passed the existing date validator.</p>
+<p>Compare accepted <code>YYYY-MM-DD</code> values deterministically.</p>
+<p>Phase 4 recommended lexical comparison because fixed-width ISO date strings preserve ordering and avoid timezone/normalization behavior.</p>
+<p>Do not silently repair the existing calendar-date validator.</p>
+<p>For example, if the current validator accepts:</p>
+<pre data-lang="text"><code>2027-02-30</code></pre>
+<p>that unrelated behavior remains unchanged.</p>
+<hr>
+<h4 id="text" class="doc-h"><a class="anchor" href="#text" aria-label="Link to this section">#</a><code>text</code></h4>
+<p>Support:</p>
+<pre data-lang="text"><code>eq
+neq</code></pre>
+<p>Exact, case-sensitive comparison.</p>
+<hr>
+<h4 id="long-text" class="doc-h"><a class="anchor" href="#long-text" aria-label="Link to this section">#</a><code>long_text</code></h4>
+<p>Support:</p>
+<pre data-lang="text"><code>eq
+neq</code></pre>
+<p>Exact, case-sensitive comparison.</p>
+<hr>
+<h4 id="choice" class="doc-h"><a class="anchor" href="#choice" aria-label="Link to this section">#</a><code>choice</code></h4>
+<p>Support:</p>
+<pre data-lang="text"><code>eq
+neq</code></pre>
+<p>Exact comparison.</p>
+<hr>
+<h4 id="boolean" class="doc-h"><a class="anchor" href="#boolean" aria-label="Link to this section">#</a><code>boolean</code></h4>
+<p>Support:</p>
+<pre data-lang="text"><code>eq
+neq</code></pre>
+<p>Strict Boolean comparison.</p>
+<hr>
+<h4 id="multi-choice" class="doc-h"><a class="anchor" href="#multi-choice" aria-label="Link to this section">#</a><code>multi_choice</code></h4>
+<p>Unsupported.</p>
+<hr>
+<h4 id="file" class="doc-h"><a class="anchor" href="#file" aria-label="Link to this section">#</a><code>file</code></h4>
+<p>Unsupported.</p>
+<hr>
+<h3 id="exact-type-rule" class="doc-h"><a class="anchor" href="#exact-type-rule" aria-label="Link to this section">#</a>EXACT TYPE RULE</h3>
+<p>For this implementation, preserve the approved Phase 4 decision:</p>
+<p>Both fields must have the <strong>same exact declared field type</strong>.</p>
+<p>Examples:</p>
+<pre data-lang="text"><code>number ↔ number     valid
+date ↔ date         valid
+text ↔ text         valid
+long_text ↔ long_text valid
+
+text ↔ long_text    invalid configuration
+number ↔ date       invalid configuration</code></pre>
+<p>Do not introduce &quot;compatible families&quot; during implementation.</p>
+<p>We deliberately prefer a small predictable contract over implicit semantic guessing.</p>
+<hr>
+<h3 id="configuration-validation" class="doc-h"><a class="anchor" href="#configuration-validation" aria-label="Link to this section">#</a>CONFIGURATION VALIDATION</h3>
+<p>Treat malformed cross-field definitions as developer/configuration errors.</p>
+<p>They must throw synchronous:</p>
+<pre data-lang="js"><code>TypeError</code></pre>
+<p>rather than returning:</p>
+<pre data-lang="js"><code>{
+  valid: false,
+  errors: [...]
+}</code></pre>
+<p>This distinction is important:</p>
+<pre data-lang="text"><code>Bad definition
+→ exception
+
+Bad record
+→ normal validation result</code></pre>
+<hr>
+<h3 id="rules-property-validation" class="doc-h"><a class="anchor" href="#rules-property-validation" aria-label="Link to this section">#</a><code>rules</code> PROPERTY VALIDATION</h3>
+<p>Backward compatibility:</p>
+<h5 id="missing-rules" class="doc-h"><a class="anchor" href="#missing-rules" aria-label="Link to this section">#</a>Missing <code>rules</code></h5>
+<p>Valid.</p>
+<p>Means no cross-field validation.</p>
+<h5 id="rules" class="doc-h"><a class="anchor" href="#rules" aria-label="Link to this section">#</a><code>rules: []</code></h5>
+<p>Valid.</p>
+<p>Means no cross-field validation.</p>
+<h5 id="existing-client-a-b-c-definitions" class="doc-h"><a class="anchor" href="#existing-client-a-b-c-definitions" aria-label="Link to this section">#</a>Existing Client A/B/C definitions</h5>
+<p>Must behave exactly as before.</p>
+<hr>
+<p>If <code>rules</code> exists but is not an array:</p>
+<pre data-lang="json"><code>{
+  &quot;rules&quot;: &quot;something&quot;
+}</code></pre>
+<p>throw <code>TypeError</code>.</p>
+<hr>
+<h3 id="each-rule-must-be-validated" class="doc-h"><a class="anchor" href="#each-rule-must-be-validated" aria-label="Link to this section">#</a>EACH RULE MUST BE VALIDATED</h3>
+<p>Each rule must be a normal object.</p>
+<p>Required keys:</p>
+<pre data-lang="text"><code>field
+operator
+other_field</code></pre>
+<p>Optional:</p>
+<pre data-lang="text"><code>message</code></pre>
+<p>No other keys are supported.</p>
+<p>Unknown rule properties should throw <code>TypeError</code>.</p>
+<hr>
+<h3 id="field-references" class="doc-h"><a class="anchor" href="#field-references" aria-label="Link to this section">#</a>FIELD REFERENCES</h3>
+<p><code>field</code> and <code>other_field</code> must be non-empty strings.</p>
+<p>They must exactly and case-sensitively match field <code>name</code> values in:</p>
+<pre data-lang="js"><code>definition.fields</code></pre>
+<p>They must refer to different fields.</p>
+<p>Example invalid rule:</p>
+<pre data-lang="json"><code>{
+  &quot;field&quot;: &quot;start_date&quot;,
+  &quot;operator&quot;: &quot;gte&quot;,
+  &quot;other_field&quot;: &quot;start_date&quot;
+}</code></pre>
+<p>Throw <code>TypeError</code>.</p>
+<hr>
+<p>If a rule references:</p>
+<pre data-lang="text"><code>unknown_field</code></pre>
+<p>throw <code>TypeError</code>.</p>
+<hr>
+<p>If duplicate field definitions make a referenced name ambiguous, throw <code>TypeError</code> for the rule configuration.</p>
+<p>Do not silently choose one.</p>
+<hr>
+<h3 id="unknown-operators" class="doc-h"><a class="anchor" href="#unknown-operators" aria-label="Link to this section">#</a>UNKNOWN OPERATORS</h3>
+<p>Example:</p>
+<pre data-lang="json"><code>{
+  &quot;field&quot;: &quot;a&quot;,
+  &quot;operator&quot;: &quot;approximately_equal&quot;,
+  &quot;other_field&quot;: &quot;b&quot;
+}</code></pre>
+<p>Throw <code>TypeError</code>.</p>
+<p>Do not ignore it.</p>
+<p>Do not convert it into a record validation error.</p>
+<hr>
+<h3 id="invalid-type-operator-combination" class="doc-h"><a class="anchor" href="#invalid-type-operator-combination" aria-label="Link to this section">#</a>INVALID TYPE/OPERATOR COMBINATION</h3>
+<p>Example:</p>
+<pre data-lang="text"><code>text gte text</code></pre>
+<p>or:</p>
+<pre data-lang="text"><code>file eq file</code></pre>
+<p>Throw <code>TypeError</code>.</p>
+<p>The configuration itself is invalid.</p>
+<hr>
+<h3 id="optional-custom-message" class="doc-h"><a class="anchor" href="#optional-custom-message" aria-label="Link to this section">#</a>OPTIONAL CUSTOM MESSAGE</h3>
+<p>Support:</p>
+<pre data-lang="json"><code>{
+  &quot;field&quot;: &quot;end_date&quot;,
+  &quot;operator&quot;: &quot;gte&quot;,
+  &quot;other_field&quot;: &quot;start_date&quot;,
+  &quot;message&quot;: &quot;End date must not be before start date&quot;
+}</code></pre>
+<p>If supplied:</p>
+<ul><li>it must be a non-empty string;</li><li>return it verbatim when the rule fails;</li><li>do not perform placeholder interpolation.</li></ul>
+<p>Invalid custom messages should cause <code>TypeError</code>.</p>
+<hr>
+<h3 id="default-error-messages" class="doc-h"><a class="anchor" href="#default-error-messages" aria-label="Link to this section">#</a>DEFAULT ERROR MESSAGES</h3>
+<p>When <code>message</code> is absent, generate a deterministic message.</p>
+<p>Use field display labels with the existing fallback:</p>
+<pre data-lang="js"><code>field.label || field.name</code></pre>
+<p>Use the Phase 4 templates as the contract.</p>
+<h4 id="generic-equality" class="doc-h"><a class="anchor" href="#generic-equality" aria-label="Link to this section">#</a>Generic equality</h4>
+<pre data-lang="text"><code>&lt;subject&gt; must equal &lt;dependency&gt;
+&lt;subject&gt; must not equal &lt;dependency&gt;</code></pre>
+<p>Use these for:</p>
+<ul><li>text;</li><li>long_text;</li><li>choice;</li><li>boolean;</li><li>numeric equality/inequality where appropriate.</li></ul>
+<hr>
+<h4 id="numbers" class="doc-h"><a class="anchor" href="#numbers" aria-label="Link to this section">#</a>Numbers</h4>
+<pre data-lang="text"><code>gt
+&lt;subject&gt; must be greater than &lt;dependency&gt;
+
+gte
+&lt;subject&gt; must be greater than or equal to &lt;dependency&gt;
+
+lt
+&lt;subject&gt; must be less than &lt;dependency&gt;
+
+lte
+&lt;subject&gt; must be less than or equal to &lt;dependency&gt;</code></pre>
+<hr>
+<h4 id="dates" class="doc-h"><a class="anchor" href="#dates" aria-label="Link to this section">#</a>Dates</h4>
+<pre data-lang="text"><code>eq
+&lt;subject&gt; must be the same date as &lt;dependency&gt;
+
+neq
+&lt;subject&gt; must not be the same date as &lt;dependency&gt;
+
+gt
+&lt;subject&gt; must be after &lt;dependency&gt;
+
+gte
+&lt;subject&gt; must be on or after &lt;dependency&gt;
+
+lt
+&lt;subject&gt; must be before &lt;dependency&gt;
+
+lte
+&lt;subject&gt; must be on or before &lt;dependency&gt;</code></pre>
+<hr>
+<h3 id="validation-execution-model" class="doc-h"><a class="anchor" href="#validation-execution-model" aria-label="Link to this section">#</a>VALIDATION EXECUTION MODEL</h3>
+<p>Implement the logic conceptually as:</p>
+<pre data-lang="text"><code>1. Validate cross-field rule configuration
+2. Run existing per-field validation
+3. Record which fields have field-level errors
+4. Evaluate eligible cross-field rules
+5. Append cross-field errors
+6. Return normal result</code></pre>
+<p>Be careful about compatibility with any existing early returns.</p>
+<p>Do not restructure more code than necessary.</p>
+<hr>
+<h3 id="missing-value-behavior" class="doc-h"><a class="anchor" href="#missing-value-behavior" aria-label="Link to this section">#</a>MISSING VALUE BEHAVIOR</h3>
+<p>Use the library's existing definition of &quot;absent.&quot;</p>
+<p>When either operand is absent:</p>
+<p><strong>skip the cross-field rule.</strong></p>
+<p>Presence is controlled by existing field validation.</p>
+<p>Example:</p>
+<pre data-lang="text"><code>required start_date missing
+end_date present</code></pre>
+<p>Expected:</p>
+<pre data-lang="text"><code>start_date required error</code></pre>
+<p>but NO additional:</p>
+<pre data-lang="text"><code>end_date must be on or after start_date</code></pre>
+<hr>
+<p>An optional missing dependency should not automatically become required simply because another field references it.</p>
+<hr>
+<h3 id="invalid-operand-behavior" class="doc-h"><a class="anchor" href="#invalid-operand-behavior" aria-label="Link to this section">#</a>INVALID OPERAND BEHAVIOR</h3>
+<p>If either field already has a field-level validation error:</p>
+<p><strong>skip the cross-field rule.</strong></p>
+<p>Example:</p>
+<pre data-lang="text"><code>start_date = &quot;banana&quot;
+end_date = &quot;2026-08-20&quot;</code></pre>
+<p>Expected:</p>
+<p>existing error on:</p>
+<pre data-lang="text"><code>start_date</code></pre>
+<p>Do NOT additionally create a cross-field error on <code>end_date</code>.</p>
+<p>This prevents cascading/confusing errors.</p>
+<hr>
+<h3 id="multiple-rules" class="doc-h"><a class="anchor" href="#multiple-rules" aria-label="Link to this section">#</a>MULTIPLE RULES</h3>
+<p>Support any number of independent rules.</p>
+<p>Example:</p>
+<pre data-lang="json"><code>{
+  &quot;rules&quot;: [
+    {
+      &quot;field&quot;: &quot;end_date&quot;,
+      &quot;operator&quot;: &quot;gte&quot;,
+      &quot;other_field&quot;: &quot;start_date&quot;
+    },
+    {
+      &quot;field&quot;: &quot;end_date&quot;,
+      &quot;operator&quot;: &quot;lte&quot;,
+      &quot;other_field&quot;: &quot;reporting_deadline&quot;
+    }
+  ]
+}</code></pre>
+<p>Rules run in array order.</p>
+<p>Do not short circuit.</p>
+<p>If both fail, append both errors in rule order.</p>
+<p>Do not implement AND/OR grouping.</p>
+<hr>
+<h3 id="error-order" class="doc-h"><a class="anchor" href="#error-order" aria-label="Link to this section">#</a>ERROR ORDER</h3>
+<p>Preserve the existing field-validation error order.</p>
+<p>Cross-field errors should be appended only after field-level validation completes.</p>
+<p>Therefore:</p>
+<pre data-lang="text"><code>field-level errors first
+cross-field errors afterward in rules array order</code></pre>
+<p>Document this.</p>
+<hr>
+<h3 id="implementation-style" class="doc-h"><a class="anchor" href="#implementation-style" aria-label="Link to this section">#</a>IMPLEMENTATION STYLE</h3>
+<p>Keep <code>lib/validate.js</code> small and readable.</p>
+<p>You may introduce private helper functions when they materially clarify:</p>
+<ul><li>rule configuration validation;</li><li>value comparison;</li><li>default message generation;</li><li>field indexing/error eligibility.</li></ul>
+<p>Do not introduce:</p>
+<ul><li>classes;</li><li>external libraries;</li><li>elaborate architecture;</li><li>generic expression evaluators;</li><li>schema-validation dependencies;</li><li>unnecessary abstraction layers.</li></ul>
+<p>This is a small CommonJS validation library.</p>
+<p>Respect its scale.</p>
+<hr>
+<h3 id="client-agnostic-requirement" class="doc-h"><a class="anchor" href="#client-agnostic-requirement" aria-label="Link to this section">#</a>CLIENT AGNOSTIC REQUIREMENT</h3>
+<p>Absolutely no Benoz client-specific identifiers inside <code>lib/</code>.</p>
+<p>Do not add:</p>
+<pre data-lang="text"><code>project_start_date
+project_end_date
+application
+referral
+clinic
+foundation
+city</code></pre>
+<p>or similar client-specific logic into reusable implementation code.</p>
+<p>Generic examples belong only in tests/README.</p>
+<hr>
+<h3 id="tests" class="doc-h"><a class="anchor" href="#tests" aria-label="Link to this section">#</a>TESTS</h3>
+<p>Implement focused tests based on the Phase 4 matrix.</p>
+<p>Prefer:</p>
+<pre data-lang="text"><code>test/cross-field-validation.test.js</code></pre>
+<p>unless the repository structure strongly suggests keeping everything in the existing test file.</p>
+<p>Do NOT alter the existing 16 tests unless unavoidable.</p>
+<p>If you alter one, explicitly explain why.</p>
+<hr>
+<h3 id="required-test-areas" class="doc-h"><a class="anchor" href="#required-test-areas" aria-label="Link to this section">#</a>REQUIRED TEST AREAS</h3>
+<h4 id="backward-compatibility" class="doc-h"><a class="anchor" href="#backward-compatibility" aria-label="Link to this section">#</a>Backward compatibility</h4>
+<p>The original:</p>
+<pre data-lang="text"><code>16 tests</code></pre>
+<p>must remain passing.</p>
+<hr>
+<h4 id="date-happy-path" class="doc-h"><a class="anchor" href="#date-happy-path" aria-label="Link to this section">#</a>Date happy path</h4>
+<p>Example:</p>
+<pre data-lang="text"><code>end_date &gt; start_date</code></pre>
+<p>with <code>gte</code>.</p>
+<p>Pass.</p>
+<hr>
+<h4 id="inclusive-boundary" class="doc-h"><a class="anchor" href="#inclusive-boundary" aria-label="Link to this section">#</a>Inclusive boundary</h4>
+<pre data-lang="text"><code>end_date == start_date</code></pre>
+<p>with <code>gte</code>.</p>
+<p>Pass.</p>
+<hr>
+<h4 id="date-violation" class="doc-h"><a class="anchor" href="#date-violation" aria-label="Link to this section">#</a>Date violation</h4>
+<pre data-lang="text"><code>end_date &lt; start_date</code></pre>
+<p>with <code>gte</code>.</p>
+<p>Fail on:</p>
+<pre data-lang="text"><code>end_date</code></pre>
+<hr>
+<h4 id="number-operators" class="doc-h"><a class="anchor" href="#number-operators" aria-label="Link to this section">#</a>Number operators</h4>
+<p>Use a table-driven test if clean.</p>
+<p>Cover:</p>
+<pre data-lang="text"><code>eq
+neq
+gt
+gte
+lt
+lte</code></pre>
+<p>including at least appropriate boundary behavior.</p>
+<hr>
+<h4 id="equality-supported-scalar" class="doc-h"><a class="anchor" href="#equality-supported-scalar" aria-label="Link to this section">#</a>Equality-supported scalar</h4>
+<p>Cover at least one:</p>
+<pre data-lang="text"><code>text eq text</code></pre>
+<p>and/or Boolean equality.</p>
+<hr>
+<h4 id="custom-message" class="doc-h"><a class="anchor" href="#custom-message" aria-label="Link to this section">#</a>Custom message</h4>
+<p>Confirm it is returned verbatim.</p>
+<hr>
+<h4 id="missing-optional-dependency" class="doc-h"><a class="anchor" href="#missing-optional-dependency" aria-label="Link to this section">#</a>Missing optional dependency</h4>
+<p>Rule skipped.</p>
+<hr>
+<h4 id="required-missing-dependency" class="doc-h"><a class="anchor" href="#required-missing-dependency" aria-label="Link to this section">#</a>Required missing dependency</h4>
+<p>Only existing required-field error.</p>
+<hr>
+<h4 id="missing-subject" class="doc-h"><a class="anchor" href="#missing-subject" aria-label="Link to this section">#</a>Missing subject</h4>
+<p>Rule skipped.</p>
+<hr>
+<h4 id="invalid-dependency-value" class="doc-h"><a class="anchor" href="#invalid-dependency-value" aria-label="Link to this section">#</a>Invalid dependency value</h4>
+<p>Existing field error only.</p>
+<p>No cascade.</p>
+<hr>
+<h4 id="invalid-subject-value" class="doc-h"><a class="anchor" href="#invalid-subject-value" aria-label="Link to this section">#</a>Invalid subject value</h4>
+<p>Existing field error only.</p>
+<hr>
+<h4 id="missing-field-reference" class="doc-h"><a class="anchor" href="#missing-field-reference" aria-label="Link to this section">#</a>Missing field reference</h4>
+<p><code>TypeError</code>.</p>
+<hr>
+<h4 id="unknown-operator" class="doc-h"><a class="anchor" href="#unknown-operator" aria-label="Link to this section">#</a>Unknown operator</h4>
+<p><code>TypeError</code>.</p>
+<hr>
+<h4 id="incompatible-type-operator" class="doc-h"><a class="anchor" href="#incompatible-type-operator" aria-label="Link to this section">#</a>Incompatible type/operator</h4>
+<p><code>TypeError</code>.</p>
+<p>Examples:</p>
+<pre data-lang="text"><code>number ↔ date
+text gte text</code></pre>
+<hr>
+<h4 id="invalid-rules" class="doc-h"><a class="anchor" href="#invalid-rules" aria-label="Link to this section">#</a>Invalid <code>rules</code></h4>
+<p>Examples such as:</p>
+<pre data-lang="text"><code>rules is not array
+rule isn't object
+missing key
+unknown rule property
+invalid message</code></pre>
+<p>Use table-driven tests if appropriate.</p>
+<p>Avoid repetitive noise.</p>
+<hr>
+<h4 id="same-field-on-both-sides" class="doc-h"><a class="anchor" href="#same-field-on-both-sides" aria-label="Link to this section">#</a>Same field on both sides</h4>
+<p><code>TypeError</code>.</p>
+<hr>
+<h4 id="multiple-rules-2" class="doc-h"><a class="anchor" href="#multiple-rules-2" aria-label="Link to this section">#</a>Multiple rules</h4>
+<p>Verify:</p>
+<ul><li>all eligible rules execute;</li><li>multiple failures may attach to the same subject;</li><li>error order follows array order.</li></ul>
+<hr>
+<h3 id="test-script-discovery" class="doc-h"><a class="anchor" href="#test-script-discovery" aria-label="Link to this section">#</a>TEST SCRIPT DISCOVERY</h3>
+<p>Phase 1 noted that <code>package.json</code> may currently only run one test file explicitly.</p>
+<p>Inspect the current <code>npm test</code> script.</p>
+<p>If creating:</p>
+<pre data-lang="text"><code>test/cross-field-validation.test.js</code></pre>
+<p>means it would not be discovered, make the <strong>smallest safe adjustment</strong> to <code>package.json</code> so:</p>
+<pre data-lang="bash"><code>npm test</code></pre>
+<p>runs both existing and new tests.</p>
+<p>Do not add dependencies.</p>
+<p>Document the script change.</p>
+<hr>
+<h3 id="readme-very-important" class="doc-h"><a class="anchor" href="#readme-very-important" aria-label="Link to this section">#</a>README — VERY IMPORTANT</h3>
+<p>After implementation and tests work, update the supplied README.</p>
+<p>The README is part of the API.</p>
+<p>Benoz.AI will write a hidden definition using it.</p>
+<p>The README must allow someone who has never seen our implementation to construct a correct cross-field rule without asking questions.</p>
+<hr>
+<h3 id="readme-structure" class="doc-h"><a class="anchor" href="#readme-structure" aria-label="Link to this section">#</a>README STRUCTURE</h3>
+<p>Preserve useful existing README material.</p>
+<p>Add a professional section such as:</p>
+<pre data-lang="markdown"><code>## Cross-field validation
+
+### Rule format
+
+### Example
+
+### Operators
+
+### Type compatibility
+
+### Error ownership
+
+### Missing values
+
+### Invalid field values
+
+### Invalid rule configuration
+
+### Custom error messages
+
+### Multiple rules
+
+### Execution order
+
+### Unsupported behavior</code></pre>
+<p>Adapt naturally to the existing README.</p>
+<p>Do not replace the whole supplied document simply to make it prettier.</p>
+<hr>
+<h3 id="readme-example" class="doc-h"><a class="anchor" href="#readme-example" aria-label="Link to this section">#</a>README EXAMPLE</h3>
+<p>Include at least one clear generic example:</p>
+<pre data-lang="json"><code>{
+  &quot;fields&quot;: [
+    {
+      &quot;name&quot;: &quot;start_date&quot;,
+      &quot;label&quot;: &quot;Start date&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    },
+    {
+      &quot;name&quot;: &quot;end_date&quot;,
+      &quot;label&quot;: &quot;End date&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    }
+  ],
+  &quot;rules&quot;: [
+    {
+      &quot;field&quot;: &quot;end_date&quot;,
+      &quot;operator&quot;: &quot;gte&quot;,
+      &quot;other_field&quot;: &quot;start_date&quot;
+    }
+  ]
+}</code></pre>
+<p>Explain explicitly:</p>
+<pre data-lang="text"><code>end_date &gt;= start_date</code></pre>
+<p>and:</p>
+<pre data-lang="text"><code>the error belongs to end_date</code></pre>
+<hr>
+<h3 id="document-the-hidden-test-contract-precisely" class="doc-h"><a class="anchor" href="#document-the-hidden-test-contract-precisely" aria-label="Link to this section">#</a>DOCUMENT THE HIDDEN-TEST CONTRACT PRECISELY</h3>
+<p>The README must explicitly state:</p>
+<h5 id="references" class="doc-h"><a class="anchor" href="#references" aria-label="Link to this section">#</a>References</h5>
+<p>Case-sensitive exact field-name references.</p>
+<h5 id="operators" class="doc-h"><a class="anchor" href="#operators" aria-label="Link to this section">#</a>Operators</h5>
+<p>Only:</p>
+<pre data-lang="text"><code>eq
+neq
+gt
+gte
+lt
+lte</code></pre>
+<h5 id="compatibility" class="doc-h"><a class="anchor" href="#compatibility" aria-label="Link to this section">#</a>Compatibility</h5>
+<p>Provide the actual type/operator matrix.</p>
+<h5 id="missing-values" class="doc-h"><a class="anchor" href="#missing-values" aria-label="Link to this section">#</a>Missing values</h5>
+<p>Cross-field rules skip when an operand is absent.</p>
+<h5 id="invalid-fields" class="doc-h"><a class="anchor" href="#invalid-fields" aria-label="Link to this section">#</a>Invalid fields</h5>
+<p>Rules skip if an operand already failed field validation.</p>
+<h5 id="configuration-failures" class="doc-h"><a class="anchor" href="#configuration-failures" aria-label="Link to this section">#</a>Configuration failures</h5>
+<p>Malformed rule definitions throw <code>TypeError</code>.</p>
+<h5 id="error-attachment" class="doc-h"><a class="anchor" href="#error-attachment" aria-label="Link to this section">#</a>Error attachment</h5>
+<p>One error attaches to <code>rule.field</code>.</p>
+<h5 id="custom-messages" class="doc-h"><a class="anchor" href="#custom-messages" aria-label="Link to this section">#</a>Custom messages</h5>
+<p>Optional and verbatim.</p>
+<h5 id="unsupported-cases" class="doc-h"><a class="anchor" href="#unsupported-cases" aria-label="Link to this section">#</a>Unsupported cases</h5>
+<p>Be explicit.</p>
+<hr>
+<h3 id="exception-message-policy" class="doc-h"><a class="anchor" href="#exception-message-policy" aria-label="Link to this section">#</a>EXCEPTION MESSAGE POLICY</h3>
+<p>Exception messages should identify the problem sufficiently for a developer.</p>
+<p>For example:</p>
+<pre data-lang="text"><code>rules[2] references unknown field &quot;foo&quot;</code></pre>
+<p>However:</p>
+<p>Do not make the <strong>exact exception wording</strong> part of the public compatibility promise unless necessary.</p>
+<p>Document:</p>
+<pre data-lang="text"><code>TypeError</code></pre>
+<p>and categories/conditions that cause it.</p>
+<p>This leaves room to improve diagnostics without breaking the API.</p>
+<hr>
+<h3 id="hidden-test-self-check" class="doc-h"><a class="anchor" href="#hidden-test-self-check" aria-label="Link to this section">#</a>HIDDEN-TEST SELF-CHECK</h3>
+<p>After implementation and README update:</p>
+<p>Pretend you are the evaluator.</p>
+<p>Do not look at implementation for this step initially.</p>
+<p>Read only the README and construct at least THREE fresh definitions:</p>
+<ol><li>date range;</li><li>numeric range;</li><li>equality confirmation.</li></ol>
+<p>Then run those definitions through the implementation.</p>
+<p>Verify their behavior matches what a reasonable README reader would predict.</p>
+<p>If README and implementation differ:</p>
+<p><strong>implementation does not automatically win.</strong></p>
+<p>Resolve the discrepancy deliberately.</p>
+<p>The documentation is part of the contract.</p>
+<hr>
+<h3 id="boundary-regression-check" class="doc-h"><a class="anchor" href="#boundary-regression-check" aria-label="Link to this section">#</a>BOUNDARY REGRESSION CHECK</h3>
+<p>Verify that this work did NOT alter unrelated Phase 1 behaviors.</p>
+<p>Do not intentionally &quot;fix&quot; them, but spot-check where useful:</p>
+<pre data-lang="text"><code>impossible calendar date behavior
+Infinity behavior
+duplicate multi-choice behavior
+null definition behavior
+invalid regex behavior</code></pre>
+<p>We are testing that Part 2 didn't accidentally expand scope.</p>
+<p>Do not create a huge regression suite for unrelated behavior.</p>
+<hr>
+<h3 id="quality-review" class="doc-h"><a class="anchor" href="#quality-review" aria-label="Link to this section">#</a>QUALITY REVIEW</h3>
+<p>Before considering Part 2 finished, manually review:</p>
+<h4 id="api" class="doc-h"><a class="anchor" href="#api" aria-label="Link to this section">#</a>API</h4>
+<p>Can I explain the rule in one sentence?</p>
+<h4 id="implementation" class="doc-h"><a class="anchor" href="#implementation" aria-label="Link to this section">#</a>Implementation</h4>
+<p>Is it the smallest reasonable change?</p>
+<h4 id="tests-2" class="doc-h"><a class="anchor" href="#tests-2" aria-label="Link to this section">#</a>Tests</h4>
+<p>Do they verify behavior rather than implementation details?</p>
+<h4 id="readme" class="doc-h"><a class="anchor" href="#readme" aria-label="Link to this section">#</a>README</h4>
+<p>Could another engineer write the hidden rule correctly?</p>
+<h4 id="error-semantics" class="doc-h"><a class="anchor" href="#error-semantics" aria-label="Link to this section">#</a>Error semantics</h4>
+<p>Are configuration failures clearly different from record validation failures?</p>
+<h4 id="missing-invalid-dependencies" class="doc-h"><a class="anchor" href="#missing-invalid-dependencies" aria-label="Link to this section">#</a>Missing/invalid dependencies</h4>
+<p>Do we avoid cascades?</p>
+<h4 id="client-independence" class="doc-h"><a class="anchor" href="#client-independence" aria-label="Link to this section">#</a>Client independence</h4>
+<p>Is <code>lib/</code> completely generic?</p>
+<h4 id="scope" class="doc-h"><a class="anchor" href="#scope" aria-label="Link to this section">#</a>Scope</h4>
+<p>Did we accidentally build a rules engine?</p>
+<hr>
+<h3 id="run-verification" class="doc-h"><a class="anchor" href="#run-verification" aria-label="Link to this section">#</a>RUN VERIFICATION</h3>
+<p>Run at minimum:</p>
+<pre data-lang="bash"><code>npm test</code></pre>
+<p>Report exact:</p>
+<pre data-lang="text"><code>total passing
+total failing</code></pre>
+<p>If you changed the test script, confirm that the original tests and cross-field tests are both actually executed.</p>
+<p>Since this project has no configured lint/build/typecheck, do not suddenly introduce those tools.</p>
+<p>Use syntax checks or built-in Node checks only if they add genuine value.</p>
+<hr>
+<h3 id="check-changes" class="doc-h"><a class="anchor" href="#check-changes" aria-label="Link to this section">#</a>CHECK CHANGES</h3>
+<p>After completion report exactly which files changed.</p>
+<p>Expected likely files:</p>
+<pre data-lang="text"><code>lib/validate.js
+test/cross-field-validation.test.js
+README.md
+package.json     # only if necessary
+private/AI-WORKLOG.md
+private/INTERVIEW-NOTES.md</code></pre>
+<p>Do not claim anything else was unchanged without verifying where practical.</p>
+<hr>
+<h3 id="interview-notes" class="doc-h"><a class="anchor" href="#interview-notes" aria-label="Link to this section">#</a>INTERVIEW NOTES</h3>
+<p>Update:</p>
+<pre data-lang="text"><code>private/INTERVIEW-NOTES.md</code></pre>
+<p>with the approved Part 2 design.</p>
+<p>Include:</p>
+<h4 id="why-top-level-rules" class="doc-h"><a class="anchor" href="#why-top-level-rules" aria-label="Link to this section">#</a>Why top-level rules</h4>
+<h4 id="why-not-field-attached-rules" class="doc-h"><a class="anchor" href="#why-not-field-attached-rules" aria-label="Link to this section">#</a>Why not field-attached rules</h4>
+<h4 id="why-not-generic-operands" class="doc-h"><a class="anchor" href="#why-not-generic-operands" aria-label="Link to this section">#</a>Why not generic operands</h4>
+<h4 id="why-six-operators" class="doc-h"><a class="anchor" href="#why-six-operators" aria-label="Link to this section">#</a>Why six operators</h4>
+<h4 id="why-typeerror-for-invalid-configuration" class="doc-h"><a class="anchor" href="#why-typeerror-for-invalid-configuration" aria-label="Link to this section">#</a>Why TypeError for invalid configuration</h4>
+<h4 id="why-skip-missing-operands" class="doc-h"><a class="anchor" href="#why-skip-missing-operands" aria-label="Link to this section">#</a>Why skip missing operands</h4>
+<h4 id="why-skip-invalid-operands" class="doc-h"><a class="anchor" href="#why-skip-invalid-operands" aria-label="Link to this section">#</a>Why skip invalid operands</h4>
+<h4 id="why-subject-owns-the-error" class="doc-h"><a class="anchor" href="#why-subject-owns-the-error" aria-label="Link to this section">#</a>Why subject owns the error</h4>
+<h4 id="why-no-type-coercion" class="doc-h"><a class="anchor" href="#why-no-type-coercion" aria-label="Link to this section">#</a>Why no type coercion</h4>
+<h4 id="what-i-intentionally-did-not-build" class="doc-h"><a class="anchor" href="#what-i-intentionally-did-not-build" aria-label="Link to this section">#</a>What I intentionally did not build</h4>
+<p>Keep this private.</p>
+<hr>
+<h3 id="ai-worklog" class="doc-h"><a class="anchor" href="#ai-worklog" aria-label="Link to this section">#</a>AI WORKLOG</h3>
+<p>Preserve the genuine design process already recorded.</p>
+<p>Add implementation observations only if genuine.</p>
+<p>Examples:</p>
+<ul><li>an approved design assumption turned out to be awkward in code;</li><li>a simpler implementation was discovered;</li><li>a proposed abstraction was rejected;</li><li>a test exposed ambiguity in README wording.</li></ul>
+<p>Do not manufacture issues.</p>
+<hr>
+<h3 id="final-response" class="doc-h"><a class="anchor" href="#final-response" aria-label="Link to this section">#</a>FINAL RESPONSE</h3>
+<p>Return:</p>
+<h3 id="part-2-implementation-complete" class="doc-h"><a class="anchor" href="#part-2-implementation-complete" aria-label="Link to this section">#</a>Part 2 Implementation Complete</h3>
+<h4 id="approved-api" class="doc-h"><a class="anchor" href="#approved-api" aria-label="Link to this section">#</a>Approved API</h4>
+<p>Short example.</p>
+<h4 id="files-changed" class="doc-h"><a class="anchor" href="#files-changed" aria-label="Link to this section">#</a>Files Changed</h4>
+<h4 id="implementation-summary" class="doc-h"><a class="anchor" href="#implementation-summary" aria-label="Link to this section">#</a>Implementation Summary</h4>
+<h4 id="tests-3" class="doc-h"><a class="anchor" href="#tests-3" aria-label="Link to this section">#</a>Tests</h4>
+<p>State exact:</p>
+<pre data-lang="text"><code>X passing
+Y failing</code></pre>
+<h4 id="original-tests" class="doc-h"><a class="anchor" href="#original-tests" aria-label="Link to this section">#</a>Original Tests</h4>
+<p>Confirm whether all 16 still pass.</p>
+<h4 id="new-tests" class="doc-h"><a class="anchor" href="#new-tests" aria-label="Link to this section">#</a>New Tests</h4>
+<p>Number and categories.</p>
+<h4 id="hidden-test-simulation" class="doc-h"><a class="anchor" href="#hidden-test-simulation" aria-label="Link to this section">#</a>Hidden-Test Simulation</h4>
+<p>Summarize the fresh README-only simulations.</p>
+<h4 id="readme-contract" class="doc-h"><a class="anchor" href="#readme-contract" aria-label="Link to this section">#</a>README Contract</h4>
+<p>Confirm all required semantics are documented.</p>
+<h4 id="backward-compatibility-2" class="doc-h"><a class="anchor" href="#backward-compatibility-2" aria-label="Link to this section">#</a>Backward Compatibility</h4>
+<h4 id="intentional-non-goals" class="doc-h"><a class="anchor" href="#intentional-non-goals" aria-label="Link to this section">#</a>Intentional Non-Goals</h4>
+<h4 id="ai-worklog-update" class="doc-h"><a class="anchor" href="#ai-worklog-update" aria-label="Link to this section">#</a>AI Worklog Update</h4>
+<h4 id="remaining-concerns" class="doc-h"><a class="anchor" href="#remaining-concerns" aria-label="Link to this section">#</a>Remaining Concerns</h4>
+<h4 id="recommended-next-phase" class="doc-h"><a class="anchor" href="#recommended-next-phase" aria-label="Link to this section">#</a>Recommended Next Phase</h4>
+<p>The recommended next phase should be:</p>
+<p><strong>Claude Independent Review #1 — Part 1 + Part 2</strong></p>
+<p>Do not invoke Claude yourself.</p>
+<hr>
+<h3 id="stop-condition" class="doc-h"><a class="anchor" href="#stop-condition" aria-label="Link to this section">#</a>STOP CONDITION</h3>
+<p>When implementation, tests, README and verification are complete:</p>
+<p>STOP.</p>
+<p>Do not start Part 3.</p>
+<p>Do not invoke Claude.</p>
+<p>Do not build the submission site.</p>
+<p>Do not deploy or push.</p>
+<p>Wait for my approval.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-5-codex-commentary-2">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-5-codex-commentary-2" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>I’ll implement the approved contract in one narrow second validation phase, add a separate test file, make the minimum test-discovery script change, and then document the exact public contract. I’ll preserve the existing validators byte-for-byte where practical and verify unrelated boundary behavior separately rather than “fixing” it.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-5-codex-commentary-3">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-5-codex-commentary-3" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The implementation and focused test file are now added. The existing validation loop remains intact; the new code validates rule configuration first, records ordinary field errors, then appends eligible rule errors. I’m running the full test command now before documenting the contract, so any mismatch is resolved in code/tests rather than papered over in the README.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-5-codex-commentary-4">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-5-codex-commentary-4" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The full suite passes: 34/34, consisting of the untouched original 16 plus 18 new cross-field tests. The approved contract mapped cleanly to the existing library; no alternative syntax, coercion, dependency, class, or expression abstraction was needed. I’m now replacing only the README’s former task section with the implemented public API contract and updating its test-discovery description.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-5-codex-commentary-5">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-5-codex-commentary-5" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The README now documents the implemented contract, including strict rule configuration, the full type/operator matrix, skip semantics, deterministic messages, execution order, and explicit non-goals. I’m entering evaluator mode next: construct three fresh definitions from the README contract, run them, then spot-check that the known out-of-scope validator behaviors did not change.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-5-codex-commentary-6">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-5-codex-commentary-6" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The three fresh README-based definitions behaved exactly as documented, and the boundary checks confirm the unrelated quirks remain unchanged. One useful implementation observation emerged: deriving the invalid-field set from the existing field errors avoided changing validator return types or refactoring the original validation functions. I’ll record that real simplification and add the approved Part 2 rationale to private interview notes.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-5-codex-commentary-7">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-5-codex-commentary-7" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The quality review found one coverage gap—not an implementation bug: the README makes all generated message templates contractual, while tests asserted only the date <code>gte</code> template and custom-message behavior. I’m adding one compact table-driven test for every number/date default template, plus the missing non-string custom-message case.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-5-codex-commentary-8">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-5-codex-commentary-8" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>A manual implementation review found stale internal documentation in <code>lib/validate.js</code>: its comments still said “per-field validation only.” I’m correcting those comments so the code does not contradict the README; no behavior is changing.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-5-codex-commentary-9">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-5-codex-commentary-9" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The implementation, tests, README, and private rationale now align. I’m doing the final verification pass: full suite, syntax, original-test isolation, client-independence scan, protected source hashes, and the exact set of files modified today.</p>
+  </div>
+</article>
+<article class="msg msg--assistant" id="turn-5-codex-final-response-10">
+  <header class="msg-head">
+    <span class="msg-role">Codex — final response</span>
+    <a class="msg-anchor" href="#turn-5-codex-final-response-10" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<h3 id="part-2-implementation-complete-2" class="doc-h"><a class="anchor" href="#part-2-implementation-complete-2" aria-label="Link to this section">#</a>Part 2 Implementation Complete</h3>
+<p>The approved cross-field validation design is implemented and documented. The official Part 2 source was rechecked before implementation. :codex-file-citation{path=&quot;[REDACTED — local workspace path]/Benoz.AI - Take-Home Exercise.docx.pdf&quot; purpose=&quot;source&quot;}</p>
+<h4 id="approved-api-2" class="doc-h"><a class="anchor" href="#approved-api-2" aria-label="Link to this section">#</a>Approved API</h4>
+<pre data-lang="json"><code>{
+  &quot;rules&quot;: [
+    {
+      &quot;field&quot;: &quot;end_date&quot;,
+      &quot;operator&quot;: &quot;gte&quot;,
+      &quot;other_field&quot;: &quot;start_date&quot;
+    }
+  ]
+}</code></pre>
+<p>This means <code>end_date &gt;= start_date</code>; failures attach to <code>end_date</code>.</p>
+<h4 id="files-changed-2" class="doc-h"><a class="anchor" href="#files-changed-2" aria-label="Link to this section">#</a>Files Changed</h4>
+<ul><li>lib/validate.js [REDACTED — local file link]</li><li>cross-field-validation.test.js [REDACTED — local file link]</li><li>README.md [REDACTED — local file link]</li><li>package.json [REDACTED — local file link]</li><li>AI-WORKLOG.md [REDACTED — private local file link]</li><li>INTERVIEW-NOTES.md [REDACTED — private local file link]</li></ul>
+<p><code>package.json</code> now runs <code>node --test test/*.test.js</code>, discovering both test files without dependencies.</p>
+<h4 id="implementation-summary-2" class="doc-h"><a class="anchor" href="#implementation-summary-2" aria-label="Link to this section">#</a>Implementation Summary</h4>
+<ul><li>Validates rule configuration before record data.</li><li>Supports exactly <code>eq</code>, <code>neq</code>, <code>gt</code>, <code>gte</code>, <code>lt</code>, and <code>lte</code>.</li><li>Enforces exact declared-type compatibility.</li><li>Uses numeric, lexical ISO-date, and strict scalar comparisons.</li><li>Runs cross-field validation after existing field validation.</li><li>Skips missing or field-invalid operands.</li><li>Appends rule errors in declaration order.</li><li>Throws synchronous <code>TypeError</code> for malformed rules.</li><li>Preserves the existing exports and error shape.</li><li>Contains no client-specific identifiers.</li></ul>
+<h4 id="tests-4" class="doc-h"><a class="anchor" href="#tests-4" aria-label="Link to this section">#</a>Tests</h4>
+<pre data-lang="text"><code>35 passing
+0 failing</code></pre>
+<p>Syntax checks also passed for the validator and both test files.</p>
+<h4 id="original-tests-2" class="doc-h"><a class="anchor" href="#original-tests-2" aria-label="Link to this section">#</a>Original Tests</h4>
+<p>All original <strong>16/16</strong> tests pass. The supplied test file and client fixtures retained their original hashes.</p>
+<h4 id="new-tests-2" class="doc-h"><a class="anchor" href="#new-tests-2" aria-label="Link to this section">#</a>New Tests</h4>
+<p><strong>19/19</strong> new tests pass, covering:</p>
+<ul><li>date ordering and inclusive boundaries;</li><li>all six number operators;</li><li>scalar equality;</li><li>every documented number/date message template;</li><li>custom messages;</li><li>missing and invalid operands;</li><li>field-reference and operator errors;</li><li>type incompatibility;</li><li>malformed rules;</li><li>self-references and duplicate field names;</li><li>multiple rules and deterministic error ordering;</li><li>empty/missing-rule backward compatibility.</li></ul>
+<h4 id="hidden-test-simulation-2" class="doc-h"><a class="anchor" href="#hidden-test-simulation-2" aria-label="Link to this section">#</a>Hidden-Test Simulation</h4>
+<p>Three fresh definitions constructed from the README behaved as documented:</p>
+<ul><li>Date range: invalid closing date produced one error on the closing field.</li><li>Numeric range: equal inclusive bounds passed.</li><li>Text confirmation: case-sensitive mismatch returned the custom message verbatim.</li></ul>
+<h4 id="readme-contract-2" class="doc-h"><a class="anchor" href="#readme-contract-2" aria-label="Link to this section">#</a>README Contract</h4>
+<p>The README now specifies:</p>
+<ul><li>exact syntax and field-reference semantics;</li><li>operator vocabulary and type matrix;</li><li>error ownership;</li><li>missing/invalid operand behavior;</li><li><code>TypeError</code> configuration failures;</li><li>default and custom messages;</li><li>multiple-rule execution and error order;</li><li>backward compatibility;</li><li>explicit unsupported behavior.</li></ul>
+<h4 id="backward-compatibility-3" class="doc-h"><a class="anchor" href="#backward-compatibility-3" aria-label="Link to this section">#</a>Backward Compatibility</h4>
+<p>Definitions without <code>rules</code>, or with <code>rules: []</code>, retain existing behavior. Boundary checks confirmed that unrelated known behaviors—including impossible dates, <code>Infinity</code>, duplicate multi-choice values, null definitions, and invalid regex exceptions—were not changed.</p>
+<h4 id="intentional-non-goals-2" class="doc-h"><a class="anchor" href="#intentional-non-goals-2" aria-label="Link to this section">#</a>Intentional Non-Goals</h4>
+<p>No expression language, literals, arithmetic, coercion, type families, conditions, Boolean grouping, array/file comparisons, callbacks, asynchronous rules, TypeScript conversion, dependencies, or unrelated validator fixes were added.</p>
+<h4 id="ai-worklog-update-2" class="doc-h"><a class="anchor" href="#ai-worklog-update-2" aria-label="Link to this section">#</a>AI Worklog Update</h4>
+<p>The worklog records that the invalid-field set could be derived from existing field errors, avoiding a broader refactor of every validator’s return contract. The approved API required no design change.</p>
+<p>Private interview notes now capture the rationale behind error ownership, skipping missing/invalid operands, strict types, <code>TypeError</code>, six operators, and the deliberately narrow scope.</p>
+<h4 id="remaining-concerns-2" class="doc-h"><a class="anchor" href="#remaining-concerns-2" aria-label="Link to this section">#</a>Remaining Concerns</h4>
+<p>The existing date validator can accept impossible calendar dates; accepted date strings are therefore compared lexically as documented. Exact <code>TypeError</code> wording remains diagnostic rather than a compatibility promise.</p>
+<p>No Git repository exists. Nothing was committed, pushed, deployed, or published.</p>
+<h4 id="recommended-next-phase-2" class="doc-h"><a class="anchor" href="#recommended-next-phase-2" aria-label="Link to this section">#</a>Recommended Next Phase</h4>
+<p><strong>Claude Independent Review #1 — Part 1 + Part 2</strong></p>
+<p>Not invoked.</p>
+  </div>
+</article></section>
+<section class="turn"><h2 class="turn-head" id="turn-6"><span>Turn 6</span></h2>
+<article class="msg msg--user" id="turn-6-user-1">
+  <header class="msg-head">
+    <span class="msg-role">User</span>
+    <a class="msg-anchor" href="#turn-6-user-1" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<h3 id="benoz-ai-take-home-codex-revision-pass-1-after-claude-indepe" class="doc-h"><a class="anchor" href="#benoz-ai-take-home-codex-revision-pass-1-after-claude-indepe" aria-label="Link to this section">#</a>Benoz.AI Take-Home — Codex Revision Pass #1 After Claude Independent Review</h3>
+<p>Continue from the completed Benoz.AI take-home work.</p>
+<p>Completed so far:</p>
+<ul><li>Part 1 architecture review;</li><li>Part 2 cross-field API design;</li><li>Part 2 implementation;</li><li>35-test suite;</li><li>README contract;</li><li>Claude Independent Review #1.</li></ul>
+<p>Claude acted as an independent read-only reviewer.</p>
+<p>We are now evaluating its findings rather than accepting them automatically.</p>
+<p>This phase is a <strong>small corrective pass</strong>, not a redesign.</p>
+<hr>
+<h3 id="current-quality-baseline" class="doc-h"><a class="anchor" href="#current-quality-baseline" aria-label="Link to this section">#</a>CURRENT QUALITY BASELINE</h3>
+<p>Claude independently reported:</p>
+<pre data-lang="text"><code>35 passing
+0 failing</code></pre>
+<p>with:</p>
+<pre data-lang="text"><code>16 original tests
+19 cross-field tests</code></pre>
+<p>It also reconstructed unseen definitions from the README and found implementation behavior matched its predictions.</p>
+<p>Therefore:</p>
+<p><strong>Do not redesign Part 2.</strong></p>
+<p>The approved rule format remains:</p>
+<pre data-lang="json"><code>{
+  &quot;rules&quot;: [
+    {
+      &quot;field&quot;: &quot;end_date&quot;,
+      &quot;operator&quot;: &quot;gte&quot;,
+      &quot;other_field&quot;: &quot;start_date&quot;
+    }
+  ]
+}</code></pre>
+<p>Keep:</p>
+<ul><li>top-level <code>rules</code>;</li><li><code>field</code> as subject/error owner;</li><li><code>other_field</code> as dependency;</li><li><code>eq</code>, <code>neq</code>, <code>gt</code>, <code>gte</code>, <code>lt</code>, <code>lte</code>;</li><li>exact declared-type matching;</li><li><code>TypeError</code> for malformed configuration;</li><li>skip-on-missing;</li><li>skip-on-field-invalid;</li><li>lexical comparison for accepted <code>YYYY-MM-DD</code>;</li><li>no coercion;</li><li>no DSL;</li><li>no expression language;</li><li>current client-agnostic design.</li></ul>
+<hr>
+<h3 id="source-of-review" class="doc-h"><a class="anchor" href="#source-of-review" aria-label="Link to this section">#</a>SOURCE OF REVIEW</h3>
+<p>Claude's review identified:</p>
+<ol><li>stale README wording saying cross-field validation does not yet exist;</li><li>possible omission of the centralized <code>audit_log</code> problem from Part 1;</li><li>overly generic RLS / &quot;suspicious but reasonable&quot; reasoning;</li><li><code>rules: undefined</code> currently throwing;</li><li>lack of one integration-style cross-field test using a supplied client fixture;</li><li>need to explicitly note why <code>package.json</code> changed.</li></ol>
+<p>It also listed several OPTIONAL implementation/test nits.</p>
+<p>We are <strong>not automatically accepting all of these</strong>.</p>
+<hr>
+<h3 id="step-1-establish-baseline-again" class="doc-h"><a class="anchor" href="#step-1-establish-baseline-again" aria-label="Link to this section">#</a>STEP 1 — ESTABLISH BASELINE AGAIN</h3>
+<p>Before modifying anything:</p>
+<pre data-lang="bash"><code>npm test</code></pre>
+<p>Record exact results.</p>
+<p>Inspect the current changed files and preserve copies/hashes where useful.</p>
+<p>Do not modify employer-provided client fixtures or original tests.</p>
+<hr>
+<h3 id="step-2-fix-the-readme-contradiction" class="doc-h"><a class="anchor" href="#step-2-fix-the-readme-contradiction" aria-label="Link to this section">#</a>STEP 2 — FIX THE README CONTRADICTION</h3>
+<p>Claude found that the README still contains old starter wording equivalent to:</p>
+<blockquote><p>What the library does not do yet: cross-field validation.</p></blockquote>
+<p>That is now false.</p>
+<p>Locate the exact stale paragraph.</p>
+<p>Rewrite it minimally so the README accurately describes the current implementation.</p>
+<p>Do not merely append another clarification.</p>
+<p>The document should read coherently from top to bottom as a finished README.</p>
+<p>Also update the README's repository/file tree if it currently omits:</p>
+<pre data-lang="text"><code>test/cross-field-validation.test.js</code></pre>
+<p>Preserve useful starter context.</p>
+<hr>
+<h3 id="step-3-resolve-rules-undefined" class="doc-h"><a class="anchor" href="#step-3-resolve-rules-undefined" aria-label="Link to this section">#</a>STEP 3 — RESOLVE <code>rules: undefined</code></h3>
+<p>Claude recommended documenting that:</p>
+<pre data-lang="js"><code>rules: undefined</code></pre>
+<p>throws.</p>
+<p>I am <strong>rejecting that recommendation</strong>.</p>
+<p>Change the implementation so these two inputs are equivalent:</p>
+<pre data-lang="js"><code>{ fields }</code></pre>
+<p>and:</p>
+<pre data-lang="js"><code>{ fields, rules: undefined }</code></pre>
+<p>Both should mean:</p>
+<blockquote><p>no cross-field rules</p></blockquote>
+<p>and preserve normal per-field validation.</p>
+<p>Rationale:</p>
+<p>A JavaScript integration may copy:</p>
+<pre data-lang="js"><code>rules: definition.rules</code></pre>
+<p>from a parsed JSON document where the property is absent.</p>
+<p>Throwing in that common shape is unnecessary surprise.</p>
+<p>This does not mean:</p>
+<pre data-lang="js"><code>rules: null
+rules: {}
+rules: &quot;...&quot;</code></pre>
+<p>should be accepted.</p>
+<p>Those must remain malformed configuration and throw <code>TypeError</code>.</p>
+<hr>
+<h3 id="step-4-add-tests-for-that-decision" class="doc-h"><a class="anchor" href="#step-4-add-tests-for-that-decision" aria-label="Link to this section">#</a>STEP 4 — ADD TESTS FOR THAT DECISION</h3>
+<p>Add focused tests proving:</p>
+<pre data-lang="text"><code>rules omitted       -&gt; normal
+rules: undefined    -&gt; normal
+rules: []           -&gt; normal
+
+rules: null         -&gt; TypeError
+rules: {}           -&gt; TypeError
+rules: &quot;...&quot;        -&gt; TypeError</code></pre>
+<p>Use existing test style.</p>
+<p>Do not inflate test count unnecessarily if some cases already exist.</p>
+<hr>
+<h3 id="step-5-add-one-realistic-supplied-fixture-test" class="doc-h"><a class="anchor" href="#step-5-add-one-realistic-supplied-fixture-test" aria-label="Link to this section">#</a>STEP 5 — ADD ONE REALISTIC SUPPLIED-FIXTURE TEST</h3>
+<p>Claude noted that every cross-field test currently constructs synthetic definitions.</p>
+<p>Add exactly one integration-style test based on the supplied Client B definition.</p>
+<p>Do NOT modify the fixture file.</p>
+<p>Load:</p>
+<pre data-lang="text"><code>clients/client-b-grant-foundation.json</code></pre>
+<p>then create an in-memory copy such as:</p>
+<pre data-lang="js"><code>{
+  ...clientB,
+  rules: [
+    {
+      field: &quot;project_end_date&quot;,
+      operator: &quot;gte&quot;,
+      other_field: &quot;project_start_date&quot;
+    }
+  ]
+}</code></pre>
+<p>Use a complete realistic Client B record containing all required fields.</p>
+<p>Verify at least:</p>
+<pre data-lang="text"><code>project_end_date before project_start_date
+→ invalid
+→ error belongs to project_end_date</code></pre>
+<p>The purpose is not new functionality.</p>
+<p>It demonstrates that the generic rule format operates correctly inside a supplied real-world definition.</p>
+<p>Do not add client-specific code to <code>lib/</code>.</p>
+<hr>
+<h3 id="step-6-re-evaluate-the-audit-log-from-primary-source" class="doc-h"><a class="anchor" href="#step-6-re-evaluate-the-audit-log-from-primary-source" aria-label="Link to this section">#</a>STEP 6 — RE-EVALUATE THE AUDIT LOG FROM PRIMARY SOURCE</h3>
+<p>This is important.</p>
+<p>Claude argues that Part 1 incorrectly omitted the centralized <code>audit_log</code>.</p>
+<p>Do NOT accept Claude's prose as evidence.</p>
+<p>Re-read:</p>
+<pre data-lang="text"><code>review/handover-architecture.md</code></pre>
+<p>and verify exactly:</p>
+<ul><li>audit log schema;</li><li>whether <code>tenant_id</code> is absent;</li><li>whether RLS is absent;</li><li>what <code>payload</code> contains or is described as containing;</li><li>the contractor's stated reasoning;</li><li>how <code>logAction()</code> is used;</li><li>whether sensitive Client C data can reasonably enter the log.</li></ul>
+<p>Also re-read the relevant Client C requirement.</p>
+<hr>
+<h3 id="step-7-decide-whether-audit-log-belongs-in-final-part-1" class="doc-h"><a class="anchor" href="#step-7-decide-whether-audit-log-belongs-in-final-part-1" aria-label="Link to this section">#</a>STEP 7 — DECIDE WHETHER AUDIT LOG BELONGS IN FINAL PART 1</h3>
+<p>After source verification classify Claude's claim:</p>
+<h4 id="accept" class="doc-h"><a class="anchor" href="#accept" aria-label="Link to this section">#</a>ACCEPT</h4>
+<p>The handover explicitly provides enough evidence for a concrete defect.</p>
+<h4 id="accept-with-narrower-wording" class="doc-h"><a class="anchor" href="#accept-with-narrower-wording" aria-label="Link to this section">#</a>ACCEPT WITH NARROWER WORDING</h4>
+<p>The architectural concern is real but Claude overstated specific payload/data-leak behavior.</p>
+<h4 id="reject" class="doc-h"><a class="anchor" href="#reject" aria-label="Link to this section">#</a>REJECT</h4>
+<p>The source does not support it strongly enough.</p>
+<p>Show your reasoning before modifying <code>architecture-review.md</code>.</p>
+<p>If accepted:</p>
+<p>Prefer incorporating the issue <strong>without increasing Part 1's total size materially</strong>.</p>
+<p>The public review currently has four main findings and is already around the desired maximum length.</p>
+<p>Therefore do not simply append a fifth long section.</p>
+<p>Evaluate whether the current:</p>
+<blockquote><p>Shared deployment conflicts with Client C's infrastructure requirement</p></blockquote>
+<p>can be compressed into a shorter bridge to Part 3, freeing space for a more discovery-oriented audit-log finding.</p>
+<p>The Part 3 isolation premise should not dominate Part 1 if it merely repeats the exercise.</p>
+<hr>
+<h3 id="step-8-audit-log-severity" class="doc-h"><a class="anchor" href="#step-8-audit-log-severity" aria-label="Link to this section">#</a>STEP 8 — AUDIT-LOG SEVERITY</h3>
+<p>If the issue is accepted, independently assign severity using Benoz.AI's definitions.</p>
+<p>Do not call it Critical simply because Claude did.</p>
+<p>For Critical, identify the exact:</p>
+<pre data-lang="text"><code>data loss
+data leak
+or legal exposure</code></pre>
+<p>supported by the handover.</p>
+<p>Be especially careful about claiming:</p>
+<blockquote><p>audit payload contains full records</p></blockquote>
+<p>unless the source actually establishes that.</p>
+<p>If the source only establishes centralized, non-tenant-scoped audit storage with potentially sensitive payload, phrase the issue accordingly.</p>
+<p>No invented legal requirements.</p>
+<hr>
+<h3 id="step-9-re-evaluate-the-rls-language" class="doc-h"><a class="anchor" href="#step-9-re-evaluate-the-rls-language" aria-label="Link to this section">#</a>STEP 9 — RE-EVALUATE THE RLS LANGUAGE</h3>
+<p>Claude correctly challenged the current phrase:</p>
+<blockquote><p>correctly implemented RLS provides a strong logical tenant boundary</p></blockquote>
+<p>because it can sound as though we have endorsed the implementation without discussing how tenant context is actually set.</p>
+<p>Re-read the exact RLS and <code>setTenantContext</code> snippets.</p>
+<p>Do NOT automatically turn <code>setTenantContext</code> into a Critical finding.</p>
+<p>Separate:</p>
+<h5 id="confirmed-behavior" class="doc-h"><a class="anchor" href="#confirmed-behavior" aria-label="Link to this section">#</a>Confirmed behavior</h5>
+<p>What the handover literally shows.</p>
+<h5 id="plausible-failure" class="doc-h"><a class="anchor" href="#plausible-failure" aria-label="Link to this section">#</a>Plausible failure</h5>
+<p>What could happen under pooling.</p>
+<h5 id="unproven-assumption" class="doc-h"><a class="anchor" href="#unproven-assumption" aria-label="Link to this section">#</a>Unproven assumption</h5>
+<p>What requires unseen request/job behavior.</p>
+<p>We previously rejected an overconfident tenant-leak claim because the evidence was incomplete.</p>
+<p>Preserve that discipline.</p>
+<hr>
+<h3 id="step-10-improve-suspicious-but-reasonable" class="doc-h"><a class="anchor" href="#step-10-improve-suspicious-but-reasonable" aria-label="Link to this section">#</a>STEP 10 — IMPROVE &quot;SUSPICIOUS BUT REASONABLE&quot;</h3>
+<p>Replace generic observations with evidence-grounded ones where possible.</p>
+<p>Claude suggested checking the RLS policy's lack of explicit:</p>
+<pre data-lang="sql"><code>WITH CHECK</code></pre>
+<p>and determining whether PostgreSQL's default behavior makes that safe.</p>
+<p>Only include this if you can support it confidently from PostgreSQL behavior already known/verified in the working environment or authoritative local documentation.</p>
+<p>Do not browse external sources unless necessary and allowed.</p>
+<p>Potential structure:</p>
+<h5 id="looks-suspicious" class="doc-h"><a class="anchor" href="#looks-suspicious" aria-label="Link to this section">#</a>Looks suspicious</h5>
+<p>RLS policy has <code>USING</code> without explicit <code>WITH CHECK</code>.</p>
+<h5 id="why-it-may-actually-be-okay" class="doc-h"><a class="anchor" href="#why-it-may-actually-be-okay" aria-label="Link to this section">#</a>Why it may actually be okay</h5>
+<p>For applicable commands, omitted <code>WITH CHECK</code> can inherit the <code>USING</code> expression.</p>
+<h5 id="what-i-would-still-verify" class="doc-h"><a class="anchor" href="#what-i-would-still-verify" aria-label="Link to this section">#</a>What I would still verify</h5>
+<p>Table ownership / <code>FORCE ROW LEVEL SECURITY</code>, policy command scope, integration tests.</p>
+<p>If you cannot verify this reliably, do not use it.</p>
+<hr>
+<p>Also tighten the PostgreSQL-volume point.</p>
+<p>Instead of arguing against an imaginary distributed-database proposal, ground it in the stated load:</p>
+<pre data-lang="text"><code>~4,000 reports in one afternoon</code></pre>
+<p>Explain why that alone does not justify a more complicated persistence/search architecture.</p>
+<hr>
+<p>Ground JSONB reasoning directly in the brief's constant client field changes and unknown fourth client.</p>
+<hr>
+<h3 id="step-11-client-c-infrastructure-finding" class="doc-h"><a class="anchor" href="#step-11-client-c-infrastructure-finding" aria-label="Link to this section">#</a>STEP 11 — CLIENT C INFRASTRUCTURE FINDING</h3>
+<p>If audit log is promoted:</p>
+<p>compress the current infrastructure finding.</p>
+<p>Retain the useful distinction:</p>
+<pre data-lang="text"><code>dedicated ≠ necessarily under clinic control</code></pre>
+<p>A database physically separated inside Benoz-controlled infrastructure does not automatically satisfy:</p>
+<pre data-lang="text"><code>infrastructure under the clinic's own control</code></pre>
+<p>Do not choose the final Part 3 architecture here.</p>
+<p>This should become a concise bridge, not a Part 3 essay.</p>
+<hr>
+<h3 id="step-12-fix-first-decision" class="doc-h"><a class="anchor" href="#step-12-fix-first-decision" aria-label="Link to this section">#</a>STEP 12 — FIX-FIRST DECISION</h3>
+<p>Do NOT automatically change:</p>
+<p><strong>Fix sensitive field exposure first.</strong></p>
+<p>Claude challenged it and still concluded it holds.</p>
+<p>Strengthen the explanation.</p>
+<p>The argument should be approximately:</p>
+<ul><li>direct sensitive-data exposure;</li><li>narrowly remediable immediately;</li><li>required regardless of eventual platform isolation choice;</li><li>can be contained without waiting for Part 3 strategy.</li></ul>
+<p>If audit log becomes another Critical issue, briefly explain why it is still second:</p>
+<p>for example:</p>
+<ul><li>audit-log remediation requires schema migration/backfill/redaction-policy work;</li><li>field projection is immediately deployable;</li><li>both remain important.</li></ul>
+<p>Do not write a ranking essay.</p>
+<hr>
+<h3 id="step-13-notification-timing-discrepancy" class="doc-h"><a class="anchor" href="#step-13-notification-timing-discrepancy" aria-label="Link to this section">#</a>STEP 13 — NOTIFICATION TIMING DISCREPANCY</h3>
+<p>Claude noticed that the brief says Client A receives SMS:</p>
+<pre data-lang="text"><code>on Resolved</code></pre>
+<p>while the handover's shown create path may send SMS immediately after creation.</p>
+<p>Verify this against the primary sources.</p>
+<p>If genuine, decide whether it strengthens the existing notification finding.</p>
+<p>Do not create another major finding unless necessary.</p>
+<p>A concise sentence may be sufficient.</p>
+<hr>
+<h3 id="step-14-delayed-scheduled-job-observation" class="doc-h"><a class="anchor" href="#step-14-delayed-scheduled-job-observation" aria-label="Link to this section">#</a>STEP 14 — DELAYED/SCHEDULED JOB OBSERVATION</h3>
+<p>Claude also noted:</p>
+<pre data-lang="text"><code>Client B → follow-up email after 14 days
+Client C → alert if urgent referral remains untriaged after 4 hours</code></pre>
+<p>while a queue alone is not necessarily a scheduler.</p>
+<p>Treat this as an observation, not automatically another submission finding.</p>
+<p>Check whether the handover actually describes scheduling/delayed dispatch.</p>
+<p>If it does not, decide whether this belongs:</p>
+<ul><li>nowhere;</li><li>private interview notes;</li><li>future Part 3 reasoning;</li><li>or as a tiny caveat.</li></ul>
+<p>Do NOT expand Part 1 into an exhaustive defect list.</p>
+<hr>
+<h3 id="step-15-package-json-transparency" class="doc-h"><a class="anchor" href="#step-15-package-json-transparency" aria-label="Link to this section">#</a>STEP 15 — PACKAGE.JSON TRANSPARENCY</h3>
+<p>Confirm the actual <code>package.json</code> change.</p>
+<p>It is expected to be something like:</p>
+<pre data-lang="text"><code>single test file
+→
+node --test test/*.test.js</code></pre>
+<p>If confirmed, document this succinctly in README or later submission notes:</p>
+<blockquote><p>The test script was widened only so <code>npm test</code> discovers both the original and new test files; no test framework or dependency was added.</p></blockquote>
+<p>Do not imply an original test was modified.</p>
+<hr>
+<h3 id="step-16-optional-claude-findings-to-leave-alone" class="doc-h"><a class="anchor" href="#step-16-optional-claude-findings-to-leave-alone" aria-label="Link to this section">#</a>STEP 16 — OPTIONAL CLAUDE FINDINGS TO LEAVE ALONE</h3>
+<p>Unless you find a real problem during implementation, do NOT spend time changing:</p>
+<ul><li>shared <code>Set</code> instances;</li><li>per-call field-map reconstruction;</li><li>self-reference diagnostic ordering;</li><li>exact <code>TypeError</code> wording;</li><li>whitespace trimming of field references;</li><li>choice fields with different option sets;</li><li>unrelated validator behavior;</li><li><code>Infinity</code>;</li><li>impossible calendar dates;</li><li>duplicate multi-choice values;</li><li>invalid regex behavior.</li></ul>
+<p>Do not add tests merely to increase coverage percentage.</p>
+<hr>
+<h3 id="step-17-comments-in-implementation" class="doc-h"><a class="anchor" href="#step-17-comments-in-implementation" aria-label="Link to this section">#</a>STEP 17 — COMMENTS IN IMPLEMENTATION</h3>
+<p>Claude suggested a comment explaining why raw:</p>
+<pre data-lang="js"><code>&lt;
+&gt;</code></pre>
+<p>does not create coercion problems.</p>
+<p>A short comment is acceptable <strong>only if it clarifies a non-obvious invariant</strong>:</p>
+<ul><li>rule configuration enforces exact declared types;</li><li>field validation completes successfully before comparison;</li><li>ordering operators are allowed only for number/date.</li></ul>
+<p>Do not add verbose commentary.</p>
+<p>Similarly, a brief comment explaining that the invalid-field set is snapshotted before rule evaluation because rules are independent may be helpful.</p>
+<p>Use judgment.</p>
+<hr>
+<h3 id="step-18-ai-worklog" class="doc-h"><a class="anchor" href="#step-18-ai-worklog" aria-label="Link to this section">#</a>STEP 18 — AI WORKLOG</h3>
+<p>Update:</p>
+<pre data-lang="text"><code>private/AI-WORKLOG.md</code></pre>
+<p>honestly.</p>
+<p>Record the cross-model review.</p>
+<p>Important real events:</p>
+<h5 id="accepted-from-claude" class="doc-h"><a class="anchor" href="#accepted-from-claude" aria-label="Link to this section">#</a>Accepted from Claude</h5>
+<p>Examples:</p>
+<ul><li>stale README contradiction;</li><li>realistic Client B integration test;</li><li>audit-log issue reopened for source verification;</li><li>generic Part 1 wording challenged.</li></ul>
+<h5 id="rejected-modified-recommendation" class="doc-h"><a class="anchor" href="#rejected-modified-recommendation" aria-label="Link to this section">#</a>Rejected / modified recommendation</h5>
+<p>Claude recommended documenting the <code>rules: undefined</code> throw.</p>
+<p>We rejected that resolution.</p>
+<p>Instead we changed behavior so explicit <code>undefined</code> is treated like omission.</p>
+<p>Reason:</p>
+<pre data-lang="text"><code>A JS harness can naturally materialize an absent JSON property as undefined,
+and throwing there adds surprise without protecting against a meaningful invalid configuration.</code></pre>
+<p>This is a genuine rejected AI recommendation.</p>
+<p>Do not portray Claude as &quot;wrong&quot;; document the engineering tradeoff.</p>
+<hr>
+<h3 id="step-19-interview-notes" class="doc-h"><a class="anchor" href="#step-19-interview-notes" aria-label="Link to this section">#</a>STEP 19 — INTERVIEW NOTES</h3>
+<p>Update private interview notes with:</p>
+<ul><li>audit-log conclusion and evidence;</li><li>why <code>rules: undefined</code> is now treated as omission;</li><li>why Claude's alternative was rejected;</li><li>tenant-context nuance;</li><li>strengthened fix-first ranking.</li></ul>
+<p>Keep private.</p>
+<hr>
+<h3 id="step-20-run-full-verification" class="doc-h"><a class="anchor" href="#step-20-run-full-verification" aria-label="Link to this section">#</a>STEP 20 — RUN FULL VERIFICATION</h3>
+<p>After all accepted changes:</p>
+<pre data-lang="bash"><code>npm test</code></pre>
+<p>Run syntax checks if appropriate.</p>
+<p>Report:</p>
+<pre data-lang="text"><code>X passing
+0 failing</code></pre>
+<p>Also separately verify:</p>
+<pre data-lang="text"><code>original 16
+new cross-field tests</code></pre>
+<p>Confirm:</p>
+<ul><li>supplied fixtures unchanged;</li><li>original test file unchanged;</li><li>no client identifiers in <code>lib/</code>;</li><li>README and implementation agree;</li><li>private files ignored;</li><li>no secrets.</li></ul>
+<hr>
+<h3 id="step-21-readme-only-hidden-simulation-again" class="doc-h"><a class="anchor" href="#step-21-readme-only-hidden-simulation-again" aria-label="Link to this section">#</a>STEP 21 — README-ONLY HIDDEN SIMULATION AGAIN</h3>
+<p>Because public behavior around <code>rules: undefined</code> changed and README wording changed, perform another small evaluator simulation.</p>
+<p>From README alone construct:</p>
+<ol><li>date range;</li><li>numeric range;</li><li>equality rule.</li></ol>
+<p>Also explicitly test:</p>
+<pre data-lang="js"><code>rules: undefined</code></pre>
+<p>according to the newly documented semantics.</p>
+<p>Do not rely on implementation knowledge when deciding expected behavior.</p>
+<hr>
+<h3 id="output" class="doc-h"><a class="anchor" href="#output" aria-label="Link to this section">#</a>OUTPUT</h3>
+<p>Return exactly:</p>
+<h3 id="1-claude-review-decisions" class="doc-h"><a class="anchor" href="#1-claude-review-decisions" aria-label="Link to this section">#</a>1. Claude Review Decisions</h3>
+<p>Table:</p>
+<p>| Claude finding | Accept / Modify / Reject | Reason |</p>
+<h3 id="2-readme-corrections" class="doc-h"><a class="anchor" href="#2-readme-corrections" aria-label="Link to this section">#</a>2. README Corrections</h3>
+<h3 id="3-rules-undefined-resolution" class="doc-h"><a class="anchor" href="#3-rules-undefined-resolution" aria-label="Link to this section">#</a>3. <code>rules: undefined</code> Resolution</h3>
+<h3 id="4-client-b-fixture-test" class="doc-h"><a class="anchor" href="#4-client-b-fixture-test" aria-label="Link to this section">#</a>4. Client B Fixture Test</h3>
+<h3 id="5-audit-log-source-verification" class="doc-h"><a class="anchor" href="#5-audit-log-source-verification" aria-label="Link to this section">#</a>5. Audit Log Source Verification</h3>
+<p>Quote/paraphrase only what the handover actually establishes.</p>
+<h3 id="6-part-1-revisions" class="doc-h"><a class="anchor" href="#6-part-1-revisions" aria-label="Link to this section">#</a>6. Part 1 Revisions</h3>
+<p>Explain what changed and what was intentionally left out.</p>
+<h3 id="7-rls-tenant-context-conclusion" class="doc-h"><a class="anchor" href="#7-rls-tenant-context-conclusion" aria-label="Link to this section">#</a>7. RLS / Tenant Context Conclusion</h3>
+<p>Separate confirmed issue from plausible-but-unproven risk.</p>
+<h3 id="8-fix-first-decision" class="doc-h"><a class="anchor" href="#8-fix-first-decision" aria-label="Link to this section">#</a>8. Fix-First Decision</h3>
+<h3 id="9-package-json-explanation" class="doc-h"><a class="anchor" href="#9-package-json-explanation" aria-label="Link to this section">#</a>9. package.json Explanation</h3>
+<h3 id="10-files-changed" class="doc-h"><a class="anchor" href="#10-files-changed" aria-label="Link to this section">#</a>10. Files Changed</h3>
+<h3 id="11-tests" class="doc-h"><a class="anchor" href="#11-tests" aria-label="Link to this section">#</a>11. Tests</h3>
+<p>Exact counts.</p>
+<h3 id="12-hidden-test-simulation" class="doc-h"><a class="anchor" href="#12-hidden-test-simulation" aria-label="Link to this section">#</a>12. Hidden-Test Simulation</h3>
+<h3 id="13-ai-worklog-update" class="doc-h"><a class="anchor" href="#13-ai-worklog-update" aria-label="Link to this section">#</a>13. AI Worklog Update</h3>
+<p>Include the genuine Claude recommendation we rejected/modified.</p>
+<h3 id="14-remaining-concerns" class="doc-h"><a class="anchor" href="#14-remaining-concerns" aria-label="Link to this section">#</a>14. Remaining Concerns</h3>
+<h3 id="15-recommended-next-phase" class="doc-h"><a class="anchor" href="#15-recommended-next-phase" aria-label="Link to this section">#</a>15. Recommended Next Phase</h3>
+<p>Recommend:</p>
+<p><strong>Part 3 — Three Architecture Decisions Workshop</strong></p>
+<p>Do not start it automatically.</p>
+<hr>
+<h3 id="stop-condition-2" class="doc-h"><a class="anchor" href="#stop-condition-2" aria-label="Link to this section">#</a>STOP CONDITION</h3>
+<p>After the corrective pass:</p>
+<p>STOP.</p>
+<p>Do not start Part 3.</p>
+<p>Do not invoke Claude again.</p>
+<p>Do not build the submission website.</p>
+<p>Do not deploy or publish.</p>
+<p>Wait for my approval.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-6-codex-commentary-2">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-6-codex-commentary-2" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>I’ll treat Claude’s review as a set of hypotheses, not authority. I’ll first re-establish the 35-test baseline and source hashes, then verify the README contradiction, audit log, RLS semantics, notification timing, and delayed-job claims against the supplied materials before deciding which corrections belong in public Part 1. I’m using the PDF review workflow for the official client requirements; no PDF will be edited.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-6-codex-commentary-3">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-6-codex-commentary-3" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>Baseline is clean: 35/35 passing, with the protected employer fixtures, original tests, and handover matching their prior hashes. There is no Git repository here, so I’ll use file hashes and direct diffs for integrity checks.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-6-codex-commentary-4">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-6-codex-commentary-4" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The handover supports reopening the audit-log issue, but only narrowly: it proves a centralized schema with no <code>tenant_id</code> and an optional JSON payload; it does not prove that payloads contain full records or that tenant users can query the log. I’m keeping those distinctions explicit before deciding severity. The local <code>pdftotext</code> binary is unavailable, so I’ll use the bundled PDF runtime to re-check the exercise itself.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-6-codex-commentary-5">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-6-codex-commentary-5" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>Primary-source re-check also confirms two timing mismatches/gaps: Client A’s SMS belongs on <code>Resolved</code>, while the shown create path sends immediately; and the handover names the 14-day/4-hour jobs but does not describe how delayed scheduling is achieved. I’ll use the first to sharpen the existing notification finding and keep the scheduler gap out of the public shortlist. I’m also verifying the PostgreSQL <code>WITH CHECK</code> behavior before using it as a “looks suspicious but reasonable” example.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-6-codex-commentary-6">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-6-codex-commentary-6" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>Decision: the audit-log finding is accepted with narrower wording and rated Serious, not Critical. The schema cannot be directly tenant-scoped as shown, which undermines tenant-specific audit control for Client C; however, the sources do not establish a present tenant-facing read path, full-record payloads, or a concrete disclosure. I’ll add that bounded finding while keeping Part 1 concise.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-6-codex-commentary-7">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-6-codex-commentary-7" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The corrective edits are now in place without changing the approved API: explicit <code>undefined</code> is omission, the fixture test extends Client B only in memory, and Part 1 adds a bounded audit finding while preserving the field-exposure fix-first decision. Next I’m checking the full suite, syntax, source hashes, scope boundaries, and README-only behavior.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-6-codex-commentary-8">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-6-codex-commentary-8" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>Verification is complete: 36/36 pass—16 original and 20 cross-field—and both modified JavaScript files pass syntax checks. Employer fixtures, the original test file, and the handover retain their baseline hashes; <code>lib/</code> remains client-agnostic, private notes remain ignored, and no secret files or credential markers were found.</p>
+  </div>
+</article>
+<article class="msg msg--assistant" id="turn-6-codex-final-response-9">
+  <header class="msg-head">
+    <span class="msg-role">Codex — final response</span>
+    <a class="msg-anchor" href="#turn-6-codex-final-response-9" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<h3 id="1-claude-review-decisions-2" class="doc-h"><a class="anchor" href="#1-claude-review-decisions-2" aria-label="Link to this section">#</a>1. Claude Review Decisions</h3>
+<div class="table-wrap"><table><thead><tr><th>Claude finding</th><th>Accept / Modify / Reject</th><th>Reason</th></tr></thead><tbody><tr><td>Stale README wording</td><td>Accept</td><td>It directly contradicted the implemented feature.</td></tr><tr><td>Missing audit-log finding</td><td>Modify</td><td>Accepted with narrower evidence and Serious—not Critical—severity.</td></tr><tr><td>Generic RLS/reasonable reasoning</td><td>Modify</td><td>Replaced with source-grounded PostgreSQL, JSONB, outbox, and workload observations.</td></tr><tr><td>Document <code>rules: undefined</code> throwing</td><td>Modify</td><td>Changed behavior instead: explicit <code>undefined</code> now means no rules.</td></tr><tr><td>Add supplied-fixture test</td><td>Accept</td><td>It verifies the generic API against a realistic employer definition.</td></tr><tr><td>Explain <code>package.json</code> change</td><td>Accept</td><td>Added a concise README explanation.</td></tr><tr><td>Optional implementation nits</td><td>Reject</td><td>No demonstrated defect justified further churn.</td></tr></tbody></table></div>
+<h3 id="2-readme-corrections-2" class="doc-h"><a class="anchor" href="#2-readme-corrections-2" aria-label="Link to this section">#</a>2. README Corrections</h3>
+<p>Updated README.md [REDACTED — local file link]:</p>
+<ul><li>Removed the stale claim that cross-field validation does not exist.</li><li>Added <code>test/cross-field-validation.test.js</code> to the repository tree.</li><li>Documented omitted, <code>undefined</code>, and empty <code>rules</code>.</li><li>Clarified that <code>null</code>, objects, and strings remain invalid.</li><li>Explained why the test command was widened.</li><li>Preserved the existing contract and starter context.</li></ul>
+<h3 id="3-rules-undefined-resolution-2" class="doc-h"><a class="anchor" href="#3-rules-undefined-resolution-2" aria-label="Link to this section">#</a>3. <code>rules: undefined</code> Resolution</h3>
+<p>lib/validate.js [REDACTED — local file link] now treats these equivalently:</p>
+<pre data-lang="js"><code>{ fields }
+{ fields, rules: undefined }
+{ fields, rules: [] }</code></pre>
+<p>All retain ordinary field validation.</p>
+<p>These still throw <code>TypeError</code>:</p>
+<pre data-lang="js"><code>rules: null
+rules: {}
+rules: &quot;...&quot;</code></pre>
+<p>This accepts a natural JavaScript representation of an absent JSON property without weakening validation of concrete malformed values.</p>
+<h3 id="4-client-b-fixture-test-2" class="doc-h"><a class="anchor" href="#4-client-b-fixture-test-2" aria-label="Link to this section">#</a>4. Client B Fixture Test</h3>
+<p>Added one integration-style test to test/cross-field-validation.test.js [REDACTED — local file link].</p>
+<p>It:</p>
+<ul><li>imports the supplied Client B definition;</li><li>adds <code>project_end_date gte project_start_date</code> in memory;</li><li>validates a complete realistic record;</li><li>confirms an earlier end date produces an error owned by <code>project_end_date</code>.</li></ul>
+<p>The supplied fixture itself was not modified.</p>
+<h3 id="5-audit-log-source-verification-2" class="doc-h"><a class="anchor" href="#5-audit-log-source-verification-2" aria-label="Link to this section">#</a>5. Audit Log Source Verification</h3>
+<p>The handover [REDACTED — local file link] establishes:</p>
+<ul><li>every write uses <code>logAction()</code>;</li><li><code>audit_log</code> contains actor, action, entity identifiers, timestamp, and optional JSON <code>payload</code>;</li><li>the shown schema has no <code>tenant_id</code>;</li><li>the contractor intentionally centralized it for administrative debugging;</li><li>entity type and ID are intended to trace the source record.</li></ul>
+<p>It does not establish:</p>
+<ul><li>that payloads contain complete records;</li><li>that tenant users can query the log;</li><li>an audit-log RLS policy or other access path;</li><li>a demonstrated data leak.</li></ul>
+<p>Client C expects audits according to the exercise. :codex-file-citation{path=&quot;[REDACTED — local workspace path]/Benoz.AI - Take-Home Exercise.docx.pdf&quot; purpose=&quot;source&quot;}</p>
+<p>Conclusion: <strong>Accept with narrower wording</strong>, Severity <strong>Serious</strong>. The demonstrated defect is tenant-specific audit scoping and extraction—not a proven disclosure.</p>
+<h3 id="6-part-1-revisions-2" class="doc-h"><a class="anchor" href="#6-part-1-revisions-2" aria-label="Link to this section">#</a>6. Part 1 Revisions</h3>
+<p>Updated review/architecture-review.md [REDACTED — local file link]:</p>
+<ul><li>Added a concise Serious audit-log finding.</li><li>Compressed the infrastructure-control finding into a Part 3 bridge.</li><li>Added the Client A notification timing mismatch to the existing reliability finding.</li><li>Replaced generic RLS language with the specific omitted-<code>WITH CHECK</code> analysis.</li><li>Grounded JSONB in frequent client changes and the unknown fourth client.</li><li>Grounded PostgreSQL suitability in the stated 4,000-report burst.</li><li>Preserved the transactional-outbox false-positive analysis.</li><li>Increased the document only from 840 to 879 words.</li></ul>
+<p>The delayed-job scheduler gap was intentionally left out: the handover does not explain scheduling, but it does identify those jobs as queued, and the omission is not strong enough to displace a higher-confidence finding.</p>
+<h3 id="7-rls-tenant-context-conclusion-2" class="doc-h"><a class="anchor" href="#7-rls-tenant-context-conclusion-2" aria-label="Link to this section">#</a>7. RLS / Tenant Context Conclusion</h3>
+<p>Confirmed:</p>
+<ul><li>RLS reads <code>app.current_tenant</code>.</li><li>Each documented request performs a session-scoped, interpolated <code>SET</code> on its checked-out connection.</li><li>The handover says this occurs after authentication.</li><li>Because the shown policy defaults to all commands, omitted <code>WITH CHECK</code> inherits <code>USING</code>; that omission alone is not a defect. <a href="https://www.postgresql.org/docs/18/sql-createpolicy.html" target="_blank" rel="noopener">PostgreSQL documents this behavior</a>.</li></ul>
+<p>Plausible but unproven:</p>
+<ul><li>pooled session state could persist if a request or background path skips setup;</li><li>parameterized <code>set_config</code> and transaction-local context would be safer;</li><li>ownership and <code>FORCE ROW LEVEL SECURITY</code> require verification.</li></ul>
+<p>The materials do not prove a skipped setup path, attacker-controlled tenant identifier, or actual cross-tenant disclosure. It was therefore not promoted to a Critical finding.</p>
+<h3 id="8-fix-first-decision-2" class="doc-h"><a class="anchor" href="#8-fix-first-decision-2" aria-label="Link to this section">#</a>8. Fix-First Decision</h3>
+<p>Sensitive referral-field exposure remains first because it is:</p>
+<ul><li>a direct disclosure of sensitive patient information;</li><li>narrowly and immediately remediable through server-side projection;</li><li>required under every eventual isolation strategy;</li><li>containable without waiting for Part 3.</li></ul>
+<p>The infrastructure issue requires a strategic platform choice. The audit correction requires migration, backfill, and payload-policy work. Neither should delay closing the active response-level exposure.</p>
+<h3 id="9-package-json-explanation-2" class="doc-h"><a class="anchor" href="#9-package-json-explanation-2" aria-label="Link to this section">#</a>9. package.json Explanation</h3>
+<p>The existing earlier change is confirmed:</p>
+<pre data-lang="text"><code>node --test test/validate.test.js
+→ node --test test/*.test.js</code></pre>
+<p>It exists only so <code>npm test</code> discovers the original and cross-field test files. No dependency or test framework was added.</p>
+<p><code>package.json</code> was not changed during this corrective pass.</p>
+<h3 id="10-files-changed-2" class="doc-h"><a class="anchor" href="#10-files-changed-2" aria-label="Link to this section">#</a>10. Files Changed</h3>
+<ul><li>README.md [REDACTED — local file link]</li><li>lib/validate.js [REDACTED — local file link]</li><li>test/cross-field-validation.test.js [REDACTED — local file link]</li><li>review/architecture-review.md [REDACTED — local file link]</li><li>private/AI-WORKLOG.md [REDACTED — private local file link]</li><li>private/INTERVIEW-NOTES.md [REDACTED — private local file link]</li></ul>
+<h3 id="11-tests-2" class="doc-h"><a class="anchor" href="#11-tests-2" aria-label="Link to this section">#</a>11. Tests</h3>
+<p>Baseline before changes:</p>
+<pre data-lang="text"><code>35 passing
+0 failing</code></pre>
+<p>Final verification:</p>
+<pre data-lang="text"><code>36 passing
+0 failing</code></pre>
+<p>Breakdown:</p>
+<pre data-lang="text"><code>16 original tests passing
+20 cross-field tests passing</code></pre>
+<p>Both modified JavaScript files passed <code>node --check</code>.</p>
+<p>Hash verification confirmed that the original test, three supplied client fixtures, and handover remain unchanged. No client-specific identifiers were introduced into <code>lib/</code>.</p>
+<h3 id="12-hidden-test-simulation-2" class="doc-h"><a class="anchor" href="#12-hidden-test-simulation-2" aria-label="Link to this section">#</a>12. Hidden-Test Simulation</h3>
+<p>Four README-driven simulations matched the documented behavior:</p>
+<div class="table-wrap"><table><thead><tr><th>Simulation</th><th>Result</th></tr></thead><tbody><tr><td><code>booking_end gte booking_start</code></td><td>Failed on <code>booking_end</code> with the documented date message</td></tr><tr><td><code>maximum_amount gte minimum_amount</code></td><td>Failed on <code>maximum_amount</code> with the numeric message</td></tr><tr><td>confirmation field <code>eq</code> original field</td><td>Failed on the confirmation field</td></tr><tr><td><code>rules: undefined</code></td><td>Ran ordinary field validation without throwing</td></tr></tbody></table></div>
+<h3 id="13-ai-worklog-update-2" class="doc-h"><a class="anchor" href="#13-ai-worklog-update-2" aria-label="Link to this section">#</a>13. AI Worklog Update</h3>
+<p>The private worklog records:</p>
+<ul><li>accepted README and fixture-test findings;</li><li>source-based reopening of the audit log;</li><li>narrowed audit wording and severity;</li><li>improvements to generic Part 1 reasoning;</li><li>rejection of Claude’s proposed <code>rules: undefined</code> resolution.</li></ul>
+<p>The genuine disagreement is recorded as an engineering tradeoff: Claude recommended documenting the throw; we instead treated explicit <code>undefined</code> as omission because it naturally arises at the JSON/JavaScript boundary.</p>
+<h3 id="14-remaining-concerns-2" class="doc-h"><a class="anchor" href="#14-remaining-concerns-2" aria-label="Link to this section">#</a>14. Remaining Concerns</h3>
+<ul><li>Audit payload contents and production read permissions remain unknown.</li><li>Tenant-context lifecycle needs production-code and integration-test evidence.</li><li>Delayed scheduling for the 14-day and 4-hour jobs is not described.</li><li>This workspace is not Git-initialized, so no Git diff or status is available.</li><li><code>private/</code> remains ignored, and no secret files or credential markers were found.</li></ul>
+<h3 id="15-recommended-next-phase-2" class="doc-h"><a class="anchor" href="#15-recommended-next-phase-2" aria-label="Link to this section">#</a>15. Recommended Next Phase</h3>
+<p><strong>Part 3 — Three Architecture Decisions Workshop</strong></p>
+<p>Part 3 has not been started.</p>
+  </div>
+</article></section>
+        <p class="doc-foot-raw"><a href="./codex-session-03.md">View the raw <code>codex-session-03.md</code></a> · <a href="../../">Back to the submission</a></p>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <p class="footer-title">Benoz.AI Take-Home Exercise</p>
+          <p>Senior Full Stack Developer · Philippine Time</p>
+        </div>
+        <div class="footer-links">
+          <a href="#doc-main">Back to top</a>
+          <a href="../../">Submission</a>
+          <a href="./codex-session-03.md">Raw source</a>
+        </div>
+      </div>
+    </footer>
+    <script src="../../submission/doc.js" defer></script>
+  </body>
+</html>

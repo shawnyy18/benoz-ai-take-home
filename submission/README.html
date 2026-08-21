@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Starter package — Platform Foundation take-home — Benoz.AI take-home submission.">
+    <title>Starter package — Platform Foundation take-home · Benoz.AI Take-Home</title>
+    <link rel="stylesheet" href="../submission/styles.css">
+    <link rel="stylesheet" href="../submission/doc.css">
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#doc-main">Skip to content</a>
+
+    <nav class="section-nav" aria-label="Submission">
+      <div class="shell nav-inner">
+        <a href="../">← Submission</a>
+        <a href="../#part-1">Part 1</a>
+        <a href="../#part-2">Part 2</a>
+        <a href="../#part-3">Part 3</a>
+        <a href="../#part-4">Part 4</a>
+      </div>
+    </nav>
+
+    <header class="doc-header">
+      <div class="shell">
+        <p class="doc-crumb">Part 2 · API contract</p>
+        <h1>Starter package — Platform Foundation take-home</h1>
+        <ul class="doc-facts"><li>282 lines</li><li>1,683 words</li><li>11 KB</li></ul>
+        <p class="doc-raw">
+          <a class="raw-link" href="./README.md">View raw <code>README.md</code></a>
+          <span>This page is generated from that file at build time. Nothing is hidden, summarised, or reordered.</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="shell doc-layout">
+      <aside class="doc-nav" aria-label="Contents"><p class="doc-nav-title">Contents</p><ol class="toc"><li class="toc-l2"><a href="#running-it">Running it</a></li><li class="toc-l2"><a href="#what-s-here">What's here</a></li><li class="toc-l2"><a href="#cross-field-validation">Cross-field validation</a></li><li class="toc-l3"><a href="#rule-format">Rule format</a></li><li class="toc-l3"><a href="#example">Example</a></li><li class="toc-l3"><a href="#operators">Operators</a></li><li class="toc-l3"><a href="#type-compatibility">Type compatibility</a></li><li class="toc-l3"><a href="#error-ownership">Error ownership</a></li><li class="toc-l3"><a href="#missing-values">Missing values</a></li><li class="toc-l3"><a href="#invalid-field-values">Invalid field values</a></li><li class="toc-l3"><a href="#invalid-rule-configuration">Invalid rule configuration</a></li><li class="toc-l3"><a href="#default-error-messages">Default error messages</a></li><li class="toc-l3"><a href="#custom-error-messages">Custom error messages</a></li><li class="toc-l3"><a href="#multiple-rules">Multiple rules</a></li><li class="toc-l3"><a href="#execution-and-error-order">Execution and error order</a></li><li class="toc-l3"><a href="#unsupported-behavior">Unsupported behavior</a></li></ol></aside>
+      <main id="doc-main" class="doc-main">
+        
+        <div class="prose"><p>This is the material referenced in Parts 1 and 2 of the exercise brief.</p>
+<pre><code>review/
+  handover-architecture.md   &lt;- Part 1: the contractor's handover notes
+lib/
+  validate.js                &lt;- the validation library (Part 2 starting point)
+clients/
+  client-a-city-maintenance.json
+  client-b-grant-foundation.json
+  client-c-clinic.json       &lt;- field definitions for the three live clients
+test/
+  validate.test.js           &lt;- the existing passing test suite
+  cross-field-validation.test.js &lt;- focused tests for Part 2
+package.json</code></pre>
+<h2 id="running-it" class="doc-h"><a class="anchor" href="#running-it" aria-label="Link to this section">#</a>Running it</h2>
+<p>Node 18+, no dependencies to install.</p>
+<pre><code>npm test</code></pre>
+<p>That runs every <code>test/*.test.js</code> file with Node's built-in test runner. The test script was widened from the original single-file command only so <code>npm test</code> discovers both the original and new test files; no test framework or dependency was added.</p>
+<h2 id="what-s-here" class="doc-h"><a class="anchor" href="#what-s-here" aria-label="Link to this section">#</a>What's here</h2>
+<p><code>lib/validate.js</code> exports <code>validateRecord(definition, record)</code>. A <strong>definition</strong> is a list of field descriptions (name, label, type, required, options for choice-like fields, and a <code>constraints</code> object); a <strong>record</strong> is the plain object of submitted values. It returns <code>{ valid, errors }</code>, where <code>errors</code> is a list of <code>{ field, message }</code>.</p>
+<p>Supported field types today: <code>text</code>, <code>long_text</code>, <code>number</code>, <code>boolean</code>, <code>date</code> (<code>YYYY-MM-DD</code>), <code>choice</code>, <code>multi_choice</code>, <code>file</code>. Supported constraints vary by type: <code>min_length</code>/<code>max_length</code>/<code>pattern</code> for text, <code>min</code>/<code>max</code> for numbers, <code>min_selected</code>/<code>max_selected</code> for multi-choice, <code>accepted</code> (a list of extensions) for files. Look at <code>clients/*.json</code> for real examples of all of these in use, and <code>test/validate.test.js</code> for what each one rejects.</p>
+<p>The three client definition files are the actual field lists for the three clients described in the brief (Client A / City maintenance, Client B / Grant-making foundation, Client C / Private clinic) — field names match what the brief describes. They're here so you have real, non-trivial definitions to test against rather than inventing your own.</p>
+<p>The original library validated each field in isolation. It now also supports the small, declarative cross-field comparison format documented below, so relationships such as &quot;the project end date must not be before the project start date&quot; remain definition data rather than client-specific code.</p>
+<h2 id="cross-field-validation" class="doc-h"><a class="anchor" href="#cross-field-validation" aria-label="Link to this section">#</a>Cross-field validation</h2>
+<p>Definitions may declare binary field-to-field comparisons in an optional top-level <code>rules</code> array. A rule is configuration: it names two defined fields and the relationship that their submitted values must satisfy. The library remains client-agnostic and does not execute custom code from definitions.</p>
+<p>Definitions without <code>rules</code>, with <code>rules: undefined</code>, or with <code>rules: []</code> retain the original per-field behavior. Explicit <code>undefined</code> is treated like omission for JavaScript callers that copy an absent JSON property.</p>
+<h3 id="rule-format" class="doc-h"><a class="anchor" href="#rule-format" aria-label="Link to this section">#</a>Rule format</h3>
+<p>Each rule has three required properties and one optional property:</p>
+<div class="table-wrap"><table><thead><tr><th>Property</th><th style="text-align:right">Required</th><th>Meaning</th></tr></thead><tbody><tr><td><code>field</code></td><td style="text-align:right">Yes</td><td>Left-hand operand, constrained subject, and error owner</td></tr><tr><td><code>operator</code></td><td style="text-align:right">Yes</td><td>One of <code>eq</code>, <code>neq</code>, <code>gt</code>, <code>gte</code>, <code>lt</code>, or <code>lte</code></td></tr><tr><td><code>other_field</code></td><td style="text-align:right">Yes</td><td>Right-hand operand/dependency</td></tr><tr><td><code>message</code></td><td style="text-align:right">No</td><td>Non-empty custom error message returned verbatim</td></tr></tbody></table></div>
+<p>No other rule properties are supported. Property names, operator names, and field references are case-sensitive. Symbolic aliases such as <code>&gt;=</code>, <code>&lt;=</code>, <code>==</code>, <code>&gt;</code>, and <code>&lt;</code> are not supported.</p>
+<h3 id="example" class="doc-h"><a class="anchor" href="#example" aria-label="Link to this section">#</a>Example</h3>
+<pre data-lang="json"><code>{
+  &quot;fields&quot;: [
+    {
+      &quot;name&quot;: &quot;start_date&quot;,
+      &quot;label&quot;: &quot;Start date&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    },
+    {
+      &quot;name&quot;: &quot;end_date&quot;,
+      &quot;label&quot;: &quot;End date&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    }
+  ],
+  &quot;rules&quot;: [
+    {
+      &quot;field&quot;: &quot;end_date&quot;,
+      &quot;operator&quot;: &quot;gte&quot;,
+      &quot;other_field&quot;: &quot;start_date&quot;
+    }
+  ]
+}</code></pre>
+<p>This declares:</p>
+<pre data-lang="text"><code>record.end_date &gt;= record.start_date</code></pre>
+<p>If the relationship fails, the error belongs to <code>end_date</code> because <code>field</code> is the subject being constrained:</p>
+<pre data-lang="js"><code>{
+  field: &quot;end_date&quot;,
+  message: &quot;End date must be on or after Start date&quot;
+}</code></pre>
+<p>Only one error is produced for a failed rule; it is not duplicated on <code>other_field</code>.</p>
+<h3 id="operators" class="doc-h"><a class="anchor" href="#operators" aria-label="Link to this section">#</a>Operators</h3>
+<p>The complete operator vocabulary is:</p>
+<div class="table-wrap"><table><thead><tr><th>Operator</th><th>Relationship</th></tr></thead><tbody><tr><td><code>eq</code></td><td><code>field</code> equals <code>other_field</code></td></tr><tr><td><code>neq</code></td><td><code>field</code> does not equal <code>other_field</code></td></tr><tr><td><code>gt</code></td><td><code>field</code> is strictly greater than or later than <code>other_field</code></td></tr><tr><td><code>gte</code></td><td><code>field</code> is greater than/later than or equal to <code>other_field</code></td></tr><tr><td><code>lt</code></td><td><code>field</code> is strictly less than or earlier than <code>other_field</code></td></tr><tr><td><code>lte</code></td><td><code>field</code> is less than/earlier than or equal to <code>other_field</code></td></tr></tbody></table></div>
+<h3 id="type-compatibility" class="doc-h"><a class="anchor" href="#type-compatibility" aria-label="Link to this section">#</a>Type compatibility</h3>
+<p>The two referenced fields must have the same exact declared type. There is no type coercion and no concept of compatible type families: <code>text</code> cannot be compared with <code>long_text</code>, and <code>number</code> cannot be compared with <code>date</code>.</p>
+<div class="table-wrap"><table><thead><tr><th>Field type</th><th style="text-align:right"><code>eq</code></th><th style="text-align:right"><code>neq</code></th><th style="text-align:right"><code>gt</code></th><th style="text-align:right"><code>gte</code></th><th style="text-align:right"><code>lt</code></th><th style="text-align:right"><code>lte</code></th></tr></thead><tbody><tr><td><code>number</code></td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td></tr><tr><td><code>date</code></td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td></tr><tr><td><code>text</code></td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr><tr><td><code>long_text</code></td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr><tr><td><code>choice</code></td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr><tr><td><code>boolean</code></td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr><tr><td><code>multi_choice</code></td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr><tr><td><code>file</code></td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr></tbody></table></div>
+<p>Number comparisons are numeric and do not coerce strings. Text, long-text, and choice equality is exact and case-sensitive. Boolean equality is strict.</p>
+<p>Date rules run only after both operands pass the existing <code>date</code> validator. Accepted fixed-width <code>YYYY-MM-DD</code> strings are compared lexically, which preserves their ordering without timezone conversion or JavaScript date normalization. The existing validator's calendar-date limitations remain unchanged; cross-field rules do not attempt to repair dates that the existing validator accepts.</p>
+<h3 id="error-ownership" class="doc-h"><a class="anchor" href="#error-ownership" aria-label="Link to this section">#</a>Error ownership</h3>
+<p><code>rule.field</code> is always:</p>
+<ul><li>the left-hand operand;</li><li>the subject being constrained; and</li><li>the field placed in the resulting <code>{ field, message }</code> error.</li></ul>
+<p>To report an error on a different field, declare that field as the rule subject and reverse the operator as needed. There is no separate <code>error_field</code> property.</p>
+<h3 id="missing-values" class="doc-h"><a class="anchor" href="#missing-values" aria-label="Link to this section">#</a>Missing values</h3>
+<p>A rule is skipped when either operand is absent according to the library's existing presence rules. <code>undefined</code>, <code>null</code>, blank strings, and empty arrays are absent; <code>0</code> and <code>false</code> are present.</p>
+<p>Presence and requiredness remain field-level concerns:</p>
+<ul><li>a missing required dependency produces its normal required error but no cross-field error;</li><li>a missing optional dependency produces no error and does not become conditionally required;</li><li>a missing subject similarly skips the cross-field rule.</li></ul>
+<h3 id="invalid-field-values" class="doc-h"><a class="anchor" href="#invalid-field-values" aria-label="Link to this section">#</a>Invalid field values</h3>
+<p>Per-field validation runs before record relationships. A cross-field rule is evaluated only when both operands are present and neither field has a field-level validation error.</p>
+<p>For example, if <code>start_date</code> is <code>&quot;banana&quot;</code>, its existing date-format error is returned. A dependent <code>end_date gte start_date</code> rule is skipped, so the invalid dependency does not cause a secondary error on <code>end_date</code>.</p>
+<p>A cross-field error from one rule does not make the field ineligible for later rules. Eligible rules are independent.</p>
+<h3 id="invalid-rule-configuration" class="doc-h"><a class="anchor" href="#invalid-rule-configuration" aria-label="Link to this section">#</a>Invalid rule configuration</h3>
+<p>Malformed rules are developer/configuration errors rather than bad record data. <code>validateRecord</code> throws synchronous <code>TypeError</code> before field validation when:</p>
+<ul><li><code>rules</code> has a value other than <code>undefined</code> but is not an array (including <code>null</code>, an object, or a string);</li><li>a rule is not a plain object;</li><li><code>field</code>, <code>operator</code>, or <code>other_field</code> is missing, not a string, or blank;</li><li>a rule contains an unknown property;</li><li><code>message</code> is present but is not a non-empty string;</li><li>an operator is unknown or uses different casing;</li><li>a referenced field does not exist;</li><li>a referenced name is ambiguous because it occurs more than once in <code>fields</code>;</li><li><code>field</code> and <code>other_field</code> refer to the same field;</li><li>the fields have different declared types;</li><li>the operator is unsupported for the declared type; or</li><li>the referenced type does not support cross-field comparisons.</li></ul>
+<p>Exceptions identify the rule index and failure reason where applicable. Exact exception wording is diagnostic and is not part of the compatibility contract; the <code>TypeError</code> class and the failure conditions above are.</p>
+<h3 id="default-error-messages" class="doc-h"><a class="anchor" href="#default-error-messages" aria-label="Link to this section">#</a>Default error messages</h3>
+<p>Messages use the existing display-label fallback: <code>field.label || field.name</code>.</p>
+<p>Equality defaults for text, long-text, choice, Boolean, and numbers are:</p>
+<pre data-lang="text"><code>&lt;subject&gt; must equal &lt;dependency&gt;
+&lt;subject&gt; must not equal &lt;dependency&gt;</code></pre>
+<p>Number ordering defaults are:</p>
+<pre data-lang="text"><code>gt   &lt;subject&gt; must be greater than &lt;dependency&gt;
+gte  &lt;subject&gt; must be greater than or equal to &lt;dependency&gt;
+lt   &lt;subject&gt; must be less than &lt;dependency&gt;
+lte  &lt;subject&gt; must be less than or equal to &lt;dependency&gt;</code></pre>
+<p>Date defaults are:</p>
+<pre data-lang="text"><code>eq   &lt;subject&gt; must be the same date as &lt;dependency&gt;
+neq  &lt;subject&gt; must not be the same date as &lt;dependency&gt;
+gt   &lt;subject&gt; must be after &lt;dependency&gt;
+gte  &lt;subject&gt; must be on or after &lt;dependency&gt;
+lt   &lt;subject&gt; must be before &lt;dependency&gt;
+lte  &lt;subject&gt; must be on or before &lt;dependency&gt;</code></pre>
+<h3 id="custom-error-messages" class="doc-h"><a class="anchor" href="#custom-error-messages" aria-label="Link to this section">#</a>Custom error messages</h3>
+<p>A rule may provide a non-empty <code>message</code>:</p>
+<pre data-lang="json"><code>{
+  &quot;field&quot;: &quot;end_date&quot;,
+  &quot;operator&quot;: &quot;gte&quot;,
+  &quot;other_field&quot;: &quot;start_date&quot;,
+  &quot;message&quot;: &quot;End date must not be before start date&quot;
+}</code></pre>
+<p>If the rule fails, this string is returned verbatim. The library does not perform placeholder interpolation.</p>
+<h3 id="multiple-rules" class="doc-h"><a class="anchor" href="#multiple-rules" aria-label="Link to this section">#</a>Multiple rules</h3>
+<p>Rules execute independently in array order and do not short-circuit:</p>
+<pre data-lang="json"><code>{
+  &quot;rules&quot;: [
+    {
+      &quot;field&quot;: &quot;end_date&quot;,
+      &quot;operator&quot;: &quot;gte&quot;,
+      &quot;other_field&quot;: &quot;start_date&quot;
+    },
+    {
+      &quot;field&quot;: &quot;end_date&quot;,
+      &quot;operator&quot;: &quot;lte&quot;,
+      &quot;other_field&quot;: &quot;reporting_deadline&quot;
+    }
+  ]
+}</code></pre>
+<p>If both relationships fail, both errors are appended in rule order and both belong to <code>end_date</code>. Boolean grouping such as AND/OR is not supported.</p>
+<h3 id="execution-and-error-order" class="doc-h"><a class="anchor" href="#execution-and-error-order" aria-label="Link to this section">#</a>Execution and error order</h3>
+<p>Validation proceeds in this order:</p>
+<ol><li>Validate the complete cross-field rule configuration.</li><li>Run the existing field validators in field order.</li><li>Record which fields have field-level errors.</li><li>Run eligible cross-field rules in <code>rules</code> array order.</li><li>Append cross-field errors after all field-level errors.</li><li>Return <code>{ valid: errors.length === 0, errors }</code>.</li></ol>
+<h3 id="unsupported-behavior" class="doc-h"><a class="anchor" href="#unsupported-behavior" aria-label="Link to this section">#</a>Unsupported behavior</h3>
+<p>The cross-field API intentionally does not support:</p>
+<ul><li>symbolic operator aliases;</li><li>literal operands or constants;</li><li>arithmetic or computed values;</li><li>more than two operands per rule;</li><li>AND/OR/NOT grouping or nested expressions;</li><li>conditional rules;</li><li>cross-type coercion;</li><li>multi-choice or file comparisons;</li><li>alphabetical string ordering;</li><li>arbitrary JavaScript or callbacks;</li><li>asynchronous validation;</li><li>custom-message placeholders; or</li><li>automatically making dependencies required.</li></ul>
+<p>This is a small binary comparison API, not a general-purpose rules engine.</p></div>
+        <p class="doc-foot-raw"><a href="./README.md">View the raw <code>README.md</code></a> · <a href="../">Back to the submission</a></p>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <p class="footer-title">Benoz.AI Take-Home Exercise</p>
+          <p>Senior Full Stack Developer · Philippine Time</p>
+        </div>
+        <div class="footer-links">
+          <a href="#doc-main">Back to top</a>
+          <a href="../">Submission</a>
+          <a href="./README.md">Raw source</a>
+        </div>
+      </div>
+    </footer>
+    <script src="../submission/doc.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Codex main session — publication export 2 of 4 — Benoz.AI take-home submission.">
+    <title>Codex main session — publication export 2 of 4 · Benoz.AI Take-Home</title>
+    <link rel="stylesheet" href="../../submission/styles.css">
+    <link rel="stylesheet" href="../../submission/doc.css">
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#doc-main">Skip to content</a>
+
+    <nav class="section-nav" aria-label="Submission">
+      <div class="shell nav-inner">
+        <a href="../../">← Submission</a>
+        <a href="../../#part-1">Part 1</a>
+        <a href="../../#part-2">Part 2</a>
+        <a href="../../#part-3">Part 3</a>
+        <a href="../../#part-4">Part 4</a>
+      </div>
+    </nav>
+
+    <header class="doc-header">
+      <div class="shell">
+        <p class="doc-crumb">Part 4 · Transcript</p>
+        <h1>Codex main session — publication export 2 of 4</h1>
+        <ul class="doc-facts"><li>12 messages</li><li>2 turns</li><li>1,663 lines</li><li>6,286 words</li><li>42 KB</li></ul>
+        <p class="doc-raw">
+          <a class="raw-link" href="./codex-session-02.md">View raw <code>codex-session-02.md</code></a>
+          <span>This page is generated from that file at build time. Nothing is hidden, summarised, or reordered.</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="shell doc-layout">
+      <aside class="doc-nav" aria-label="Contents"><p class="doc-nav-title">Contents</p><ol class="toc"><li class="toc-turn"><a href="#turn-3">Turn 3</a></li><li class="toc-msg toc-msg--user"><a href="#turn-3-user-1">User</a></li><li class="toc-sub"><a href="#files-pasted-by-the-user">Files pasted by the user:</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-3-codex-commentary-2">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-3-codex-commentary-3">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-3-codex-commentary-4">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-3-codex-commentary-5">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-3-codex-commentary-6">Codex — commentary</a></li><li class="toc-msg toc-msg--assistant"><a href="#turn-3-codex-final-response-7">Codex — final response</a></li><li class="toc-sub"><a href="#part-1-created">Part 1 Created</a></li><li class="toc-sub"><a href="#final-word-count">Final Word Count</a></li><li class="toc-sub"><a href="#four-findings">Four Findings</a></li><li class="toc-sub"><a href="#fix-first">Fix First</a></li><li class="toc-sub"><a href="#intentional-omissions">Intentional Omissions</a></li><li class="toc-sub"><a href="#files-changed">Files Changed</a></li><li class="toc-sub"><a href="#any-remaining-concern">Any Remaining Concern</a></li><li class="toc-sub"><a href="#recommended-next-phase">Recommended Next Phase</a></li><li class="toc-turn"><a href="#turn-4">Turn 4</a></li><li class="toc-msg toc-msg--user"><a href="#turn-4-user-1">User</a></li><li class="toc-sub"><a href="#benoz-ai-take-home-phase-4-cross-field-validation-api-design">Benoz.AI Take-Home — Phase 4: Cross-Field Validation API Design Workshop</a></li><li class="toc-sub"><a href="#primary-requirement">PRIMARY REQUIREMENT</a></li><li class="toc-sub"><a href="#existing-system-constraints">EXISTING SYSTEM CONSTRAINTS</a></li><li class="toc-sub"><a href="#step-1-re-read-the-part-2-source">STEP 1 — RE-READ THE PART 2 SOURCE</a></li><li class="toc-sub"><a href="#step-2-identify-the-design-dimensions">STEP 2 — IDENTIFY THE DESIGN DIMENSIONS</a></li><li class="toc-sub"><a href="#step-3-field-reference-format">STEP 3 — FIELD REFERENCE FORMAT</a></li><li class="toc-sub"><a href="#step-4-supported-operators">STEP 4 — SUPPORTED OPERATORS</a></li><li class="toc-sub"><a href="#step-5-type-compatibility">STEP 5 — TYPE COMPATIBILITY</a></li><li class="toc-sub"><a href="#step-6-date-comparison">STEP 6 — DATE COMPARISON</a></li><li class="toc-sub"><a href="#step-7-error-ownership">STEP 7 — ERROR OWNERSHIP</a></li><li class="toc-sub"><a href="#step-8-missing-dependencies">STEP 8 — MISSING DEPENDENCIES</a></li><li class="toc-sub"><a href="#step-9-invalid-dependencies">STEP 9 — INVALID DEPENDENCIES</a></li><li class="toc-sub"><a href="#step-10-nonexistent-field-reference">STEP 10 — NONEXISTENT FIELD REFERENCE</a></li><li class="toc-sub"><a href="#step-11-unknown-operator">STEP 11 — UNKNOWN OPERATOR</a></li><li class="toc-sub"><a href="#step-12-type-incompatible-rules">STEP 12 — TYPE-INCOMPATIBLE RULES</a></li><li class="toc-sub"><a href="#step-13-error-message-design">STEP 13 — ERROR MESSAGE DESIGN</a></li><li class="toc-sub"><a href="#step-14-multiple-rules">STEP 14 — MULTIPLE RULES</a></li><li class="toc-sub"><a href="#step-15-propose-3-designs">STEP 15 — PROPOSE 3 DESIGNS</a></li><li class="toc-sub"><a href="#step-16-recommend-one-design">STEP 16 — RECOMMEND ONE DESIGN</a></li><li class="toc-sub"><a href="#step-17-define-the-complete-contract">STEP 17 — DEFINE THE COMPLETE CONTRACT</a></li><li class="toc-sub"><a href="#step-18-test-matrix">STEP 18 — TEST MATRIX</a></li><li class="toc-sub"><a href="#step-19-hidden-test-simulation">STEP 19 — HIDDEN-TEST SIMULATION</a></li><li class="toc-sub"><a href="#step-20-don-t-fix-unrelated-validator-behavior">STEP 20 — DON'T FIX UNRELATED VALIDATOR BEHAVIOR</a></li><li class="toc-sub"><a href="#step-21-ai-worklog">STEP 21 — AI WORKLOG</a></li><li class="toc-sub"><a href="#output">OUTPUT</a></li><li class="toc-sub"><a href="#1-existing-constraints">1. Existing Constraints</a></li><li class="toc-sub"><a href="#2-design-questions">2. Design Questions</a></li><li class="toc-sub"><a href="#3-option-a">3. Option A</a></li><li class="toc-sub"><a href="#4-option-b">4. Option B</a></li><li class="toc-sub"><a href="#5-option-c">5. Option C</a></li><li class="toc-sub"><a href="#6-comparison-table">6. Comparison Table</a></li><li class="toc-sub"><a href="#7-recommended-design">7. Recommended Design</a></li><li class="toc-sub"><a href="#8-complete-proposed-contract">8. Complete Proposed Contract</a></li><li class="toc-sub"><a href="#9-proposed-test-matrix">9. Proposed Test Matrix</a></li><li class="toc-sub"><a href="#10-hidden-test-simulation">10. Hidden-Test Simulation</a></li><li class="toc-sub"><a href="#11-explicit-non-goals">11. Explicit Non-Goals</a></li><li class="toc-sub"><a href="#12-risks-open-questions">12. Risks / Open Questions</a></li><li class="toc-sub"><a href="#13-ai-worklog-update">13. AI Worklog Update</a></li><li class="toc-sub"><a href="#14-recommended-next-phase">14. Recommended Next Phase</a></li><li class="toc-sub"><a href="#stop-condition">STOP CONDITION</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-4-codex-commentary-2">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-4-codex-commentary-3">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-4-codex-commentary-4">Codex — commentary</a></li><li class="toc-msg toc-msg--assistant"><a href="#turn-4-codex-final-response-5">Codex — final response</a></li><li class="toc-sub"><a href="#1-existing-constraints-2">1. Existing Constraints</a></li><li class="toc-sub"><a href="#2-design-questions-2">2. Design Questions</a></li><li class="toc-sub"><a href="#3-option-a-2">3. Option A</a></li><li class="toc-sub"><a href="#4-option-b-2">4. Option B</a></li><li class="toc-sub"><a href="#5-option-c-2">5. Option C</a></li><li class="toc-sub"><a href="#6-comparison-table-2">6. Comparison Table</a></li><li class="toc-sub"><a href="#7-recommended-design-2">7. Recommended Design</a></li><li class="toc-sub"><a href="#8-complete-proposed-contract-2">8. Complete Proposed Contract</a></li><li class="toc-sub"><a href="#9-proposed-test-matrix-2">9. Proposed Test Matrix</a></li><li class="toc-sub"><a href="#10-hidden-test-simulation-2">10. Hidden-Test Simulation</a></li><li class="toc-sub"><a href="#11-explicit-non-goals-2">11. Explicit Non-Goals</a></li><li class="toc-sub"><a href="#12-risks-open-questions-2">12. Risks / Open Questions</a></li><li class="toc-sub"><a href="#13-ai-worklog-update-2">13. AI Worklog Update</a></li><li class="toc-sub"><a href="#14-recommended-next-phase-2">14. Recommended Next Phase</a></li></ol></aside>
+      <main id="doc-main" class="doc-main">
+        <div class="doc-intro"><p>Source: native Codex task history for “Audit Benoz.AI starter repository”.</p>
+<p>Scope: completed user and assistant conversation messages in chronological order. Internal reasoning summaries and tool-event metadata are not conversation messages and are not included.</p>
+<p>Integrity: message text is preserved except for the labeled local-path redactions documented in the private redaction log.</p></div>
+        <section class="turn"><h2 class="turn-head" id="turn-3"><span>Turn 3</span></h2>
+<article class="msg msg--user" id="turn-3-user-1">
+  <header class="msg-head">
+    <span class="msg-role">User</span>
+    <a class="msg-anchor" href="#turn-3-user-1" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<h3 id="files-pasted-by-the-user" class="doc-h"><a class="anchor" href="#files-pasted-by-the-user" aria-label="Link to this section">#</a>Files pasted by the user:</h3>
+<h4 id="benoz-ai-take-home-phase-3-finalize-part-1-architecture-revi" class="doc-h"><a class="anchor" href="#benoz-ai-take-home-phase-3-finalize-part-1-architecture-revi" aria-label="Link to this section">#</a>&quot;# Benoz.AI Take-Home — Phase 3: Finalize Part 1 Architecture Review Continue fr…&quot;: [REDACTED — local attachment path]/2137baee-db6b-4f8a-813f-5be38d6b71d0/pasted-text.txt</h4>
+<p>Pasted text contains the user's request.</p>
+<h4 id="my-request" class="doc-h"><a class="anchor" href="#my-request" aria-label="Link to this section">#</a>My request:</h4>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-3-codex-commentary-2">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-3-codex-commentary-2" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>I’ll read the pasted Phase 3 instructions directly, then follow them as the current request without restarting earlier analysis.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-3-codex-commentary-3">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-3-codex-commentary-3" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>I’ll now finalize the approved Part 1 artifact. I’m using the PDF review workflow to re-check the client requirements and severity definitions, then I’ll write the public review, correct the deadline chronology in the private worklog, add the four private interview-note entries, and run a focused evidence/word-count/change-scope review.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-3-codex-commentary-4">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-3-codex-commentary-4" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The approved findings remain supported after source re-reading. I’m writing them with two deliberate limits: the clinic infrastructure finding will identify incompatibility without choosing Part 3’s isolation model, and the sensitive-field finding will criticize response projection—not RLS tenant isolation.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-3-codex-commentary-5">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-3-codex-commentary-5" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The draft is in place. I’m now applying the requested self-review against evidence, failure mode, severity, proportionality, Part 3 scope, and confidence. I’ll revise once based on that review, then verify source hashes and report only the files actually changed.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-3-codex-commentary-6">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-3-codex-commentary-6" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The self-review found one wording overreach: the handover explicitly proves a shared database/pool and no silo, but does not literally use the phrase “same infrastructure.” I revised that sentence to track the source exactly while retaining the incompatibility with the clinic-controlled requirement. The final review remains within the target length.</p>
+  </div>
+</article>
+<article class="msg msg--assistant" id="turn-3-codex-final-response-7">
+  <header class="msg-head">
+    <span class="msg-role">Codex — final response</span>
+    <a class="msg-anchor" href="#turn-3-codex-final-response-7" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<h3 id="part-1-created" class="doc-h"><a class="anchor" href="#part-1-created" aria-label="Link to this section">#</a>Part 1 Created</h3>
+<p>Path: review/architecture-review.md [REDACTED — local file link]</p>
+<p>The exercise source was rechecked before writing. :codex-file-citation{path=&quot;[REDACTED — local workspace path]/Benoz.AI - Take-Home Exercise.docx.pdf&quot; purpose=&quot;source&quot;}</p>
+<h3 id="final-word-count" class="doc-h"><a class="anchor" href="#final-word-count" aria-label="Link to this section">#</a>Final Word Count</h3>
+<p>840 words.</p>
+<h3 id="four-findings" class="doc-h"><a class="anchor" href="#four-findings" aria-label="Link to this section">#</a>Four Findings</h3>
+<ol><li><strong>Critical:</strong> Referral list responses can expose clinical notes to reception.</li><li><strong>Critical:</strong> The shared deployment cannot meet Client C’s infrastructure-control requirement.</li><li><strong>Serious:</strong> Inline notification delivery creates ambiguous failures and duplicate retries.</li><li><strong>Serious:</strong> Outbox deduplication can suppress distinct status-change events.</li></ol>
+<h3 id="fix-first" class="doc-h"><a class="anchor" href="#fix-first" aria-label="Link to this section">#</a>Fix First</h3>
+<p>Referral field-level visibility. It is a direct sensitive-data disclosure with a narrow fix required under any future isolation architecture.</p>
+<h3 id="intentional-omissions" class="doc-h"><a class="anchor" href="#intentional-omissions" aria-label="Link to this section">#</a>Intentional Omissions</h3>
+<p>Tenant-context injection/leak claims, Critical audit-log claims, scoring design, configuration versioning, noisy-neighbor scaling, and Part 3’s final isolation choice were intentionally excluded due to insufficient evidence, lower priority, or scope.</p>
+<h3 id="files-changed" class="doc-h"><a class="anchor" href="#files-changed" aria-label="Link to this section">#</a>Files Changed</h3>
+<ul><li>architecture-review.md [REDACTED — local file link]</li><li>AI-WORKLOG.md [REDACTED — private local file link]</li><li>INTERVIEW-NOTES.md [REDACTED — private local file link]</li></ul>
+<p>The worklog now records August 22 as the operative extended deadline. Employer-provided source, code, fixtures, and tests retained their original hashes. No tests were run because those files were untouched.</p>
+<p>No Git repository exists, so no Git diff was available. Nothing was committed, pushed, published, or deployed.</p>
+<h3 id="any-remaining-concern" class="doc-h"><a class="anchor" href="#any-remaining-concern" aria-label="Link to this section">#</a>Any Remaining Concern</h3>
+<p>The review treats the handover snippets as representative, as instructed. If production has an unmentioned response serializer or unique event identifier, Findings 1 or 4 would need reassessment.</p>
+<h3 id="recommended-next-phase" class="doc-h"><a class="anchor" href="#recommended-next-phase" aria-label="Link to this section">#</a>Recommended Next Phase</h3>
+<p><strong>Part 2 — Cross-Field Validation API Design Workshop</strong></p>
+<p>Not started.</p>
+  </div>
+</article></section>
+<section class="turn"><h2 class="turn-head" id="turn-4"><span>Turn 4</span></h2>
+<article class="msg msg--user" id="turn-4-user-1">
+  <header class="msg-head">
+    <span class="msg-role">User</span>
+    <a class="msg-anchor" href="#turn-4-user-1" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<h3 id="benoz-ai-take-home-phase-4-cross-field-validation-api-design" class="doc-h"><a class="anchor" href="#benoz-ai-take-home-phase-4-cross-field-validation-api-design" aria-label="Link to this section">#</a>Benoz.AI Take-Home — Phase 4: Cross-Field Validation API Design Workshop</h3>
+<p>Continue from the completed work:</p>
+<ul><li>Phase 1 — repository discovery;</li><li>Phase 2 — architecture review workshop;</li><li>Phase 3 — finalized Part 1 in <code>review/architecture-review.md</code>.</li></ul>
+<p>This phase focuses ONLY on <strong>Part 2 design</strong>.</p>
+<p>Do NOT implement the feature yet.</p>
+<p>Do NOT modify:</p>
+<ul><li><code>lib/validate.js</code>;</li><li>existing tests;</li><li>client fixtures;</li><li>employer-provided source files.</li></ul>
+<p>Do NOT begin Part 3.</p>
+<p>Do NOT invoke Claude yet.</p>
+<p>Do NOT build the submission website.</p>
+<p>The objective is to make the cross-field validation API contract precise enough that another engineer could implement and use it correctly from the README alone.</p>
+<hr>
+<h3 id="primary-requirement" class="doc-h"><a class="anchor" href="#primary-requirement" aria-label="Link to this section">#</a>PRIMARY REQUIREMENT</h3>
+<p>Benoz.AI asks us to extend the validation definition format so a relationship such as:</p>
+<blockquote><p>project end date must not be before project start date</p></blockquote>
+<p>can be declared as <strong>data rather than custom code</strong>.</p>
+<p>The library must remain client-agnostic.</p>
+<p>The employer will later create a definition for an unseen client using only our documented format.</p>
+<p>Therefore:</p>
+<p><strong>The public API design is the most important part of this phase.</strong></p>
+<p>We must decide the contract before implementing it.</p>
+<hr>
+<h3 id="existing-system-constraints" class="doc-h"><a class="anchor" href="#existing-system-constraints" aria-label="Link to this section">#</a>EXISTING SYSTEM CONSTRAINTS</h3>
+<p>Use the actual existing repository as the source of truth.</p>
+<p>The current library is intentionally minimal:</p>
+<pre data-lang="text"><code>CommonJS JavaScript
+Node built-in test runner
+No external dependencies
+validateRecord(definition, record)
+=&gt; {
+     valid: boolean,
+     errors: [
+       {
+         field,
+         message
+       }
+     ]
+   }</code></pre>
+<p>Existing field validation should remain conceptually intact.</p>
+<p>Do not convert the project to TypeScript.</p>
+<p>Do not introduce dependencies unless absolutely necessary.</p>
+<p>Do not redesign the entire validation library.</p>
+<p>Prefer a small extension that fits the existing style.</p>
+<hr>
+<h3 id="step-1-re-read-the-part-2-source" class="doc-h"><a class="anchor" href="#step-1-re-read-the-part-2-source" aria-label="Link to this section">#</a>STEP 1 — RE-READ THE PART 2 SOURCE</h3>
+<p>Before proposing designs, re-read:</p>
+<ul><li>the official Part 2 instructions;</li><li>the supplied README;</li><li><code>lib/validate.js</code>;</li><li><code>test/validate.test.js</code>;</li><li>all three supplied client definitions.</li></ul>
+<p>Verify the current validation format and runtime behavior directly.</p>
+<p>Do not rely only on Phase 1 notes.</p>
+<hr>
+<h3 id="step-2-identify-the-design-dimensions" class="doc-h"><a class="anchor" href="#step-2-identify-the-design-dimensions" aria-label="Link to this section">#</a>STEP 2 — IDENTIFY THE DESIGN DIMENSIONS</h3>
+<p>We need deliberate decisions for each of these.</p>
+<h4 id="1-where-cross-field-rules-live" class="doc-h"><a class="anchor" href="#1-where-cross-field-rules-live" aria-label="Link to this section">#</a>1. Where cross-field rules live</h4>
+<p>Evaluate whether rules should live:</p>
+<h5 id="option-a" class="doc-h"><a class="anchor" href="#option-a" aria-label="Link to this section">#</a>Option A</h5>
+<p>At the top-level definition:</p>
+<pre data-lang="json"><code>{
+  &quot;fields&quot;: [...],
+  &quot;rules&quot;: [...]
+}</code></pre>
+<h5 id="option-b" class="doc-h"><a class="anchor" href="#option-b" aria-label="Link to this section">#</a>Option B</h5>
+<p>On the field that owns the error:</p>
+<pre data-lang="json"><code>{
+  &quot;name&quot;: &quot;end_date&quot;,
+  &quot;cross_field&quot;: [...]
+}</code></pre>
+<h5 id="option-c" class="doc-h"><a class="anchor" href="#option-c" aria-label="Link to this section">#</a>Option C</h5>
+<p>Another minimal structure justified by the existing library.</p>
+<p>Do not choose based on aesthetics.</p>
+<p>Evaluate:</p>
+<ul><li>clarity;</li><li>extensibility;</li><li>hidden-test usability;</li><li>error ownership;</li><li>implementation simplicity;</li><li>client independence.</li></ul>
+<hr>
+<h3 id="step-3-field-reference-format" class="doc-h"><a class="anchor" href="#step-3-field-reference-format" aria-label="Link to this section">#</a>STEP 3 — FIELD REFERENCE FORMAT</h3>
+<p>Decide how one field refers to another.</p>
+<p>Possible examples:</p>
+<pre data-lang="json"><code>{
+  &quot;field&quot;: &quot;project_end&quot;,
+  &quot;operator&quot;: &quot;gte&quot;,
+  &quot;other_field&quot;: &quot;project_start&quot;
+}</code></pre>
+<p>or:</p>
+<pre data-lang="json"><code>{
+  &quot;field&quot;: &quot;project_end&quot;,
+  &quot;operator&quot;: &quot;&gt;=&quot;,
+  &quot;value&quot;: {
+    &quot;field&quot;: &quot;project_start&quot;
+  }
+}</code></pre>
+<p>or another design.</p>
+<p>We do NOT need a generic expression language.</p>
+<p>Evaluate:</p>
+<ul><li>readability;</li><li>JSON friendliness;</li><li>ambiguity;</li><li>future extensibility;</li><li>documentation burden.</li></ul>
+<p>The hidden evaluator should be able to construct a valid rule without guessing.</p>
+<hr>
+<h3 id="step-4-supported-operators" class="doc-h"><a class="anchor" href="#step-4-supported-operators" aria-label="Link to this section">#</a>STEP 4 — SUPPORTED OPERATORS</h3>
+<p>Decide the smallest useful operator vocabulary.</p>
+<p>At minimum the example requires ordering.</p>
+<p>Possible operators include:</p>
+<pre data-lang="text"><code>eq
+neq
+gt
+gte
+lt
+lte</code></pre>
+<p>But do not automatically support all six.</p>
+<p>For every operator considered, ask:</p>
+<blockquote><p>Does supporting this materially improve the abstraction without increasing ambiguity or implementation risk?</p></blockquote>
+<p>Consider whether equality and inequality are safe/general enough to include.</p>
+<p>Avoid:</p>
+<ul><li>arithmetic expressions;</li><li>nested boolean logic;</li><li>arbitrary JavaScript;</li><li>custom user code;</li><li>regex-like cross-field expressions;</li><li>full rules-engine behavior.</li></ul>
+<p>We are not building a DSL.</p>
+<hr>
+<h3 id="step-5-type-compatibility" class="doc-h"><a class="anchor" href="#step-5-type-compatibility" aria-label="Link to this section">#</a>STEP 5 — TYPE COMPATIBILITY</h3>
+<p>Define precisely what values can be compared.</p>
+<p>Existing field types include concepts such as:</p>
+<pre data-lang="text"><code>text
+long_text
+number
+boolean
+date
+choice
+multi_choice
+file</code></pre>
+<p>Determine which cross-field comparisons should be supported.</p>
+<p>For example:</p>
+<h5 id="number" class="doc-h"><a class="anchor" href="#number" aria-label="Link to this section">#</a>Number</h5>
+<pre data-lang="text"><code>gt
+gte
+lt
+lte
+eq
+neq</code></pre>
+<p>may make sense.</p>
+<h5 id="date" class="doc-h"><a class="anchor" href="#date" aria-label="Link to this section">#</a>Date</h5>
+<p>Ordering may make sense.</p>
+<h5 id="text-choice" class="doc-h"><a class="anchor" href="#text-choice" aria-label="Link to this section">#</a>Text / choice</h5>
+<p>Equality might make sense, but ordering may not.</p>
+<h5 id="boolean" class="doc-h"><a class="anchor" href="#boolean" aria-label="Link to this section">#</a>Boolean</h5>
+<p>Equality may make sense.</p>
+<h5 id="arrays-files" class="doc-h"><a class="anchor" href="#arrays-files" aria-label="Link to this section">#</a>Arrays/files</h5>
+<p>Possibly unsupported.</p>
+<p>Do not expand scope just because JavaScript technically allows comparison.</p>
+<p>Define semantic compatibility.</p>
+<hr>
+<h3 id="step-6-date-comparison" class="doc-h"><a class="anchor" href="#step-6-date-comparison" aria-label="Link to this section">#</a>STEP 6 — DATE COMPARISON</h3>
+<p>The existing date validator accepts strings formatted as:</p>
+<pre data-lang="text"><code>YYYY-MM-DD</code></pre>
+<p>Phase 1 found that the existing implementation has imperfect real-calendar validation.</p>
+<p>Do NOT silently fix the existing date validator in this task.</p>
+<p>For cross-field date comparison, determine how we should compare values that have already passed existing field validation.</p>
+<p>Prefer behavior that remains consistent with existing expectations.</p>
+<p>Document any limitation.</p>
+<hr>
+<h3 id="step-7-error-ownership" class="doc-h"><a class="anchor" href="#step-7-error-ownership" aria-label="Link to this section">#</a>STEP 7 — ERROR OWNERSHIP</h3>
+<p>Benoz.AI explicitly asks us to define which field receives the error.</p>
+<p>Example:</p>
+<pre data-lang="text"><code>start_date = 2026-08-20
+end_date   = 2026-08-10</code></pre>
+<p>Possible choices:</p>
+<h5 id="a" class="doc-h"><a class="anchor" href="#a" aria-label="Link to this section">#</a>A</h5>
+<p>Attach error to <code>end_date</code>.</p>
+<h5 id="b" class="doc-h"><a class="anchor" href="#b" aria-label="Link to this section">#</a>B</h5>
+<p>Attach error to both.</p>
+<h5 id="c" class="doc-h"><a class="anchor" href="#c" aria-label="Link to this section">#</a>C</h5>
+<p>Attach to the rule/object.</p>
+<p>Because the current error format is:</p>
+<pre data-lang="js"><code>{
+  field,
+  message
+}</code></pre>
+<p>a field must probably own the error.</p>
+<p>Recommend the cleanest model.</p>
+<p>Strongly consider making the field on the left-hand side / subject of the rule own the error.</p>
+<p>But challenge that assumption before accepting it.</p>
+<hr>
+<h3 id="step-8-missing-dependencies" class="doc-h"><a class="anchor" href="#step-8-missing-dependencies" aria-label="Link to this section">#</a>STEP 8 — MISSING DEPENDENCIES</h3>
+<p>Define behavior when one field is absent.</p>
+<p>Example:</p>
+<pre data-lang="text"><code>start_date = missing
+end_date = present</code></pre>
+<p>Consider interaction with:</p>
+<ul><li>required fields;</li><li>optional fields;</li><li>blank strings;</li><li>null;</li><li>undefined;</li><li>empty arrays.</li></ul>
+<p>We should avoid producing confusing secondary errors.</p>
+<p>Possible behavior:</p>
+<blockquote><p>Skip a cross-field rule if either operand is absent. Presence/required validation remains the responsibility of the normal field validators.</p></blockquote>
+<p>Evaluate whether that is the best choice.</p>
+<hr>
+<h3 id="step-9-invalid-dependencies" class="doc-h"><a class="anchor" href="#step-9-invalid-dependencies" aria-label="Link to this section">#</a>STEP 9 — INVALID DEPENDENCIES</h3>
+<p>This is particularly important.</p>
+<p>Example:</p>
+<pre data-lang="text"><code>start_date = &quot;banana&quot;
+end_date   = &quot;2026-08-20&quot;</code></pre>
+<p>If <code>start_date</code> already fails its own date validation, should the cross-field rule also produce:</p>
+<blockquote><p>end_date must be on or after start_date</p></blockquote>
+<p>Probably not.</p>
+<p>Consider a two-phase design:</p>
+<pre data-lang="text"><code>Phase 1
+field validation
+
+Phase 2
+cross-field validation only when all referenced operands passed field validation</code></pre>
+<p>Evaluate this explicitly.</p>
+<p>Avoid cascading errors based on invalid values.</p>
+<hr>
+<h3 id="step-10-nonexistent-field-reference" class="doc-h"><a class="anchor" href="#step-10-nonexistent-field-reference" aria-label="Link to this section">#</a>STEP 10 — NONEXISTENT FIELD REFERENCE</h3>
+<p>Differentiate:</p>
+<h5 id="user-data-problem" class="doc-h"><a class="anchor" href="#user-data-problem" aria-label="Link to this section">#</a>User data problem</h5>
+<p>Referenced field exists in the definition but is absent from the submitted record.</p>
+<p>versus:</p>
+<h5 id="configuration-problem" class="doc-h"><a class="anchor" href="#configuration-problem" aria-label="Link to this section">#</a>Configuration problem</h5>
+<p>Rule references a field that does not exist in <code>definition.fields</code>.</p>
+<p>Determine whether the latter should:</p>
+<ul><li>throw;</li><li>return a validation error;</li><li>silently skip;</li><li>use another mechanism.</li></ul>
+<p>Strong preference: malformed definitions should fail clearly rather than silently behave differently.</p>
+<p>But consider compatibility with the current library.</p>
+<hr>
+<h3 id="step-11-unknown-operator" class="doc-h"><a class="anchor" href="#step-11-unknown-operator" aria-label="Link to this section">#</a>STEP 11 — UNKNOWN OPERATOR</h3>
+<p>Same question.</p>
+<p>Example:</p>
+<pre data-lang="json"><code>{
+  &quot;operator&quot;: &quot;approximately_equal&quot;
+}</code></pre>
+<p>Should this be:</p>
+<ul><li>configuration exception;</li><li>normal record error;</li><li>ignored?</li></ul>
+<p>Choose and document one behavior.</p>
+<p>A hidden evaluator must not have to guess.</p>
+<hr>
+<h3 id="step-12-type-incompatible-rules" class="doc-h"><a class="anchor" href="#step-12-type-incompatible-rules" aria-label="Link to this section">#</a>STEP 12 — TYPE-INCOMPATIBLE RULES</h3>
+<p>Example:</p>
+<pre data-lang="text"><code>number field &gt;= date field</code></pre>
+<p>or:</p>
+<pre data-lang="text"><code>file &lt; boolean</code></pre>
+<p>Determine whether this is a malformed definition.</p>
+<p>Avoid JavaScript implicit coercion.</p>
+<p>We should prefer explicit semantic comparison.</p>
+<hr>
+<h3 id="step-13-error-message-design" class="doc-h"><a class="anchor" href="#step-13-error-message-design" aria-label="Link to this section">#</a>STEP 13 — ERROR MESSAGE DESIGN</h3>
+<p>Existing errors use:</p>
+<pre data-lang="js"><code>{
+  field,
+  message
+}</code></pre>
+<p>Do not redesign the public error shape unnecessarily.</p>
+<p>Design predictable messages.</p>
+<p>For example:</p>
+<pre data-lang="text"><code>&quot;Project end date must be on or after Project start date&quot;</code></pre>
+<p>or a generic equivalent based on field labels.</p>
+<p>Determine whether rules should allow:</p>
+<pre data-lang="json"><code>{
+  &quot;message&quot;: &quot;End date must not be before start date&quot;
+}</code></pre>
+<p>Evaluate custom messages versus generated messages.</p>
+<p>Questions:</p>
+<ul><li>Does a custom message improve configurability?</li><li>Does it complicate hidden-test expectations?</li><li>Should it be optional?</li><li>Should labels be used for generated messages?</li></ul>
+<hr>
+<h3 id="step-14-multiple-rules" class="doc-h"><a class="anchor" href="#step-14-multiple-rules" aria-label="Link to this section">#</a>STEP 14 — MULTIPLE RULES</h3>
+<p>Determine behavior when a field participates in multiple rules.</p>
+<p>Example:</p>
+<pre data-lang="text"><code>end_date &gt;= start_date
+end_date &lt;= reporting_deadline</code></pre>
+<p>The design should support multiple rules without ambiguity.</p>
+<p>Define rule execution order if relevant.</p>
+<p>Do not build boolean expression grouping.</p>
+<hr>
+<h3 id="step-15-propose-3-designs" class="doc-h"><a class="anchor" href="#step-15-propose-3-designs" aria-label="Link to this section">#</a>STEP 15 — PROPOSE 3 DESIGNS</h3>
+<p>Present exactly THREE viable rule-format designs.</p>
+<p>For each provide:</p>
+<h4 id="format" class="doc-h"><a class="anchor" href="#format" aria-label="Link to this section">#</a>Format</h4>
+<p>Example JSON.</p>
+<h4 id="strengths" class="doc-h"><a class="anchor" href="#strengths" aria-label="Link to this section">#</a>Strengths</h4>
+<h4 id="weaknesses" class="doc-h"><a class="anchor" href="#weaknesses" aria-label="Link to this section">#</a>Weaknesses</h4>
+<h4 id="hidden-test-usability" class="doc-h"><a class="anchor" href="#hidden-test-usability" aria-label="Link to this section">#</a>Hidden-test usability</h4>
+<h4 id="implementation-complexity" class="doc-h"><a class="anchor" href="#implementation-complexity" aria-label="Link to this section">#</a>Implementation complexity</h4>
+<h4 id="extensibility" class="doc-h"><a class="anchor" href="#extensibility" aria-label="Link to this section">#</a>Extensibility</h4>
+<h4 id="why-we-might-reject-it" class="doc-h"><a class="anchor" href="#why-we-might-reject-it" aria-label="Link to this section">#</a>Why we might reject it</h4>
+<p>Do not make one obviously bad just to make the recommendation easy.</p>
+<p>All three should be plausible.</p>
+<hr>
+<h3 id="step-16-recommend-one-design" class="doc-h"><a class="anchor" href="#step-16-recommend-one-design" aria-label="Link to this section">#</a>STEP 16 — RECOMMEND ONE DESIGN</h3>
+<p>After comparison, recommend exactly ONE.</p>
+<p>Explain:</p>
+<ul><li>why it best fits the current library;</li><li>why it is easy to document;</li><li>why the hidden evaluator can use it reliably;</li><li>why it avoids overengineering;</li><li>what it intentionally does not support.</li></ul>
+<p>Do not implement it yet.</p>
+<hr>
+<h3 id="step-17-define-the-complete-contract" class="doc-h"><a class="anchor" href="#step-17-define-the-complete-contract" aria-label="Link to this section">#</a>STEP 17 — DEFINE THE COMPLETE CONTRACT</h3>
+<p>For the recommended design, provide a proposed specification covering:</p>
+<h4 id="definition-syntax" class="doc-h"><a class="anchor" href="#definition-syntax" aria-label="Link to this section">#</a>Definition syntax</h4>
+<p>Exact JSON structure.</p>
+<h4 id="rule-subject" class="doc-h"><a class="anchor" href="#rule-subject" aria-label="Link to this section">#</a>Rule subject</h4>
+<p>Which field owns the rule.</p>
+<h4 id="field-reference" class="doc-h"><a class="anchor" href="#field-reference" aria-label="Link to this section">#</a>Field reference</h4>
+<p>How dependencies are referenced.</p>
+<h4 id="operators" class="doc-h"><a class="anchor" href="#operators" aria-label="Link to this section">#</a>Operators</h4>
+<p>Exact supported list.</p>
+<h4 id="type-operator-compatibility" class="doc-h"><a class="anchor" href="#type-operator-compatibility" aria-label="Link to this section">#</a>Type/operator compatibility</h4>
+<p>Prefer a clear table.</p>
+<p>Example:</p>
+<div class="table-wrap"><table><thead><tr><th>Type</th><th style="text-align:right">eq</th><th style="text-align:right">neq</th><th style="text-align:right">gt</th><th style="text-align:right">gte</th><th style="text-align:right">lt</th><th style="text-align:right">lte</th></tr></thead><tbody><tr><td>number</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td></tr><tr><td>date</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td></tr><tr><td>text</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr></tbody></table></div>
+<p>Only include actual recommended behavior.</p>
+<h4 id="missing-value-behavior" class="doc-h"><a class="anchor" href="#missing-value-behavior" aria-label="Link to this section">#</a>Missing value behavior</h4>
+<h4 id="invalid-dependency-behavior" class="doc-h"><a class="anchor" href="#invalid-dependency-behavior" aria-label="Link to this section">#</a>Invalid dependency behavior</h4>
+<h4 id="missing-field-reference-behavior" class="doc-h"><a class="anchor" href="#missing-field-reference-behavior" aria-label="Link to this section">#</a>Missing field-reference behavior</h4>
+<h4 id="unknown-operator-behavior" class="doc-h"><a class="anchor" href="#unknown-operator-behavior" aria-label="Link to this section">#</a>Unknown operator behavior</h4>
+<h4 id="type-incompatibility-behavior" class="doc-h"><a class="anchor" href="#type-incompatibility-behavior" aria-label="Link to this section">#</a>Type incompatibility behavior</h4>
+<h4 id="error-ownership" class="doc-h"><a class="anchor" href="#error-ownership" aria-label="Link to this section">#</a>Error ownership</h4>
+<h4 id="error-message-behavior" class="doc-h"><a class="anchor" href="#error-message-behavior" aria-label="Link to this section">#</a>Error message behavior</h4>
+<h4 id="multiple-rule-behavior" class="doc-h"><a class="anchor" href="#multiple-rule-behavior" aria-label="Link to this section">#</a>Multiple-rule behavior</h4>
+<h4 id="execution-order" class="doc-h"><a class="anchor" href="#execution-order" aria-label="Link to this section">#</a>Execution order</h4>
+<h4 id="backward-compatibility" class="doc-h"><a class="anchor" href="#backward-compatibility" aria-label="Link to this section">#</a>Backward compatibility</h4>
+<h4 id="explicitly-unsupported-behavior" class="doc-h"><a class="anchor" href="#explicitly-unsupported-behavior" aria-label="Link to this section">#</a>Explicitly unsupported behavior</h4>
+<hr>
+<h3 id="step-18-test-matrix" class="doc-h"><a class="anchor" href="#step-18-test-matrix" aria-label="Link to this section">#</a>STEP 18 — TEST MATRIX</h3>
+<p>Design the tests we would write in the next phase.</p>
+<p>Do NOT implement them yet.</p>
+<p>Organize into:</p>
+<h4 id="happy-paths" class="doc-h"><a class="anchor" href="#happy-paths" aria-label="Link to this section">#</a>Happy paths</h4>
+<p>Examples:</p>
+<ul><li>valid number comparison;</li><li>valid date comparison;</li><li>equality boundary.</li></ul>
+<h4 id="validation-failures" class="doc-h"><a class="anchor" href="#validation-failures" aria-label="Link to this section">#</a>Validation failures</h4>
+<p>Examples:</p>
+<ul><li>end date before start date;</li><li>number violates threshold relationship.</li></ul>
+<h4 id="missing-values" class="doc-h"><a class="anchor" href="#missing-values" aria-label="Link to this section">#</a>Missing values</h4>
+<h4 id="invalid-dependency" class="doc-h"><a class="anchor" href="#invalid-dependency" aria-label="Link to this section">#</a>Invalid dependency</h4>
+<h4 id="invalid-rule-configuration" class="doc-h"><a class="anchor" href="#invalid-rule-configuration" aria-label="Link to this section">#</a>Invalid rule configuration</h4>
+<h4 id="type-mismatch" class="doc-h"><a class="anchor" href="#type-mismatch" aria-label="Link to this section">#</a>Type mismatch</h4>
+<h4 id="multiple-rules" class="doc-h"><a class="anchor" href="#multiple-rules" aria-label="Link to this section">#</a>Multiple rules</h4>
+<h4 id="backward-compatibility-2" class="doc-h"><a class="anchor" href="#backward-compatibility-2" aria-label="Link to this section">#</a>Backward compatibility</h4>
+<p>For each proposed test state:</p>
+<pre data-lang="text"><code>Scenario
+Expected valid
+Expected error field
+Expected behavior</code></pre>
+<p>We do not need dozens of redundant tests.</p>
+<p>Aim for strong coverage of semantics.</p>
+<hr>
+<h3 id="step-19-hidden-test-simulation" class="doc-h"><a class="anchor" href="#step-19-hidden-test-simulation" aria-label="Link to this section">#</a>STEP 19 — HIDDEN-TEST SIMULATION</h3>
+<p>Pretend you are a Benoz.AI evaluator who has never seen our implementation.</p>
+<p>Using only the proposed documentation, write 2–3 example unseen definitions.</p>
+<p>For example:</p>
+<h5 id="unknown-client-x" class="doc-h"><a class="anchor" href="#unknown-client-x" aria-label="Link to this section">#</a>Unknown Client X</h5>
+<pre data-lang="text"><code>booking_end &gt;= booking_start</code></pre>
+<h5 id="unknown-client-y" class="doc-h"><a class="anchor" href="#unknown-client-y" aria-label="Link to this section">#</a>Unknown Client Y</h5>
+<pre data-lang="text"><code>maximum_amount &gt;= minimum_amount</code></pre>
+<p>Verify that the format is obvious without relying on knowledge of our code.</p>
+<p>If you discover ambiguity, revise the proposed design before recommending it.</p>
+<hr>
+<h3 id="step-20-don-t-fix-unrelated-validator-behavior" class="doc-h"><a class="anchor" href="#step-20-don-t-fix-unrelated-validator-behavior" aria-label="Link to this section">#</a>STEP 20 — DON'T FIX UNRELATED VALIDATOR BEHAVIOR</h3>
+<p>Do not use this task to fix:</p>
+<ul><li>impossible calendar dates;</li><li><code>Infinity</code>;</li><li>duplicate multi-choice values;</li><li>null definition handling;</li><li>invalid regex behavior;</li><li>unknown optional field behavior;</li><li>unrelated error messages.</li></ul>
+<p>Those were discovered during Phase 1 but are outside the requested change.</p>
+<p>Document boundaries where relevant.</p>
+<hr>
+<h3 id="step-21-ai-worklog" class="doc-h"><a class="anchor" href="#step-21-ai-worklog" aria-label="Link to this section">#</a>STEP 21 — AI WORKLOG</h3>
+<p>Update <code>private/AI-WORKLOG.md</code> only if this design workshop produces genuine:</p>
+<ul><li>rejected designs;</li><li>changed opinions;</li><li>identified AI overengineering;</li><li>unresolved uncertainty.</li></ul>
+<p>Do not manufacture disagreement.</p>
+<p>This phase is likely to produce a useful genuine rejected suggestion because we are comparing API designs.</p>
+<hr>
+<h3 id="output" class="doc-h"><a class="anchor" href="#output" aria-label="Link to this section">#</a>OUTPUT</h3>
+<p>Return exactly:</p>
+<h3 id="1-existing-constraints" class="doc-h"><a class="anchor" href="#1-existing-constraints" aria-label="Link to this section">#</a>1. Existing Constraints</h3>
+<h3 id="2-design-questions" class="doc-h"><a class="anchor" href="#2-design-questions" aria-label="Link to this section">#</a>2. Design Questions</h3>
+<p>Short summary of the important choices.</p>
+<h3 id="3-option-a" class="doc-h"><a class="anchor" href="#3-option-a" aria-label="Link to this section">#</a>3. Option A</h3>
+<h3 id="4-option-b" class="doc-h"><a class="anchor" href="#4-option-b" aria-label="Link to this section">#</a>4. Option B</h3>
+<h3 id="5-option-c" class="doc-h"><a class="anchor" href="#5-option-c" aria-label="Link to this section">#</a>5. Option C</h3>
+<h3 id="6-comparison-table" class="doc-h"><a class="anchor" href="#6-comparison-table" aria-label="Link to this section">#</a>6. Comparison Table</h3>
+<h3 id="7-recommended-design" class="doc-h"><a class="anchor" href="#7-recommended-design" aria-label="Link to this section">#</a>7. Recommended Design</h3>
+<h3 id="8-complete-proposed-contract" class="doc-h"><a class="anchor" href="#8-complete-proposed-contract" aria-label="Link to this section">#</a>8. Complete Proposed Contract</h3>
+<h3 id="9-proposed-test-matrix" class="doc-h"><a class="anchor" href="#9-proposed-test-matrix" aria-label="Link to this section">#</a>9. Proposed Test Matrix</h3>
+<h3 id="10-hidden-test-simulation" class="doc-h"><a class="anchor" href="#10-hidden-test-simulation" aria-label="Link to this section">#</a>10. Hidden-Test Simulation</h3>
+<h3 id="11-explicit-non-goals" class="doc-h"><a class="anchor" href="#11-explicit-non-goals" aria-label="Link to this section">#</a>11. Explicit Non-Goals</h3>
+<h3 id="12-risks-open-questions" class="doc-h"><a class="anchor" href="#12-risks-open-questions" aria-label="Link to this section">#</a>12. Risks / Open Questions</h3>
+<h3 id="13-ai-worklog-update" class="doc-h"><a class="anchor" href="#13-ai-worklog-update" aria-label="Link to this section">#</a>13. AI Worklog Update</h3>
+<h3 id="14-recommended-next-phase" class="doc-h"><a class="anchor" href="#14-recommended-next-phase" aria-label="Link to this section">#</a>14. Recommended Next Phase</h3>
+<p>The next phase should be:</p>
+<p><strong>Part 2 — Implement the Approved Cross-Field Validation Design</strong></p>
+<p>But do NOT begin implementation automatically.</p>
+<hr>
+<h3 id="stop-condition" class="doc-h"><a class="anchor" href="#stop-condition" aria-label="Link to this section">#</a>STOP CONDITION</h3>
+<p>After completing the design workshop:</p>
+<p>STOP.</p>
+<p>Do not change:</p>
+<ul><li><code>lib/validate.js</code>;</li><li>test files;</li><li>README public documentation.</li></ul>
+<p>Do not implement anything.</p>
+<p>Do not start Part 3.</p>
+<p>Do not invoke Claude.</p>
+<p>Wait for my approval.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-4-codex-commentary-2">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-4-codex-commentary-2" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>I’ll keep this as a contract workshop: three genuinely viable formats, one recommendation, exact configuration/error semantics, and a focused future test matrix. I’ll re-read the Part 2 brief, README, implementation, complete test file, and all client definitions now; only the ignored AI worklog may be updated afterward if the comparison produces a real rejected design.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-4-codex-commentary-3">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-4-codex-commentary-3" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>I’m also using the PDF review workflow for the official Part 2 wording, because the README and the exercise together define the hidden-test contract. This is read-only; no PDF or public documentation will be edited in this phase.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-4-codex-commentary-4">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-4-codex-commentary-4" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The format comparison produced a genuine design rejection worth logging: field-attached rules make error ownership concise but scatter relationships through field definitions, while generic left/right operand objects add an unnecessary second way to declare error ownership and invite a future expression DSL. I’m recording the decision to prefer a flat top-level binary rule; no public README, code, tests, or fixtures are being changed.</p>
+  </div>
+</article>
+<article class="msg msg--assistant" id="turn-4-codex-final-response-5">
+  <header class="msg-head">
+    <span class="msg-role">Codex — final response</span>
+    <a class="msg-anchor" href="#turn-4-codex-final-response-5" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<h3 id="1-existing-constraints-2" class="doc-h"><a class="anchor" href="#1-existing-constraints-2" aria-label="Link to this section">#</a>1. Existing Constraints</h3>
+<p>The official Part 2 instructions, supplied README, implementation, complete test suite, and all three client definitions were re-read. :codex-file-citation{path=&quot;[REDACTED — local workspace path]/Benoz.AI - Take-Home Exercise.docx.pdf&quot; purpose=&quot;source&quot;}</p>
+<p>The design must preserve:</p>
+<ul><li>CommonJS JavaScript and Node 18+.</li><li>No external dependencies.</li><li><code>validateRecord(definition, record)</code>.</li><li>Record-validation output of <code>{ valid, errors: [{ field, message }] }</code>.</li><li>Existing presence semantics:<ul><li>absent: <code>undefined</code>, <code>null</code>, blank strings, empty arrays;</li><li>present: <code>false</code>, <code>0</code>, objects.</li></ul></li><li>Existing field validators and error behavior.</li><li>Client-independent code.</li><li>Existing definitions with no cross-field rules.</li></ul>
+<p>The untouched baseline remains 16 passing, 0 failing.</p>
+<h3 id="2-design-questions-2" class="doc-h"><a class="anchor" href="#2-design-questions-2" aria-label="Link to this section">#</a>2. Design Questions</h3>
+<p>The important decisions are:</p>
+<ul><li>Rules belong at definition level or inside individual fields.</li><li>References must use exact field names without expression syntax.</li><li>The operator vocabulary must be useful but bounded.</li><li>Comparisons must be type-aware and must not use JavaScript coercion.</li><li>The rule’s subject field should own its error.</li><li>Missing operands should skip the relationship check.</li><li>Invalid operands should not create cascading cross-field errors.</li><li>Malformed rules are configuration failures, not user-record errors.</li><li>Multiple rules should be independent and deterministic.</li><li>Default messages should be predictable, with a small custom-message escape hatch.</li><li>Existing unrelated validator limitations must remain untouched.</li></ul>
+<h3 id="3-option-a-2" class="doc-h"><a class="anchor" href="#3-option-a-2" aria-label="Link to this section">#</a>3. Option A</h3>
+<h4 id="format-2" class="doc-h"><a class="anchor" href="#format-2" aria-label="Link to this section">#</a>Format</h4>
+<p>Flat definition-level binary rules:</p>
+<pre data-lang="json"><code>{
+  &quot;fields&quot;: [
+    {
+      &quot;name&quot;: &quot;project_start_date&quot;,
+      &quot;label&quot;: &quot;Project start date&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    },
+    {
+      &quot;name&quot;: &quot;project_end_date&quot;,
+      &quot;label&quot;: &quot;Project end date&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    }
+  ],
+  &quot;rules&quot;: [
+    {
+      &quot;field&quot;: &quot;project_end_date&quot;,
+      &quot;operator&quot;: &quot;gte&quot;,
+      &quot;other_field&quot;: &quot;project_start_date&quot;
+    }
+  ]
+}</code></pre>
+<h4 id="strengths-2" class="doc-h"><a class="anchor" href="#strengths-2" aria-label="Link to this section">#</a>Strengths</h4>
+<ul><li>Every relationship is visible in one definition-level list.</li><li>Error ownership is explicit through <code>field</code>.</li><li>The format maps directly to a binary comparison.</li><li>Simple to validate before examining record values.</li><li>Adds one optional top-level property without changing field definitions.</li><li>Easy to document without introducing operand/expression concepts.</li></ul>
+<h4 id="weaknesses-2" class="doc-h"><a class="anchor" href="#weaknesses-2" aria-label="Link to this section">#</a>Weaknesses</h4>
+<ul><li>Repeats the subject field name.</li><li>Slightly more verbose than attaching a rule directly to the subject field.</li><li>It is intentionally limited to two fields.</li></ul>
+<h4 id="hidden-test-usability-2" class="doc-h"><a class="anchor" href="#hidden-test-usability-2" aria-label="Link to this section">#</a>Hidden-test usability</h4>
+<p>High. An evaluator needs only four documented keys: <code>field</code>, <code>operator</code>, <code>other_field</code>, and optional <code>message</code>.</p>
+<h4 id="implementation-complexity-2" class="doc-h"><a class="anchor" href="#implementation-complexity-2" aria-label="Link to this section">#</a>Implementation complexity</h4>
+<p>Low. Resolve two fields, verify compatibility, then evaluate in a second phase.</p>
+<h4 id="extensibility-2" class="doc-h"><a class="anchor" href="#extensibility-2" aria-label="Link to this section">#</a>Extensibility</h4>
+<p>Moderate and controlled. More binary operators can be added later without changing the shape, but compound expressions would require an explicit new design.</p>
+<h4 id="why-we-might-reject-it-2" class="doc-h"><a class="anchor" href="#why-we-might-reject-it-2" aria-label="Link to this section">#</a>Why we might reject it</h4>
+<p>If minimizing repetition were more important than central rule discovery, the field-attached format would be smaller.</p>
+<h3 id="4-option-b-2" class="doc-h"><a class="anchor" href="#4-option-b-2" aria-label="Link to this section">#</a>4. Option B</h3>
+<h4 id="format-3" class="doc-h"><a class="anchor" href="#format-3" aria-label="Link to this section">#</a>Format</h4>
+<p>Attach each rule to the field that owns the error:</p>
+<pre data-lang="json"><code>{
+  &quot;fields&quot;: [
+    {
+      &quot;name&quot;: &quot;project_start_date&quot;,
+      &quot;label&quot;: &quot;Project start date&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    },
+    {
+      &quot;name&quot;: &quot;project_end_date&quot;,
+      &quot;label&quot;: &quot;Project end date&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true,
+      &quot;rules&quot;: [
+        {
+          &quot;operator&quot;: &quot;gte&quot;,
+          &quot;other_field&quot;: &quot;project_start_date&quot;
+        }
+      ]
+    }
+  ]
+}</code></pre>
+<h4 id="strengths-3" class="doc-h"><a class="anchor" href="#strengths-3" aria-label="Link to this section">#</a>Strengths</h4>
+<ul><li>Error ownership is implicit and unambiguous.</li><li>Avoids repeating the subject field name.</li><li>Keeps rules near the field most likely to display the error.</li><li>Runtime implementation remains small.</li></ul>
+<h4 id="weaknesses-3" class="doc-h"><a class="anchor" href="#weaknesses-3" aria-label="Link to this section">#</a>Weaknesses</h4>
+<ul><li>Cross-field relationships are scattered through <code>fields</code>.</li><li>Reviewing or validating the complete rule set requires scanning every field.</li><li>A definition-level concern becomes mixed with per-field constraints.</li><li>Future rules that do not naturally belong to one field would not fit cleanly.</li></ul>
+<h4 id="hidden-test-usability-3" class="doc-h"><a class="anchor" href="#hidden-test-usability-3" aria-label="Link to this section">#</a>Hidden-test usability</h4>
+<p>High, provided the README clearly states that the containing field is the rule subject. However, evaluators must notice that rules are nested within fields rather than at definition level.</p>
+<h4 id="implementation-complexity-3" class="doc-h"><a class="anchor" href="#implementation-complexity-3" aria-label="Link to this section">#</a>Implementation complexity</h4>
+<p>Low, but the existing field loop would need to collect rules and defer them until all field validation is complete.</p>
+<h4 id="extensibility-3" class="doc-h"><a class="anchor" href="#extensibility-3" aria-label="Link to this section">#</a>Extensibility</h4>
+<p>Moderate. It extends field-owned relationships well but creates pressure to force future rule categories into individual fields.</p>
+<h4 id="why-we-might-reject-it-3" class="doc-h"><a class="anchor" href="#why-we-might-reject-it-3" aria-label="Link to this section">#</a>Why we might reject it</h4>
+<p>The smaller syntax is outweighed by distributing relationships across the field list and blending two validation phases in the definition format.</p>
+<h3 id="5-option-c-2" class="doc-h"><a class="anchor" href="#5-option-c-2" aria-label="Link to this section">#</a>5. Option C</h3>
+<h4 id="format-4" class="doc-h"><a class="anchor" href="#format-4" aria-label="Link to this section">#</a>Format</h4>
+<p>Definition-level rules with generic operand objects:</p>
+<pre data-lang="json"><code>{
+  &quot;fields&quot;: [
+    {
+      &quot;name&quot;: &quot;project_start_date&quot;,
+      &quot;label&quot;: &quot;Project start date&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    },
+    {
+      &quot;name&quot;: &quot;project_end_date&quot;,
+      &quot;label&quot;: &quot;Project end date&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    }
+  ],
+  &quot;rules&quot;: [
+    {
+      &quot;left&quot;: {
+        &quot;field&quot;: &quot;project_end_date&quot;
+      },
+      &quot;operator&quot;: &quot;gte&quot;,
+      &quot;right&quot;: {
+        &quot;field&quot;: &quot;project_start_date&quot;
+      },
+      &quot;error_field&quot;: &quot;project_end_date&quot;
+    }
+  ]
+}</code></pre>
+<h4 id="strengths-4" class="doc-h"><a class="anchor" href="#strengths-4" aria-label="Link to this section">#</a>Strengths</h4>
+<ul><li>Makes both operands structurally explicit.</li><li>Could later support literal operands without changing the outer shape.</li><li>Symmetrical representation works for other binary relationships.</li><li>Error ownership is separately configurable.</li></ul>
+<h4 id="weaknesses-4" class="doc-h"><a class="anchor" href="#weaknesses-4" aria-label="Link to this section">#</a>Weaknesses</h4>
+<ul><li>More verbose for the required use case.</li><li><code>error_field</code> can contradict or be unrelated to <code>left.field</code>.</li><li>Introduces operand terminology that the current library does not need.</li><li>Encourages future literals, nesting, and expression-tree behavior.</li><li>More configuration validation is required.</li></ul>
+<h4 id="hidden-test-usability-4" class="doc-h"><a class="anchor" href="#hidden-test-usability-4" aria-label="Link to this section">#</a>Hidden-test usability</h4>
+<p>Good, but the evaluator must understand three concepts—operands, operator, and error target—rather than one subject/dependency relationship.</p>
+<h4 id="implementation-complexity-4" class="doc-h"><a class="anchor" href="#implementation-complexity-4" aria-label="Link to this section">#</a>Implementation complexity</h4>
+<p>Medium. Operand parsing and independent error-field validation add code without improving the requested comparison.</p>
+<h4 id="extensibility-4" class="doc-h"><a class="anchor" href="#extensibility-4" aria-label="Link to this section">#</a>Extensibility</h4>
+<p>High, but much of that extensibility points toward a rule DSL that is intentionally out of scope.</p>
+<h4 id="why-we-might-reject-it-4" class="doc-h"><a class="anchor" href="#why-we-might-reject-it-4" aria-label="Link to this section">#</a>Why we might reject it</h4>
+<p>It optimizes for hypothetical expression features rather than the current requirement and creates avoidable error-ownership ambiguity.</p>
+<h3 id="6-comparison-table-2" class="doc-h"><a class="anchor" href="#6-comparison-table-2" aria-label="Link to this section">#</a>6. Comparison Table</h3>
+<div class="table-wrap"><table><thead><tr><th>Dimension</th><th>Option A: flat top-level</th><th>Option B: field-attached</th><th>Option C: operand objects</th></tr></thead><tbody><tr><td>Definition clarity</td><td>High</td><td>High locally; lower globally</td><td>Medium</td></tr><tr><td>Rule discoverability</td><td>High</td><td>Medium</td><td>High</td></tr><tr><td>Error ownership</td><td>Explicit subject</td><td>Implicit containing field</td><td>Separate property</td></tr><tr><td>Hidden-test usability</td><td>High</td><td>High</td><td>Good</td></tr><tr><td>Implementation complexity</td><td>Low</td><td>Low</td><td>Medium</td></tr><tr><td>Configuration validation</td><td>Straightforward</td><td>Distributed across fields</td><td>Most complex</td></tr><tr><td>Client independence</td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td>Multiple rules</td><td>Natural array order</td><td>Distributed arrays</td><td>Natural array order</td></tr><tr><td>Future binary operators</td><td>Easy</td><td>Easy</td><td>Easy</td></tr><tr><td>Pressure toward a DSL</td><td>Low</td><td>Low–medium</td><td>High</td></tr><tr><td>Fit with current library</td><td>Best</td><td>Good</td><td>Acceptable</td></tr><tr><td>Main cost</td><td>Repeats field name</td><td>Scatters relationships</td><td>Excess structure</td></tr></tbody></table></div>
+<h3 id="7-recommended-design-2" class="doc-h"><a class="anchor" href="#7-recommended-design-2" aria-label="Link to this section">#</a>7. Recommended Design</h3>
+<p>I recommend <strong>Option A: a flat top-level <code>rules</code> array</strong>.</p>
+<p>It fits the current definition-driven library without changing existing field objects. Each rule states:</p>
+<ul><li>the subject field;</li><li>the operator;</li><li>the dependency field;</li><li>optionally, a custom message.</li></ul>
+<p>The evaluator can construct an unseen definition without understanding implementation details or expression syntax. The shape makes error ownership explicit and allows the library to validate rule configuration before validating the record.</p>
+<p>The design deliberately supports only binary field-to-field comparisons. It does not support constants, arithmetic, compound conditions, nested expressions, callbacks, or client-specific logic.</p>
+<p>I recommend all six operators—<code>eq</code>, <code>neq</code>, <code>gt</code>, <code>gte</code>, <code>lt</code>, and <code>lte</code>—but only for semantically compatible types. This is still a small vocabulary:</p>
+<ul><li>equality supports confirmation or matching fields;</li><li>inequality supports explicitly distinct values;</li><li>strict and inclusive ordering are both necessary for common ranges;</li><li>type restrictions prevent JavaScript’s generic comparison behavior from becoming the contract.</li></ul>
+<h3 id="8-complete-proposed-contract-2" class="doc-h"><a class="anchor" href="#8-complete-proposed-contract-2" aria-label="Link to this section">#</a>8. Complete Proposed Contract</h3>
+<h4 id="definition-syntax-2" class="doc-h"><a class="anchor" href="#definition-syntax-2" aria-label="Link to this section">#</a>Definition syntax</h4>
+<p><code>rules</code> is an optional top-level array:</p>
+<pre data-lang="json"><code>{
+  &quot;fields&quot;: [
+    {
+      &quot;name&quot;: &quot;project_start_date&quot;,
+      &quot;label&quot;: &quot;Project start date&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    },
+    {
+      &quot;name&quot;: &quot;project_end_date&quot;,
+      &quot;label&quot;: &quot;Project end date&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    }
+  ],
+  &quot;rules&quot;: [
+    {
+      &quot;field&quot;: &quot;project_end_date&quot;,
+      &quot;operator&quot;: &quot;gte&quot;,
+      &quot;other_field&quot;: &quot;project_start_date&quot;,
+      &quot;message&quot;: &quot;Project end date must not be before project start date&quot;
+    }
+  ]
+}</code></pre>
+<p>Each rule has exactly these properties:</p>
+<div class="table-wrap"><table><thead><tr><th>Property</th><th style="text-align:right">Required</th><th>Meaning</th></tr></thead><tbody><tr><td><code>field</code></td><td style="text-align:right">Yes</td><td>Subject field being constrained and error owner</td></tr><tr><td><code>operator</code></td><td style="text-align:right">Yes</td><td>Comparison operator</td></tr><tr><td><code>other_field</code></td><td style="text-align:right">Yes</td><td>Field the subject is compared with</td></tr><tr><td><code>message</code></td><td style="text-align:right">No</td><td>Non-empty custom error message used verbatim</td></tr></tbody></table></div>
+<p>Unknown rule properties are configuration errors. Field references are case-sensitive and must exactly match field <code>name</code> values.</p>
+<h4 id="rule-subject-2" class="doc-h"><a class="anchor" href="#rule-subject-2" aria-label="Link to this section">#</a>Rule subject</h4>
+<p>For:</p>
+<pre data-lang="json"><code>{
+  &quot;field&quot;: &quot;project_end_date&quot;,
+  &quot;operator&quot;: &quot;gte&quot;,
+  &quot;other_field&quot;: &quot;project_start_date&quot;
+}</code></pre>
+<p>the rule means:</p>
+<pre data-lang="text"><code>record.project_end_date &gt;= record.project_start_date</code></pre>
+<p><code>field</code> is always the left-hand operand, subject, and error owner.</p>
+<h4 id="field-reference-2" class="doc-h"><a class="anchor" href="#field-reference-2" aria-label="Link to this section">#</a>Field reference</h4>
+<p>Both <code>field</code> and <code>other_field</code> must:</p>
+<ul><li>be non-empty strings;</li><li>resolve to exactly one field in <code>definition.fields</code>;</li><li>refer to different fields.</li></ul>
+<p>A missing or ambiguous reference is invalid configuration.</p>
+<h4 id="operators-2" class="doc-h"><a class="anchor" href="#operators-2" aria-label="Link to this section">#</a>Operators</h4>
+<p>The exact operator list is:</p>
+<div class="table-wrap"><table><thead><tr><th>Operator</th><th>Meaning</th></tr></thead><tbody><tr><td><code>eq</code></td><td>subject equals dependency</td></tr><tr><td><code>neq</code></td><td>subject does not equal dependency</td></tr><tr><td><code>gt</code></td><td>subject is strictly greater/later</td></tr><tr><td><code>gte</code></td><td>subject is greater/later or equal</td></tr><tr><td><code>lt</code></td><td>subject is strictly less/earlier</td></tr><tr><td><code>lte</code></td><td>subject is less/earlier or equal</td></tr></tbody></table></div>
+<p>Operator names are case-sensitive.</p>
+<h4 id="type-operator-compatibility-2" class="doc-h"><a class="anchor" href="#type-operator-compatibility-2" aria-label="Link to this section">#</a>Type/operator compatibility</h4>
+<p>Both referenced fields must have the same exact field type.</p>
+<div class="table-wrap"><table><thead><tr><th>Field type</th><th style="text-align:right"><code>eq</code></th><th style="text-align:right"><code>neq</code></th><th style="text-align:right"><code>gt</code></th><th style="text-align:right"><code>gte</code></th><th style="text-align:right"><code>lt</code></th><th style="text-align:right"><code>lte</code></th></tr></thead><tbody><tr><td><code>number</code></td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td></tr><tr><td><code>date</code></td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">✓</td></tr><tr><td><code>text</code></td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr><tr><td><code>long_text</code></td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr><tr><td><code>choice</code></td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr><tr><td><code>boolean</code></td><td style="text-align:right">✓</td><td style="text-align:right">✓</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr><tr><td><code>multi_choice</code></td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr><tr><td><code>file</code></td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr></tbody></table></div>
+<p>There is no implicit coercion:</p>
+<ul><li>number values compare numerically;</li><li>text, long-text, and choice equality is exact and case-sensitive;</li><li>Boolean equality is strict;</li><li>cross-type comparisons are invalid configuration.</li></ul>
+<h4 id="date-comparison" class="doc-h"><a class="anchor" href="#date-comparison" aria-label="Link to this section">#</a>Date comparison</h4>
+<p>A date rule runs only after both fields pass the existing date validator.</p>
+<p>Because valid-format dates are fixed-width <code>YYYY-MM-DD</code> strings, ordering uses direct lexical comparison. This avoids timezone behavior and JavaScript date normalization.</p>
+<p>The existing date validator’s imperfect calendar-date handling remains unchanged. Consequently, a value such as <code>2027-02-30</code> may still pass field validation and participate in lexical comparison. Fixing that is explicitly outside this change.</p>
+<h4 id="missing-value-behavior-2" class="doc-h"><a class="anchor" href="#missing-value-behavior-2" aria-label="Link to this section">#</a>Missing value behavior</h4>
+<p>If either operand is absent according to the existing <code>isPresent</code> semantics, the rule is skipped.</p>
+<p>Examples:</p>
+<ul><li>missing required dependency: normal required error only;</li><li>missing optional dependency: no cross-field error;</li><li>blank string, <code>null</code>, <code>undefined</code>, or empty array: treated as absent;</li><li><code>0</code> and <code>false</code>: present and eligible for comparison.</li></ul>
+<p>Cross-field rules do not make optional dependencies conditionally required.</p>
+<h4 id="invalid-dependency-behavior-2" class="doc-h"><a class="anchor" href="#invalid-dependency-behavior-2" aria-label="Link to this section">#</a>Invalid dependency behavior</h4>
+<p>Validation has two phases:</p>
+<ol><li>validate all fields using the existing validators;</li><li>evaluate cross-field rules.</li></ol>
+<p>A rule runs only if both operands:</p>
+<ul><li>are present; and</li><li>have no field-level validation errors.</li></ul>
+<p>If either field is invalid, the relationship rule is skipped. This prevents a malformed dependency from producing a secondary error on the subject.</p>
+<p>Only field-level errors control this skip. A cross-field failure from an earlier rule does not prevent later rules from evaluating.</p>
+<h4 id="missing-field-reference-behavior-2" class="doc-h"><a class="anchor" href="#missing-field-reference-behavior-2" aria-label="Link to this section">#</a>Missing field-reference behavior</h4>
+<p>A rule that references a field not present in <code>definition.fields</code> is malformed configuration.</p>
+<p><code>validateRecord</code> throws a synchronous <code>TypeError</code> identifying the rule index and invalid reference. It does not return a normal record-validation error and does not silently skip the rule.</p>
+<h4 id="unknown-operator-behavior-2" class="doc-h"><a class="anchor" href="#unknown-operator-behavior-2" aria-label="Link to this section">#</a>Unknown operator behavior</h4>
+<p>An unknown operator is malformed configuration.</p>
+<p><code>validateRecord</code> throws <code>TypeError</code> before record validation, even when the corresponding record values are absent.</p>
+<h4 id="type-incompatibility-behavior-2" class="doc-h"><a class="anchor" href="#type-incompatibility-behavior-2" aria-label="Link to this section">#</a>Type incompatibility behavior</h4>
+<p>The following are malformed configuration and throw <code>TypeError</code>:</p>
+<ul><li>different field types;</li><li>ordering operators on text, long-text, choice, or Boolean fields;</li><li>any operator on multi-choice or file fields;</li><li>unsupported or unknown field types referenced by a rule.</li></ul>
+<p>Exception messages should identify <code>rules[index]</code> and the reason. Exact exception prose need not be part of the stable public API; the exception class and failure category are.</p>
+<h4 id="other-malformed-rule-behavior" class="doc-h"><a class="anchor" href="#other-malformed-rule-behavior" aria-label="Link to this section">#</a>Other malformed rule behavior</h4>
+<p><code>TypeError</code> is also thrown when:</p>
+<ul><li><code>rules</code> exists but is not an array;</li><li>a rule is not an object;</li><li>required properties are missing or not non-empty strings;</li><li><code>message</code> exists but is not a non-empty string;</li><li>a rule contains unknown properties;</li><li><code>field</code> and <code>other_field</code> are the same;</li><li>a referenced field name is ambiguous because it occurs more than once.</li></ul>
+<p>Rule configuration is checked before record values, so malformed definitions fail consistently.</p>
+<h4 id="error-ownership-2" class="doc-h"><a class="anchor" href="#error-ownership-2" aria-label="Link to this section">#</a>Error ownership</h4>
+<p>A failed rule produces exactly one error attached to <code>rule.field</code>:</p>
+<pre data-lang="js"><code>{
+  field: &quot;project_end_date&quot;,
+  message: &quot;Project end date must be on or after Project start date&quot;
+}</code></pre>
+<p>Errors are not attached to both operands because the subject is the value the rule declares invalid. Attaching one error also avoids duplicate UI messages.</p>
+<h4 id="error-message-behavior-2" class="doc-h"><a class="anchor" href="#error-message-behavior-2" aria-label="Link to this section">#</a>Error message behavior</h4>
+<p>If <code>message</code> is present, it is returned verbatim. There is no placeholder interpolation.</p>
+<p>Otherwise, labels use the existing fallback:</p>
+<pre data-lang="text"><code>field.label || field.name</code></pre>
+<p>Default templates are:</p>
+<div class="table-wrap"><table><thead><tr><th>Type/operator</th><th>Generated message</th></tr></thead><tbody><tr><td>scalar <code>eq</code></td><td><code>&lt;subject&gt; must equal &lt;dependency&gt;</code></td></tr><tr><td>scalar <code>neq</code></td><td><code>&lt;subject&gt; must not equal &lt;dependency&gt;</code></td></tr><tr><td>number <code>gt</code></td><td><code>&lt;subject&gt; must be greater than &lt;dependency&gt;</code></td></tr><tr><td>number <code>gte</code></td><td><code>&lt;subject&gt; must be greater than or equal to &lt;dependency&gt;</code></td></tr><tr><td>number <code>lt</code></td><td><code>&lt;subject&gt; must be less than &lt;dependency&gt;</code></td></tr><tr><td>number <code>lte</code></td><td><code>&lt;subject&gt; must be less than or equal to &lt;dependency&gt;</code></td></tr><tr><td>date <code>eq</code></td><td><code>&lt;subject&gt; must be the same date as &lt;dependency&gt;</code></td></tr><tr><td>date <code>neq</code></td><td><code>&lt;subject&gt; must not be the same date as &lt;dependency&gt;</code></td></tr><tr><td>date <code>gt</code></td><td><code>&lt;subject&gt; must be after &lt;dependency&gt;</code></td></tr><tr><td>date <code>gte</code></td><td><code>&lt;subject&gt; must be on or after &lt;dependency&gt;</code></td></tr><tr><td>date <code>lt</code></td><td><code>&lt;subject&gt; must be before &lt;dependency&gt;</code></td></tr><tr><td>date <code>lte</code></td><td><code>&lt;subject&gt; must be on or before &lt;dependency&gt;</code></td></tr></tbody></table></div>
+<p>“Scalar” here covers text, long-text, choice, Boolean, and equality comparisons for numbers.</p>
+<h4 id="multiple-rule-behavior-2" class="doc-h"><a class="anchor" href="#multiple-rule-behavior-2" aria-label="Link to this section">#</a>Multiple-rule behavior</h4>
+<p>A definition can contain any number of independent rules:</p>
+<pre data-lang="json"><code>{
+  &quot;rules&quot;: [
+    {
+      &quot;field&quot;: &quot;end_date&quot;,
+      &quot;operator&quot;: &quot;gte&quot;,
+      &quot;other_field&quot;: &quot;start_date&quot;
+    },
+    {
+      &quot;field&quot;: &quot;end_date&quot;,
+      &quot;operator&quot;: &quot;lte&quot;,
+      &quot;other_field&quot;: &quot;reporting_deadline&quot;
+    }
+  ]
+}</code></pre>
+<p>Rules execute in array order. Every eligible rule runs; there is no short-circuiting or Boolean grouping. Each failed rule appends one error, so a field may receive multiple cross-field errors.</p>
+<h4 id="execution-and-error-order" class="doc-h"><a class="anchor" href="#execution-and-error-order" aria-label="Link to this section">#</a>Execution and error order</h4>
+<ol><li>Validate the rule configuration.</li><li>Run existing per-field validation in field order.</li><li>Record which fields have field-level errors.</li><li>Run eligible cross-field rules in <code>rules</code> order.</li><li>Append cross-field errors after all field-level errors.</li><li>Return <code>valid: errors.length === 0</code>.</li></ol>
+<h4 id="backward-compatibility-3" class="doc-h"><a class="anchor" href="#backward-compatibility-3" aria-label="Link to this section">#</a>Backward compatibility</h4>
+<ul><li>Missing <code>definition.rules</code> means no cross-field validation.</li><li><code>rules: []</code> also means no cross-field validation.</li><li>Existing definitions and records retain their current behavior.</li><li>Existing field validators, exports, error shape, and field-error ordering remain unchanged.</li><li>No dependency or TypeScript conversion is required.</li></ul>
+<h4 id="explicitly-unsupported-behavior-2" class="doc-h"><a class="anchor" href="#explicitly-unsupported-behavior-2" aria-label="Link to this section">#</a>Explicitly unsupported behavior</h4>
+<ul><li>Literal operands or constants.</li><li>Arithmetic or computed values.</li><li>More than two operands per rule.</li><li>AND/OR/NOT grouping.</li><li>Conditional rules.</li><li>Nested expressions.</li><li>Cross-type coercion.</li><li>Array or file comparison.</li><li>Ordering strings alphabetically.</li><li>Custom JavaScript or callbacks.</li><li>Asynchronous validation.</li><li>Custom message placeholders.</li><li>Automatically making a dependency required.</li><li>Correcting existing unrelated validator behavior.</li></ul>
+<h3 id="9-proposed-test-matrix-2" class="doc-h"><a class="anchor" href="#9-proposed-test-matrix-2" aria-label="Link to this section">#</a>9. Proposed Test Matrix</h3>
+<p>These tests are designs only; none have been implemented.</p>
+<div class="table-wrap"><table><thead><tr><th>Category</th><th>Scenario</th><th style="text-align:right">Expected valid</th><th>Expected error field</th><th>Expected behavior</th></tr></thead><tbody><tr><td>Happy path</td><td>Date <code>end gte start</code>, end is later</td><td style="text-align:right"><code>true</code></td><td>—</td><td>No errors</td></tr><tr><td>Happy path</td><td>Date <code>end gte start</code>, dates equal</td><td style="text-align:right"><code>true</code></td><td>—</td><td>Inclusive boundary passes</td></tr><tr><td>Happy path</td><td>Table-driven number checks cover all six operators</td><td style="text-align:right">Depends on case</td><td>Subject on failing cases</td><td>Numeric semantics, no coercion</td></tr><tr><td>Happy path</td><td>Text confirmation uses <code>eq</code> with exact matching strings</td><td style="text-align:right"><code>true</code></td><td>—</td><td>Equality comparison passes</td></tr><tr><td>Validation failure</td><td>End date is before start date</td><td style="text-align:right"><code>false</code></td><td><code>end_date</code></td><td>One generated date message</td></tr><tr><td>Validation failure</td><td>Maximum number is below minimum with custom message</td><td style="text-align:right"><code>false</code></td><td><code>maximum</code></td><td>Custom message returned verbatim</td></tr><tr><td>Missing value</td><td>Optional dependency is absent</td><td style="text-align:right"><code>true</code></td><td>—</td><td>Rule skipped</td></tr><tr><td>Missing value</td><td>Required dependency is absent</td><td style="text-align:right"><code>false</code></td><td>Dependency</td><td>Required error only; no subject error</td></tr><tr><td>Missing value</td><td>Required subject is blank</td><td style="text-align:right"><code>false</code></td><td>Subject</td><td>Required error only; rule skipped</td></tr><tr><td>Invalid operand</td><td>Dependency has malformed date text</td><td style="text-align:right"><code>false</code></td><td>Dependency</td><td>Existing date error only</td></tr><tr><td>Invalid operand</td><td>Subject contains a string instead of number</td><td style="text-align:right"><code>false</code></td><td>Subject</td><td>Existing number error only</td></tr><tr><td>Invalid configuration</td><td>Referenced field does not exist</td><td style="text-align:right">N/A</td><td>N/A</td><td>Synchronous <code>TypeError</code></td></tr><tr><td>Invalid configuration</td><td>Operator is unknown</td><td style="text-align:right">N/A</td><td>N/A</td><td>Synchronous <code>TypeError</code></td></tr><tr><td>Type mismatch</td><td>Number compared with date, or text uses <code>gte</code></td><td style="text-align:right">N/A</td><td>N/A</td><td>Synchronous <code>TypeError</code></td></tr><tr><td>Invalid configuration</td><td><code>rules</code> is not an array</td><td style="text-align:right">N/A</td><td>N/A</td><td>Synchronous <code>TypeError</code></td></tr><tr><td>Multiple rules</td><td>Two eligible rules on one subject both fail</td><td style="text-align:right"><code>false</code></td><td>Subject twice</td><td>Two errors in rule-array order</td></tr><tr><td>Backward compatibility</td><td>Existing Client A/B/C fixtures contain no <code>rules</code></td><td style="text-align:right">Existing results</td><td>Existing fields</td><td>All original 16 tests remain unchanged</td></tr></tbody></table></div>
+<h3 id="10-hidden-test-simulation-2" class="doc-h"><a class="anchor" href="#10-hidden-test-simulation-2" aria-label="Link to this section">#</a>10. Hidden-Test Simulation</h3>
+<h4 id="unknown-client-x-booking-window" class="doc-h"><a class="anchor" href="#unknown-client-x-booking-window" aria-label="Link to this section">#</a>Unknown Client X — Booking window</h4>
+<pre data-lang="json"><code>{
+  &quot;fields&quot;: [
+    {
+      &quot;name&quot;: &quot;booking_start&quot;,
+      &quot;label&quot;: &quot;Booking start&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    },
+    {
+      &quot;name&quot;: &quot;booking_end&quot;,
+      &quot;label&quot;: &quot;Booking end&quot;,
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;required&quot;: true
+    }
+  ],
+  &quot;rules&quot;: [
+    {
+      &quot;field&quot;: &quot;booking_end&quot;,
+      &quot;operator&quot;: &quot;gte&quot;,
+      &quot;other_field&quot;: &quot;booking_start&quot;
+    }
+  ]
+}</code></pre>
+<p>Record:</p>
+<pre data-lang="json"><code>{
+  &quot;booking_start&quot;: &quot;2026-10-20&quot;,
+  &quot;booking_end&quot;: &quot;2026-10-18&quot;
+}</code></pre>
+<p>Expected error:</p>
+<pre data-lang="json"><code>{
+  &quot;field&quot;: &quot;booking_end&quot;,
+  &quot;message&quot;: &quot;Booking end must be on or after Booking start&quot;
+}</code></pre>
+<p>The syntax and error owner are determinable without implementation knowledge.</p>
+<h4 id="unknown-client-y-capacity-range" class="doc-h"><a class="anchor" href="#unknown-client-y-capacity-range" aria-label="Link to this section">#</a>Unknown Client Y — Capacity range</h4>
+<pre data-lang="json"><code>{
+  &quot;fields&quot;: [
+    {
+      &quot;name&quot;: &quot;minimum_capacity&quot;,
+      &quot;label&quot;: &quot;Minimum capacity&quot;,
+      &quot;type&quot;: &quot;number&quot;,
+      &quot;required&quot;: true
+    },
+    {
+      &quot;name&quot;: &quot;maximum_capacity&quot;,
+      &quot;label&quot;: &quot;Maximum capacity&quot;,
+      &quot;type&quot;: &quot;number&quot;,
+      &quot;required&quot;: true
+    }
+  ],
+  &quot;rules&quot;: [
+    {
+      &quot;field&quot;: &quot;maximum_capacity&quot;,
+      &quot;operator&quot;: &quot;gte&quot;,
+      &quot;other_field&quot;: &quot;minimum_capacity&quot;
+    }
+  ]
+}</code></pre>
+<p>A maximum of <code>100</code> and minimum of <code>100</code> passes. A maximum of <code>99</code> fails against <code>maximum_capacity</code>.</p>
+<h4 id="unknown-client-z-contact-confirmation" class="doc-h"><a class="anchor" href="#unknown-client-z-contact-confirmation" aria-label="Link to this section">#</a>Unknown Client Z — Contact confirmation</h4>
+<pre data-lang="json"><code>{
+  &quot;fields&quot;: [
+    {
+      &quot;name&quot;: &quot;contact_email&quot;,
+      &quot;label&quot;: &quot;Contact email&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;required&quot;: true
+    },
+    {
+      &quot;name&quot;: &quot;contact_email_confirmation&quot;,
+      &quot;label&quot;: &quot;Contact email confirmation&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;required&quot;: true
+    }
+  ],
+  &quot;rules&quot;: [
+    {
+      &quot;field&quot;: &quot;contact_email_confirmation&quot;,
+      &quot;operator&quot;: &quot;eq&quot;,
+      &quot;other_field&quot;: &quot;contact_email&quot;,
+      &quot;message&quot;: &quot;Email confirmation must match the contact email&quot;
+    }
+  ]
+}</code></pre>
+<p>Different strings produce one error on <code>contact_email_confirmation</code> using the custom message verbatim.</p>
+<p>These simulations did not expose an unresolved syntax ambiguity.</p>
+<h3 id="11-explicit-non-goals-2" class="doc-h"><a class="anchor" href="#11-explicit-non-goals-2" aria-label="Link to this section">#</a>11. Explicit Non-Goals</h3>
+<p>This design does not:</p>
+<ul><li>create a general-purpose rule engine;</li><li>add an expression language;</li><li>support arithmetic, constants, or computed fields;</li><li>allow arbitrary JavaScript;</li><li>add conditional or grouped rules;</li><li>compare arrays or files;</li><li>perform cross-type coercion;</li><li>perform locale-aware or alphabetical text ordering;</li><li>change the public record-error shape;</li><li>convert the project to TypeScript;</li><li>add dependencies;</li><li>change client fixtures;</li><li>fix impossible calendar dates;</li><li>reject <code>Infinity</code>;</li><li>deduplicate multi-choice values;</li><li>change null-definition behavior;</li><li>catch invalid regex configuration;</li><li>change optional unknown-field behavior;</li><li>revise unrelated messages or validators.</li></ul>
+<h3 id="12-risks-open-questions-2" class="doc-h"><a class="anchor" href="#12-risks-open-questions-2" aria-label="Link to this section">#</a>12. Risks / Open Questions</h3>
+<p>The design is complete enough to implement, but approval should explicitly confirm these tradeoffs:</p>
+<ul><li><strong>Six operators:</strong> All six form a coherent binary vocabulary, but the implementation could be narrowed to <code>eq</code>, <code>neq</code>, <code>gt</code>, <code>gte</code>, <code>lt</code>, and <code>lte</code> only as documented—no aliases such as <code>&gt;=</code>.</li><li><strong>Configuration exceptions:</strong> Malformed rules throw <code>TypeError</code> rather than returning <code>{ valid: false }</code>. This cleanly separates developer configuration errors from user input errors but adds a documented throwing path.</li><li><strong>Exact-type restriction:</strong> <code>text</code> cannot be compared with <code>long_text</code>, even for equality. This sacrifices some flexibility to eliminate coercion and semantic guessing.</li><li><strong>Strict rule keys:</strong> Rejecting unknown properties catches typos but means future extensions must intentionally update the schema.</li><li><strong>Date limitation:</strong> Lexical comparison is deterministic, but it inherits the existing validator’s acceptance of some impossible calendar dates.</li><li><strong>Generated-message stability:</strong> Documenting exact templates makes hidden use predictable but turns those templates into public behavior.</li><li><strong>Definition validation scope:</strong> Only the new <code>rules</code> structure receives strict configuration validation. Existing malformed field-definition behavior remains unchanged.</li></ul>
+<h3 id="13-ai-worklog-update-2" class="doc-h"><a class="anchor" href="#13-ai-worklog-update-2" aria-label="Link to this section">#</a>13. AI Worklog Update</h3>
+<p>Updated only private/AI-WORKLOG.md [REDACTED — private local file link] with a genuine design decision:</p>
+<ul><li>field-attached rules were rejected because relationships become distributed through the field list;</li><li>generic operand objects were rejected because they add error-target ambiguity and encourage expression-language growth;</li><li>the flat top-level binary format was selected provisionally;</li><li>implementation remains subject to approval.</li></ul>
+<p>The README, validator, tests, package configuration, and client fixtures retained their original hashes. No Git repository exists.</p>
+<h3 id="14-recommended-next-phase-2" class="doc-h"><a class="anchor" href="#14-recommended-next-phase-2" aria-label="Link to this section">#</a>14. Recommended Next Phase</h3>
+<p><strong>Part 2 — Implement the Approved Cross-Field Validation Design</strong></p>
+<p>Implementation has not begun.</p>
+  </div>
+</article></section>
+        <p class="doc-foot-raw"><a href="./codex-session-02.md">View the raw <code>codex-session-02.md</code></a> · <a href="../../">Back to the submission</a></p>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <p class="footer-title">Benoz.AI Take-Home Exercise</p>
+          <p>Senior Full Stack Developer · Philippine Time</p>
+        </div>
+        <div class="footer-links">
+          <a href="#doc-main">Back to top</a>
+          <a href="../../">Submission</a>
+          <a href="./codex-session-02.md">Raw source</a>
+        </div>
+      </div>
+    </footer>
+    <script src="../../submission/doc.js" defer></script>
+  </body>
+</html>

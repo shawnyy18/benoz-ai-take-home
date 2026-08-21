@@ -1,0 +1,1073 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Codex main session — publication export 1 of 4 — Benoz.AI take-home submission.">
+    <title>Codex main session — publication export 1 of 4 · Benoz.AI Take-Home</title>
+    <link rel="stylesheet" href="../../submission/styles.css">
+    <link rel="stylesheet" href="../../submission/doc.css">
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#doc-main">Skip to content</a>
+
+    <nav class="section-nav" aria-label="Submission">
+      <div class="shell nav-inner">
+        <a href="../../">← Submission</a>
+        <a href="../../#part-1">Part 1</a>
+        <a href="../../#part-2">Part 2</a>
+        <a href="../../#part-3">Part 3</a>
+        <a href="../../#part-4">Part 4</a>
+      </div>
+    </nav>
+
+    <header class="doc-header">
+      <div class="shell">
+        <p class="doc-crumb">Part 4 · Transcript</p>
+        <h1>Codex main session — publication export 1 of 4</h1>
+        <ul class="doc-facts"><li>15 messages</li><li>2 turns</li><li>2,025 lines</li><li>10,428 words</li><li>72 KB</li></ul>
+        <p class="doc-raw">
+          <a class="raw-link" href="./codex-session-01.md">View raw <code>codex-session-01.md</code></a>
+          <span>This page is generated from that file at build time. Nothing is hidden, summarised, or reordered.</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="shell doc-layout">
+      <aside class="doc-nav" aria-label="Contents"><p class="doc-nav-title">Contents</p><ol class="toc"><li class="toc-turn"><a href="#turn-1">Turn 1</a></li><li class="toc-msg toc-msg--user"><a href="#turn-1-user-1">User</a></li><li class="toc-sub"><a href="#primary-objective-for-this-phase">PRIMARY OBJECTIVE FOR THIS PHASE</a></li><li class="toc-sub"><a href="#step-1-inspect-the-complete-workspace">STEP 1 — INSPECT THE COMPLETE WORKSPACE</a></li><li class="toc-sub"><a href="#step-2-create-a-workspace-inventory">STEP 2 — CREATE A WORKSPACE INVENTORY</a></li><li class="toc-sub"><a href="#step-3-understand-the-existing-validation-library">STEP 3 — UNDERSTAND THE EXISTING VALIDATION LIBRARY</a></li><li class="toc-sub"><a href="#step-4-understand-the-test-suite">STEP 4 — UNDERSTAND THE TEST SUITE</a></li><li class="toc-sub"><a href="#step-5-review-the-architecture-handover">STEP 5 — REVIEW THE ARCHITECTURE HANDOVER</a></li><li class="toc-sub"><a href="#step-6-analyze-against-the-three-clients">STEP 6 — ANALYZE AGAINST THE THREE CLIENTS</a></li><li class="toc-sub"><a href="#step-7-identify-ambiguities">STEP 7 — IDENTIFY AMBIGUITIES</a></li><li class="toc-sub"><a href="#potential-clarification-questions">Potential Clarification Questions</a></li><li class="toc-sub"><a href="#step-8-propose-the-professional-final-project-structure">STEP 8 — PROPOSE THE PROFESSIONAL FINAL PROJECT STRUCTURE</a></li><li class="toc-sub"><a href="#step-9-private-working-files">STEP 9 — PRIVATE WORKING FILES</a></li><li class="toc-sub"><a href="#ai-worklog-md">AI-WORKLOG.md</a></li><li class="toc-sub"><a href="#interview-notes-md">INTERVIEW-NOTES.md</a></li><li class="toc-sub"><a href="#step-10-protect-the-repository">STEP 10 — PROTECT THE REPOSITORY</a></li><li class="toc-sub"><a href="#step-11-git-discipline">STEP 11 — GIT DISCIPLINE</a></li><li class="toc-sub"><a href="#step-12-quality-standard-for-the-entire-project">STEP 12 — QUALITY STANDARD FOR THE ENTIRE PROJECT</a></li><li class="toc-sub"><a href="#important-do-not-overstate-my-experience">IMPORTANT — DO NOT OVERSTATE MY EXPERIENCE</a></li><li class="toc-sub"><a href="#important-this-will-be-discussed-live">IMPORTANT — THIS WILL BE DISCUSSED LIVE</a></li><li class="toc-sub"><a href="#deliverable-for-this-phase">DELIVERABLE FOR THIS PHASE</a></li><li class="toc-sub"><a href="#1-workspace-inventory">1. Workspace Inventory</a></li><li class="toc-sub"><a href="#2-exercise-requirements">2. Exercise Requirements</a></li><li class="toc-sub"><a href="#3-current-validation-architecture">3. Current Validation Architecture</a></li><li class="toc-sub"><a href="#4-current-test-architecture">4. Current Test Architecture</a></li><li class="toc-sub"><a href="#5-baseline-test-typecheck-build-status">5. Baseline Test / Typecheck / Build Status</a></li><li class="toc-sub"><a href="#6-handover-architecture-findings">6. Handover Architecture Findings</a></li><li class="toc-sub"><a href="#7-potential-clarification-questions">7. Potential Clarification Questions</a></li><li class="toc-sub"><a href="#8-recommended-final-repository-structure">8. Recommended Final Repository Structure</a></li><li class="toc-sub"><a href="#9-recommended-execution-order">9. Recommended Execution Order</a></li><li class="toc-sub"><a href="#10-risks-to-avoid">10. Risks to Avoid</a></li><li class="toc-sub"><a href="#11-interview-knowledge-gaps">11. Interview Knowledge Gaps</a></li><li class="toc-sub"><a href="#12-recommended-next-prompt">12. Recommended Next Prompt</a></li><li class="toc-sub"><a href="#stop-condition">STOP CONDITION</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-1-codex-commentary-2">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-1-codex-commentary-3">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-1-codex-commentary-4">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-1-codex-commentary-5">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-1-codex-commentary-6">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-1-codex-commentary-7">Codex — commentary</a></li><li class="toc-msg toc-msg--assistant"><a href="#turn-1-codex-final-response-8">Codex — final response</a></li><li class="toc-sub"><a href="#1-workspace-inventory-2">1. Workspace Inventory</a></li><li class="toc-sub"><a href="#2-exercise-requirements-2">2. Exercise Requirements</a></li><li class="toc-sub"><a href="#3-current-validation-architecture-2">3. Current Validation Architecture</a></li><li class="toc-sub"><a href="#4-current-test-architecture-2">4. Current Test Architecture</a></li><li class="toc-sub"><a href="#5-baseline-test-typecheck-build-status-2">5. Baseline Test / Typecheck / Build Status</a></li><li class="toc-sub"><a href="#6-handover-architecture-findings-2">6. Handover Architecture Findings</a></li><li class="toc-sub"><a href="#7-potential-clarification-questions-2">7. Potential Clarification Questions</a></li><li class="toc-sub"><a href="#8-recommended-final-repository-structure-2">8. Recommended Final Repository Structure</a></li><li class="toc-sub"><a href="#9-recommended-execution-order-2">9. Recommended Execution Order</a></li><li class="toc-sub"><a href="#10-risks-to-avoid-2">10. Risks to Avoid</a></li><li class="toc-sub"><a href="#11-interview-knowledge-gaps-2">11. Interview Knowledge Gaps</a></li><li class="toc-sub"><a href="#12-recommended-next-prompt-2">12. Recommended Next Prompt</a></li><li class="toc-turn"><a href="#turn-2">Turn 2</a></li><li class="toc-msg toc-msg--user"><a href="#turn-2-user-1">User</a></li><li class="toc-sub"><a href="#benoz-ai-take-home-phase-2-architecture-review-decision-work">Benoz.AI Take-Home — Phase 2: Architecture Review Decision Workshop</a></li><li class="toc-sub"><a href="#important-correction-from-phase-1">IMPORTANT CORRECTION FROM PHASE 1</a></li><li class="toc-sub"><a href="#primary-objective">PRIMARY OBJECTIVE</a></li><li class="toc-sub"><a href="#step-1-re-read-the-relevant-sources">STEP 1 — RE-READ THE RELEVANT SOURCES</a></li><li class="toc-sub"><a href="#step-2-audit-your-own-phase-1-findings">STEP 2 — AUDIT YOUR OWN PHASE 1 FINDINGS</a></li><li class="toc-sub"><a href="#step-3-verify-severity-carefully">STEP 3 — VERIFY SEVERITY CAREFULLY</a></li><li class="toc-sub"><a href="#step-4-pay-special-attention-to-these-phase-1-claims">STEP 4 — PAY SPECIAL ATTENTION TO THESE PHASE 1 CLAIMS</a></li><li class="toc-sub"><a href="#step-5-find-false-positives">STEP 5 — FIND FALSE POSITIVES</a></li><li class="toc-sub"><a href="#step-6-reduce-to-the-strongest-findings">STEP 6 — REDUCE TO THE STRONGEST FINDINGS</a></li><li class="toc-sub"><a href="#step-7-structure-each-finalist">STEP 7 — STRUCTURE EACH FINALIST</a></li><li class="toc-sub"><a href="#step-8-choose-the-fix-first-candidate">STEP 8 — CHOOSE THE FIX-FIRST CANDIDATE</a></li><li class="toc-sub"><a href="#step-9-don-t-over-solve">STEP 9 — DON'T OVER-SOLVE</a></li><li class="toc-sub"><a href="#step-10-legal-and-regulatory-claims">STEP 10 — LEGAL AND REGULATORY CLAIMS</a></li><li class="toc-sub"><a href="#step-11-output-for-this-workshop">STEP 11 — OUTPUT FOR THIS WORKSHOP</a></li><li class="toc-sub"><a href="#1-phase-1-self-critique">1. Phase 1 Self-Critique</a></li><li class="toc-sub"><a href="#2-recommended-part-1-findings">2. Recommended Part 1 Findings</a></li><li class="toc-sub"><a href="#3-findings-i-recommend-dropping">3. Findings I Recommend Dropping</a></li><li class="toc-sub"><a href="#4-suspicious-but-actually-reasonable">4. Suspicious but Actually Reasonable</a></li><li class="toc-sub"><a href="#5-fix-first-comparison">5. Fix-First Comparison</a></li><li class="toc-sub"><a href="#6-recommended-fix-first">6. Recommended Fix First</a></li><li class="toc-sub"><a href="#7-remaining-uncertainties">7. Remaining Uncertainties</a></li><li class="toc-sub"><a href="#8-proposed-public-part-1-structure">8. Proposed Public Part 1 Structure</a></li><li class="toc-sub"><a href="#9-ai-worklog-update">9. AI Worklog Update</a></li><li class="toc-sub"><a href="#10-recommended-next-step">10. Recommended Next Step</a></li><li class="toc-sub"><a href="#stop-condition-2">STOP CONDITION</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-2-codex-commentary-2">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-2-codex-commentary-3">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-2-codex-commentary-4">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-2-codex-commentary-5">Codex — commentary</a></li><li class="toc-msg toc-msg--commentary"><a href="#turn-2-codex-commentary-6">Codex — commentary</a></li><li class="toc-msg toc-msg--assistant"><a href="#turn-2-codex-final-response-7">Codex — final response</a></li><li class="toc-sub"><a href="#1-phase-1-self-critique-2">1. Phase 1 Self-Critique</a></li><li class="toc-sub"><a href="#2-recommended-part-1-findings-2">2. Recommended Part 1 Findings</a></li><li class="toc-sub"><a href="#3-findings-i-recommend-dropping-2">3. Findings I Recommend Dropping</a></li><li class="toc-sub"><a href="#4-suspicious-but-actually-reasonable-2">4. Suspicious but Actually Reasonable</a></li><li class="toc-sub"><a href="#5-fix-first-comparison-2">5. Fix-First Comparison</a></li><li class="toc-sub"><a href="#6-recommended-fix-first-2">6. Recommended Fix First</a></li><li class="toc-sub"><a href="#7-remaining-uncertainties-2">7. Remaining Uncertainties</a></li><li class="toc-sub"><a href="#8-proposed-public-part-1-structure-2">8. Proposed Public Part 1 Structure</a></li><li class="toc-sub"><a href="#9-ai-worklog-update-2">9. AI Worklog Update</a></li><li class="toc-sub"><a href="#10-recommended-next-step-2">10. Recommended Next Step</a></li></ol></aside>
+      <main id="doc-main" class="doc-main">
+        <div class="doc-intro"><p>Source: native Codex task history for “Audit Benoz.AI starter repository”.</p>
+<p>Scope: completed user and assistant conversation messages in chronological order. Internal reasoning summaries and tool-event metadata are not conversation messages and are not included.</p>
+<p>Integrity: message text is preserved except for the labeled local-path redactions documented in the private redaction log.</p></div>
+        <section class="turn"><h2 class="turn-head" id="turn-1"><span>Turn 1</span></h2>
+<article class="msg msg--user" id="turn-1-user-1">
+  <header class="msg-head">
+    <span class="msg-role">User</span>
+    <a class="msg-anchor" href="#turn-1-user-1" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p><a href="plugin://gmail@openai-curated-remote">@gmail</a> # Benoz.AI Take-Home Exercise — Phase 1: Repository Audit and Professional Project Setup</p>
+<p>You are working with me on a real hiring assessment for the <strong>Senior Full Stack Developer role at Benoz.AI</strong>.</p>
+<p>This repository contains the official Benoz.AI take-home exercise materials and starter package.</p>
+<p>Your role is to act as my <strong>senior engineering implementation partner</strong>, but do not blindly complete the assessment for me. Important architecture choices must remain decisions that I understand, agree with, and can defend during the later technical discussion.</p>
+<p>AI-assisted development is explicitly encouraged by Benoz.AI, and our actual AI conversations may be reviewed as part of the hiring process.</p>
+<p>Therefore:</p>
+<ul><li>reason carefully;</li><li>challenge weak ideas;</li><li>do not fabricate information;</li><li>do not pretend commands/tests were run if they were not;</li><li>do not hide uncertainty;</li><li>do not overengineer;</li><li>preserve the original starter project's intent;</li><li>prioritize quality, correctness, maintainability, security, and clear engineering reasoning.</li></ul>
+<hr>
+<h3 id="primary-objective-for-this-phase" class="doc-h"><a class="anchor" href="#primary-objective-for-this-phase" aria-label="Link to this section">#</a>PRIMARY OBJECTIVE FOR THIS PHASE</h3>
+<p>Do <strong>not</strong> begin implementing the cross-field validation feature yet.</p>
+<p>Do <strong>not</strong> write the final submission answers yet.</p>
+<p>Do <strong>not</strong> build the submission website yet.</p>
+<p>The goal of this phase is to:</p>
+<ol><li>fully inspect the supplied exercise;</li><li>understand the starter code;</li><li>understand the architecture handover;</li><li>understand all existing tests;</li><li>establish a professional project structure;</li><li>identify risks, ambiguities, and important decisions;</li><li>prepare a clear execution plan for the complete take-home.</li></ol>
+<p>We want to understand the system before touching it.</p>
+<hr>
+<h3 id="step-1-inspect-the-complete-workspace" class="doc-h"><a class="anchor" href="#step-1-inspect-the-complete-workspace" aria-label="Link to this section">#</a>STEP 1 — INSPECT THE COMPLETE WORKSPACE</h3>
+<p>Start by recursively inspecting the current workspace.</p>
+<p>Locate all supplied materials, especially:</p>
+<ul><li>Take-home exercise document</li><li>Starter package</li><li><code>README.md</code></li><li><code>review/handover-architecture.md</code></li><li>source files</li><li>validation library</li><li>test files</li><li>TypeScript configuration</li><li>package configuration</li><li>lint/format/test configuration</li><li>existing documentation</li><li>scripts</li><li>fixtures</li><li>example definitions</li><li>any other Benoz.AI-provided files</li></ul>
+<p>If the starter package is compressed, extract or inspect it safely while preserving the original archive.</p>
+<p>Do not modify employer-provided files during the discovery phase unless technically required simply to inspect them.</p>
+<hr>
+<h3 id="step-2-create-a-workspace-inventory" class="doc-h"><a class="anchor" href="#step-2-create-a-workspace-inventory" aria-label="Link to this section">#</a>STEP 2 — CREATE A WORKSPACE INVENTORY</h3>
+<p>Report the repository structure in a concise tree.</p>
+<p>Example format:</p>
+<pre data-lang="text"><code>project/
+├── README.md
+├── package.json
+├── review/
+│   └── handover-architecture.md
+├── src/
+├── tests/
+└── ...</code></pre>
+<p>For every important directory/file, briefly state its purpose.</p>
+<p>Do not describe irrelevant generated folders such as <code>node_modules</code>.</p>
+<hr>
+<h3 id="step-3-understand-the-existing-validation-library" class="doc-h"><a class="anchor" href="#step-3-understand-the-existing-validation-library" aria-label="Link to this section">#</a>STEP 3 — UNDERSTAND THE EXISTING VALIDATION LIBRARY</h3>
+<p>Before proposing any implementation, explain:</p>
+<h4 id="current-data-model" class="doc-h"><a class="anchor" href="#current-data-model" aria-label="Link to this section">#</a>Current data model</h4>
+<p>How are validation definitions currently represented?</p>
+<h4 id="current-api" class="doc-h"><a class="anchor" href="#current-api" aria-label="Link to this section">#</a>Current API</h4>
+<p>What functions/classes/modules perform validation?</p>
+<h4 id="validation-flow" class="doc-h"><a class="anchor" href="#validation-flow" aria-label="Link to this section">#</a>Validation flow</h4>
+<p>Trace what happens from:</p>
+<pre data-lang="text"><code>definition + input
+        ↓
+validation
+        ↓
+errors/result</code></pre>
+<h4 id="existing-validators" class="doc-h"><a class="anchor" href="#existing-validators" aria-label="Link to this section">#</a>Existing validators</h4>
+<p>Identify the supported validation behaviors.</p>
+<h4 id="error-representation" class="doc-h"><a class="anchor" href="#error-representation" aria-label="Link to this section">#</a>Error representation</h4>
+<p>Explain the existing error format.</p>
+<h4 id="type-handling" class="doc-h"><a class="anchor" href="#type-handling" aria-label="Link to this section">#</a>Type handling</h4>
+<p>Explain how different field types are currently validated.</p>
+<h4 id="extensibility" class="doc-h"><a class="anchor" href="#extensibility" aria-label="Link to this section">#</a>Extensibility</h4>
+<p>Identify the natural extension point for cross-field validation.</p>
+<h4 id="constraints" class="doc-h"><a class="anchor" href="#constraints" aria-label="Link to this section">#</a>Constraints</h4>
+<p>Identify anything in the existing design that makes cross-field validation difficult.</p>
+<p>Do not propose a rewrite unless there is a compelling reason.</p>
+<p>Our preference is to extend the existing system cleanly.</p>
+<hr>
+<h3 id="step-4-understand-the-test-suite" class="doc-h"><a class="anchor" href="#step-4-understand-the-test-suite" aria-label="Link to this section">#</a>STEP 4 — UNDERSTAND THE TEST SUITE</h3>
+<p>Inspect every relevant existing test.</p>
+<p>Report:</p>
+<ul><li>testing framework;</li><li>test organization;</li><li>test helpers;</li><li>fixture strategy;</li><li>edge cases already covered;</li><li>assumptions encoded by the tests;</li><li>areas where behavior is currently undefined.</li></ul>
+<p>Run the existing test suite before modifying anything.</p>
+<p>Report:</p>
+<pre data-lang="text"><code>Tests:
+X passing
+X failing
+
+Typecheck:
+pass/fail
+
+Lint:
+pass/fail
+
+Build:
+pass/fail</code></pre>
+<p>Only report commands as successful if they were actually executed successfully.</p>
+<p>If something cannot run because of environment/dependency issues, explain exactly why.</p>
+<p>Do not modify tests merely to make them pass.</p>
+<hr>
+<h3 id="step-5-review-the-architecture-handover" class="doc-h"><a class="anchor" href="#step-5-review-the-architecture-handover" aria-label="Link to this section">#</a>STEP 5 — REVIEW THE ARCHITECTURE HANDOVER</h3>
+<p>Read:</p>
+<p><code>review/handover-architecture.md</code></p>
+<p>as if I am about to become responsible for the production system.</p>
+<p>Do not assume everything is wrong.</p>
+<p>Identify:</p>
+<h5 id="real-problems" class="doc-h"><a class="anchor" href="#real-problems" aria-label="Link to this section">#</a>Real problems</h5>
+<p>Problems that would create concrete operational, security, scalability, correctness, or legal consequences.</p>
+<p>For each potential issue explain:</p>
+<p><strong>Problem</strong></p>
+<p>What is wrong.</p>
+<p><strong>Real-world consequence</strong></p>
+<p>What actually happens in production.</p>
+<p>Avoid vague claims such as:</p>
+<blockquote><p>This does not scale.</p></blockquote>
+<p>Instead explain the failure mode.</p>
+<p><strong>Severity</strong></p>
+<p>Use Benoz.AI's categories:</p>
+<ul><li>Critical — data loss, data leak, or legal exposure</li><li>Serious — breaks under real load or real use</li><li>Minor — worth fixing but not urgent</li></ul>
+<p><strong>Potential remedy</strong></p>
+<p>A reasonable correction.</p>
+<p>Do not finalize the submitted answer yet.</p>
+<hr>
+<h5 id="things-that-are-actually-fine" class="doc-h"><a class="anchor" href="#things-that-are-actually-fine" aria-label="Link to this section">#</a>Things that are actually fine</h5>
+<p>Also identify architecture decisions that initially appear suspicious but are reasonable given the stated requirements.</p>
+<p>Benoz.AI explicitly values identifying false positives as well as real problems.</p>
+<hr>
+<h3 id="step-6-analyze-against-the-three-clients" class="doc-h"><a class="anchor" href="#step-6-analyze-against-the-three-clients" aria-label="Link to this section">#</a>STEP 6 — ANALYZE AGAINST THE THREE CLIENTS</h3>
+<p>Use the scenarios in the exercise as test cases for the architecture.</p>
+<h4 id="client-a-city-maintenance" class="doc-h"><a class="anchor" href="#client-a-city-maintenance" aria-label="Link to this section">#</a>Client A — City Maintenance</h4>
+<p>Consider especially:</p>
+<ul><li>normal volume;</li><li>burst volume;</li><li>authorization;</li><li>workflow changes;</li><li>notifications;</li><li>inconsistent resident identity data;</li><li>frequent configuration changes.</li></ul>
+<hr>
+<h4 id="client-b-grant-making-foundation" class="doc-h"><a class="anchor" href="#client-b-grant-making-foundation" aria-label="Link to this section">#</a>Client B — Grant-Making Foundation</h4>
+<p>Consider:</p>
+<ul><li>external registry API dependency;</li><li>eligibility calculations;</li><li>historical data;</li><li>scoring formula revisions;</li><li>board-controlled weights;</li><li>automatic rejection;</li><li>delayed email;</li><li>repeatability/auditability.</li></ul>
+<hr>
+<h4 id="client-c-specialist-clinic" class="doc-h"><a class="anchor" href="#client-c-specialist-clinic" aria-label="Link to this section">#</a>Client C — Specialist Clinic</h4>
+<p>Consider:</p>
+<ul><li>sensitive medical data;</li><li>national ID;</li><li>clinical notes;</li><li>field-level visibility;</li><li>audit requirements;</li><li>urgent alerts;</li><li>infrastructure/data residency requirements.</li></ul>
+<p>For Client C, treat security/privacy concerns as genuine architecture constraints rather than generic best-practice notes.</p>
+<hr>
+<h3 id="step-7-identify-ambiguities" class="doc-h"><a class="anchor" href="#step-7-identify-ambiguities" aria-label="Link to this section">#</a>STEP 7 — IDENTIFY AMBIGUITIES</h3>
+<p>The employer explicitly allows clarification questions.</p>
+<p>Create a section:</p>
+<h3 id="potential-clarification-questions" class="doc-h"><a class="anchor" href="#potential-clarification-questions" aria-label="Link to this section">#</a>Potential Clarification Questions</h3>
+<p>Only include questions where the answer could materially affect:</p>
+<ul><li>architecture review;</li><li>validation-library implementation;</li><li>hidden-test compatibility;</li><li>infrastructure decision;</li><li>scoring decision;</li><li>scaling decision.</li></ul>
+<p>For each question provide:</p>
+<h5 id="question" class="doc-h"><a class="anchor" href="#question" aria-label="Link to this section">#</a>Question</h5>
+<h5 id="why-it-matters" class="doc-h"><a class="anchor" href="#why-it-matters" aria-label="Link to this section">#</a>Why it matters</h5>
+<h5 id="default-assumption-if-unanswered" class="doc-h"><a class="anchor" href="#default-assumption-if-unanswered" aria-label="Link to this section">#</a>Default assumption if unanswered</h5>
+<p>Do not create questions merely to appear thorough.</p>
+<hr>
+<h3 id="step-8-propose-the-professional-final-project-structure" class="doc-h"><a class="anchor" href="#step-8-propose-the-professional-final-project-structure" aria-label="Link to this section">#</a>STEP 8 — PROPOSE THE PROFESSIONAL FINAL PROJECT STRUCTURE</h3>
+<p>Do not aggressively reorganize the supplied starter repository.</p>
+<p>Preserve its existing structure wherever practical.</p>
+<p>However, recommend how we should ultimately organize our additional work.</p>
+<p>The final structure should clearly support:</p>
+<pre data-lang="text"><code>Part 1 — Architecture Review
+Part 2 — Validation Library
+Part 3 — Architecture Decisions
+Part 4 — AI Workflow
+Final Hosted Submission
+Private Interview Preparation</code></pre>
+<p>Use the existing repository layout as the foundation rather than imposing a completely new architecture.</p>
+<p>A possible direction is:</p>
+<pre data-lang="text"><code>existing-starter-files/
+│
+├── review/
+│   ├── handover-architecture.md
+│   └── architecture-review.md
+│
+├── src or lib/
+│   └── existing validation library
+│
+├── tests/
+│   └── validation tests
+│
+├── docs/
+│   ├── decision-1-isolation.md
+│   ├── decision-2-eligibility-score.md
+│   ├── decision-3-scaling.md
+│   └── ai-usage.md
+│
+├── submission/
+│   └── hosted submission site
+│
+└── README.md</code></pre>
+<p>But adapt this to the actual repository.</p>
+<p>Do not move supplied files simply for cosmetic organization.</p>
+<hr>
+<h3 id="step-9-private-working-files" class="doc-h"><a class="anchor" href="#step-9-private-working-files" aria-label="Link to this section">#</a>STEP 9 — PRIVATE WORKING FILES</h3>
+<p>Recommend or create, if appropriate:</p>
+<pre data-lang="text"><code>private/
+├── AI-WORKLOG.md
+├── INTERVIEW-NOTES.md
+└── BENOZ-QUESTIONS.md</code></pre>
+<p>These are internal working documents.</p>
+<p>They should not automatically become part of the published submission.</p>
+<p>Ensure <code>private/</code> is excluded from the public repository if needed.</p>
+<hr>
+<h3 id="ai-worklog-md" class="doc-h"><a class="anchor" href="#ai-worklog-md" aria-label="Link to this section">#</a>AI-WORKLOG.md</h3>
+<p>This should track our actual AI-assisted workflow.</p>
+<p>Use entries such as:</p>
+<pre data-lang="markdown"><code>## Entry
+
+Tool:
+Codex
+
+Task:
+Reviewed validation library architecture.
+
+Suggestion:
+Use a generic expression-evaluation engine.
+
+Decision:
+Rejected.
+
+Reason:
+Would introduce unnecessary complexity for the requested comparison-based feature.
+
+Human judgment involved:
+Choosing the smallest abstraction that supports the hidden-test requirement.</code></pre>
+<p>Do not invent rejected AI suggestions.</p>
+<p>Only record genuine events.</p>
+<hr>
+<h3 id="interview-notes-md" class="doc-h"><a class="anchor" href="#interview-notes-md" aria-label="Link to this section">#</a>INTERVIEW-NOTES.md</h3>
+<p>For every major decision eventually accepted into the submission:</p>
+<pre data-lang="markdown"><code>## Decision
+
+### Choice
+
+### Why
+
+### Strongest alternative
+
+### Why we did not choose it
+
+### Tradeoff
+
+### Failure mode
+
+### What would change our decision</code></pre>
+<p>These notes are for live interview preparation.</p>
+<p>They should not be automatically published.</p>
+<hr>
+<h3 id="step-10-protect-the-repository" class="doc-h"><a class="anchor" href="#step-10-protect-the-repository" aria-label="Link to this section">#</a>STEP 10 — PROTECT THE REPOSITORY</h3>
+<p>Check:</p>
+<ul><li><code>.gitignore</code></li><li>environment files</li><li>API keys</li><li>secrets</li><li>tokens</li><li>credentials</li><li>personal information</li></ul>
+<p>No secrets should ever be committed.</p>
+<p>Do not add:</p>
+<ul><li>Gmail credentials;</li><li>OAuth tokens;</li><li>Supabase service-role keys;</li><li>API keys;</li><li>deployment secrets;</li><li>local <code>.env</code> files.</li></ul>
+<p>If examples are necessary, use:</p>
+<pre data-lang="text"><code>.env.example</code></pre>
+<p>with safe placeholders.</p>
+<hr>
+<h3 id="step-11-git-discipline" class="doc-h"><a class="anchor" href="#step-11-git-discipline" aria-label="Link to this section">#</a>STEP 11 — GIT DISCIPLINE</h3>
+<p>Inspect Git status/history if this repository is already initialized.</p>
+<p>Do not perform destructive Git operations.</p>
+<p>Do not rewrite history.</p>
+<p>Do not automatically push anything.</p>
+<p>Do not automatically make the repository public.</p>
+<p>Do not create artificial commit history simply to make the project look more active.</p>
+<p>Later commits should correspond to meaningful engineering milestones.</p>
+<hr>
+<h3 id="step-12-quality-standard-for-the-entire-project" class="doc-h"><a class="anchor" href="#step-12-quality-standard-for-the-entire-project" aria-label="Link to this section">#</a>STEP 12 — QUALITY STANDARD FOR THE ENTIRE PROJECT</h3>
+<p>Everything we eventually submit should feel like the work of an engineer taking ownership of an existing system.</p>
+<p>Optimize for:</p>
+<h5 id="correctness" class="doc-h"><a class="anchor" href="#correctness" aria-label="Link to this section">#</a>Correctness</h5>
+<p>Implementation behaves consistently and predictably.</p>
+<h5 id="simplicity" class="doc-h"><a class="anchor" href="#simplicity" aria-label="Link to this section">#</a>Simplicity</h5>
+<p>Prefer the smallest sufficient abstraction.</p>
+<h5 id="maintainability" class="doc-h"><a class="anchor" href="#maintainability" aria-label="Link to this section">#</a>Maintainability</h5>
+<p>Another engineer should understand the code without requiring us to explain it verbally.</p>
+<h5 id="documentation" class="doc-h"><a class="anchor" href="#documentation" aria-label="Link to this section">#</a>Documentation</h5>
+<p>The README must be precise enough that Benoz.AI can construct a hidden validation definition using our documented design.</p>
+<h5 id="testing" class="doc-h"><a class="anchor" href="#testing" aria-label="Link to this section">#</a>Testing</h5>
+<p>Important behavior and awkward cases are covered without test-count inflation.</p>
+<h5 id="security" class="doc-h"><a class="anchor" href="#security" aria-label="Link to this section">#</a>Security</h5>
+<p>Tenant isolation, authorization, and sensitive-data concerns are treated seriously.</p>
+<h5 id="professional-communication" class="doc-h"><a class="anchor" href="#professional-communication" aria-label="Link to this section">#</a>Professional communication</h5>
+<p>Short and precise is better than verbose and vague.</p>
+<h5 id="honest-limitations" class="doc-h"><a class="anchor" href="#honest-limitations" aria-label="Link to this section">#</a>Honest limitations</h5>
+<p>If we intentionally do not support something, document it clearly.</p>
+<hr>
+<h3 id="important-do-not-overstate-my-experience" class="doc-h"><a class="anchor" href="#important-do-not-overstate-my-experience" aria-label="Link to this section">#</a>IMPORTANT — DO NOT OVERSTATE MY EXPERIENCE</h3>
+<p>Do not write claims about my background or experience unless they are explicitly provided by me.</p>
+<p>Do not fabricate:</p>
+<ul><li>years of experience;</li><li>production scale;</li><li>previous employment;</li><li>technical leadership roles;</li><li>architecture ownership;</li><li>security expertise;</li><li>DevOps expertise.</li></ul>
+<p>Evaluate the quality of the work itself.</p>
+<hr>
+<h3 id="important-this-will-be-discussed-live" class="doc-h"><a class="anchor" href="#important-this-will-be-discussed-live" aria-label="Link to this section">#</a>IMPORTANT — THIS WILL BE DISCUSSED LIVE</h3>
+<p>Assume the hiring team may ask:</p>
+<blockquote><p>Why did you make this decision?</p></blockquote>
+<p>for every important design choice.</p>
+<p>Therefore never introduce architecture or implementation choices that we cannot explain.</p>
+<p>If you recommend something advanced, explain it simply enough that I could defend it myself.</p>
+<p>If you identify something I should study before the interview, flag it under:</p>
+<pre data-lang="text"><code>Interview Knowledge Gap</code></pre>
+<hr>
+<h3 id="deliverable-for-this-phase" class="doc-h"><a class="anchor" href="#deliverable-for-this-phase" aria-label="Link to this section">#</a>DELIVERABLE FOR THIS PHASE</h3>
+<p>After completing discovery, return a structured report with exactly these sections:</p>
+<h3 id="1-workspace-inventory" class="doc-h"><a class="anchor" href="#1-workspace-inventory" aria-label="Link to this section">#</a>1. Workspace Inventory</h3>
+<h3 id="2-exercise-requirements" class="doc-h"><a class="anchor" href="#2-exercise-requirements" aria-label="Link to this section">#</a>2. Exercise Requirements</h3>
+<h3 id="3-current-validation-architecture" class="doc-h"><a class="anchor" href="#3-current-validation-architecture" aria-label="Link to this section">#</a>3. Current Validation Architecture</h3>
+<h3 id="4-current-test-architecture" class="doc-h"><a class="anchor" href="#4-current-test-architecture" aria-label="Link to this section">#</a>4. Current Test Architecture</h3>
+<h3 id="5-baseline-test-typecheck-build-status" class="doc-h"><a class="anchor" href="#5-baseline-test-typecheck-build-status" aria-label="Link to this section">#</a>5. Baseline Test / Typecheck / Build Status</h3>
+<h3 id="6-handover-architecture-findings" class="doc-h"><a class="anchor" href="#6-handover-architecture-findings" aria-label="Link to this section">#</a>6. Handover Architecture Findings</h3>
+<p>Separate findings into:</p>
+<ul><li>likely real problems;</li><li>possibly suspicious but actually reasonable;</li><li>uncertain / requires more evidence.</li></ul>
+<h3 id="7-potential-clarification-questions" class="doc-h"><a class="anchor" href="#7-potential-clarification-questions" aria-label="Link to this section">#</a>7. Potential Clarification Questions</h3>
+<h3 id="8-recommended-final-repository-structure" class="doc-h"><a class="anchor" href="#8-recommended-final-repository-structure" aria-label="Link to this section">#</a>8. Recommended Final Repository Structure</h3>
+<h3 id="9-recommended-execution-order" class="doc-h"><a class="anchor" href="#9-recommended-execution-order" aria-label="Link to this section">#</a>9. Recommended Execution Order</h3>
+<p>Provide the sequence for:</p>
+<pre data-lang="text"><code>Part 1
+→ Part 2 design
+→ Part 2 implementation
+→ tests
+→ README
+→ Part 3
+→ Claude independent review
+→ AI documentation
+→ submission website
+→ final QA
+→ interview preparation</code></pre>
+<p>Adjust if the actual repository suggests a better sequence.</p>
+<h3 id="10-risks-to-avoid" class="doc-h"><a class="anchor" href="#10-risks-to-avoid" aria-label="Link to this section">#</a>10. Risks to Avoid</h3>
+<h3 id="11-interview-knowledge-gaps" class="doc-h"><a class="anchor" href="#11-interview-knowledge-gaps" aria-label="Link to this section">#</a>11. Interview Knowledge Gaps</h3>
+<h3 id="12-recommended-next-prompt" class="doc-h"><a class="anchor" href="#12-recommended-next-prompt" aria-label="Link to this section">#</a>12. Recommended Next Prompt</h3>
+<p>At the end, tell me what the <strong>next Codex phase should be</strong>, but do not begin that phase until I instruct you.</p>
+<hr>
+<h3 id="stop-condition" class="doc-h"><a class="anchor" href="#stop-condition" aria-label="Link to this section">#</a>STOP CONDITION</h3>
+<p>Once you have delivered the discovery report:</p>
+<p><strong>STOP.</strong></p>
+<p>Do not implement cross-field validation.</p>
+<p>Do not write final Part 1 answers.</p>
+<p>Do not finalize Part 3 decisions.</p>
+<p>Do not build the website.</p>
+<p>Do not deploy anything.</p>
+<p>Wait for my next instruction.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-1-codex-commentary-2">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-1-codex-commentary-2" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>I’ll audit the workspace read-only first, including archives, documents, code, tests, configuration, and Git state. I’ll use the document/PDF tooling only if the supplied exercise format requires it; the Gmail plugin is referenced, but this phase gives no mailbox task, so I won’t access email. After discovery I’ll create only the explicitly requested private working structure if it can be safely excluded, then run the untouched baseline checks.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-1-codex-commentary-3">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-1-codex-commentary-3" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The workspace contains a single starter repository plus the exercise PDF. I also found macOS AppleDouble metadata files (<code>._*</code>); they are not project content but may need ignore rules later. I’m now reading the PDF instructions and the repository’s actual source/tests/config before making any architectural judgments.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-1-codex-commentary-4">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-1-codex-commentary-4" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The starter is intentionally minimal: plain CommonJS JavaScript, Node’s built-in test runner, no dependencies, no TypeScript/lint/build setup, and no Git repository detected. The system <code>pdftotext</code> binary is unavailable, so I’m switching to the bundled PDF runtime for complete text extraction and page rendering; this is a tooling limitation, not a repository failure.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-1-codex-commentary-5">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-1-codex-commentary-5" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The PDF confirms four required submission parts, a public no-login hosted page, and a deadline of Saturday, August 22, 2026 at 11:59 PM PHT. It also makes two constraints unusually important: Part 3 isolation must choose exactly one approach (no hybrid), and hidden validation tests will be authored solely from the final README. I’m running the pristine baseline now, before any workspace edits.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-1-codex-commentary-6">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-1-codex-commentary-6" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>Baseline is clean for the only configured check: 16/16 tests pass. Typecheck, lint, and build were also invoked, but each is unconfigured (<code>Missing script</code>), so they are “not available,” not passing. The main architecture risks emerging are concrete rather than stylistic: pooled tenant context safety, field-level exposure for clinic data, audit completeness, notification consistency, and missing versioned/reproducible grant scoring. I’m checking repository hygiene and then I’ll add only ignored private working templates—not alter supplied source, tests, fixtures, README, or handover.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-1-codex-commentary-7">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-1-codex-commentary-7" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>Discovery is complete. The original code, tests, client fixtures, README, and handover remain untouched; only a root <code>.gitignore</code> and an ignored <code>private/</code> workspace were added. A post-scaffolding rerun still passes 16/16. I also confirmed several behaviors the tests do not define—including impossible calendar dates and <code>Infinity</code> being accepted—so those will be treated as explicit future decisions, not silently “fixed” during cross-field work.</p>
+  </div>
+</article>
+<article class="msg msg--assistant" id="turn-1-codex-final-response-8">
+  <header class="msg-head">
+    <span class="msg-role">Codex — final response</span>
+    <a class="msg-anchor" href="#turn-1-codex-final-response-8" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<h3 id="1-workspace-inventory-2" class="doc-h"><a class="anchor" href="#1-workspace-inventory-2" aria-label="Link to this section">#</a>1. Workspace Inventory</h3>
+<p>The complete four-page exercise PDF was extracted and visually inspected. :codex-file-citation{path=&quot;[REDACTED — local workspace path]/Benoz.AI - Take-Home Exercise.docx.pdf&quot; purpose=&quot;source&quot;}</p>
+<pre data-lang="text"><code>Workplace/
+├── Benoz.AI - Take-Home Exercise.docx.pdf
+└── starterpackage/
+    ├── .gitignore                         # Added: excludes private files, secrets, output, metadata
+    ├── README.md                          # Supplied Part 2 requirements and library documentation
+    ├── package.json                       # CommonJS package; only npm test is configured
+    ├── clients/
+    │   ├── client-a-city-maintenance.json # City report field definition
+    │   ├── client-b-grant-foundation.json # Grant application field definition
+    │   └── client-c-clinic.json           # Clinic referral field definition
+    ├── lib/
+    │   └── validate.js                    # Existing validation library
+    ├── review/
+    │   └── handover-architecture.md       # Supplied production architecture handover
+    ├── test/
+    │   └── validate.test.js               # Existing 16-test suite
+    └── private/                           # Added and ignored; internal working material
+        ├── AI-WORKLOG.md
+        ├── BENOZ-QUESTIONS.md
+        └── INTERVIEW-NOTES.md</code></pre>
+<p>Important observations:</p>
+<ul><li>No compressed starter archive remains to extract.</li><li>No TypeScript, lint, format, coverage, or build configuration exists.</li><li>There are no dependencies or lockfiles.</li><li>The workspace and starter package are not currently Git repositories.</li><li>macOS <code>._*</code> metadata files exist. They were preserved but are now ignored.</li><li>Employer-provided source, tests, fixtures, README, and handover were not modified.</li><li>The new private files are excluded by .gitignore [REDACTED — local file link].</li></ul>
+<h3 id="2-exercise-requirements-2" class="doc-h"><a class="anchor" href="#2-exercise-requirements-2" aria-label="Link to this section">#</a>2. Exercise Requirements</h3>
+<p>The submission must ultimately be one publicly reachable, no-login web page containing:</p>
+<ul><li>Part 1: concise architecture handover review, including real problems, consequences, severity, remedies, false positives, and which issue should be fixed first.</li><li>Part 2: a link to the code and a client-agnostic, data-declared cross-field validation extension.</li><li>Part 3: three short architecture decisions:<ul><li>Choose exactly one isolation approach—hybrids explicitly score zero.</li><li>Decide where eligibility scoring lives and how revisions/other clients are handled.</li><li>Name one component that fails first at 300 clients.</li></ul></li><li>Part 4: actual AI transcripts, tools/models used, a genuinely rejected suggestion, where AI helped least, omissions, and least-confident areas.</li></ul>
+<p>Part 2’s critical acceptance contract is:</p>
+<ul><li>Existing tests continue to pass.</li><li>New awkward cases are tested.</li><li><code>lib/</code> contains no client-specific names or rules.</li><li>Hidden evaluators will write an unseen rule using only the final README.</li><li>The README must precisely define references, operators, error attachment, missing/invalid dependencies, unsupported cases, and the abstraction boundary.</li></ul>
+<p>Deadline shown in the exercise: August 22, 2026, 11:59 PM PHT.</p>
+<h3 id="3-current-validation-architecture-2" class="doc-h"><a class="anchor" href="#3-current-validation-architecture-2" aria-label="Link to this section">#</a>3. Current Validation Architecture</h3>
+<p>Relevant source: lib/validate.js [REDACTED — local file link].</p>
+<h5 id="current-data-model-2" class="doc-h"><a class="anchor" href="#current-data-model-2" aria-label="Link to this section">#</a>Current data model</h5>
+<p>A definition is an object containing <code>fields</code>. Each field can contain:</p>
+<pre data-lang="js"><code>{
+  name,
+  label,
+  type,
+  required,
+  options?,
+  constraints?
+}</code></pre>
+<p>The client fixtures also contain <code>client</code>, <code>record_type</code>, and sometimes <code>sensitivity</code>, but the validator ignores those properties.</p>
+<p>A record is a plain object keyed by field name.</p>
+<h5 id="current-api-2" class="doc-h"><a class="anchor" href="#current-api-2" aria-label="Link to this section">#</a>Current API</h5>
+<pre data-lang="js"><code>validateRecord(definition, record)
+// =&gt; { valid: boolean, errors: [{ field, message }] }</code></pre>
+<p>The module also exports <code>TYPE_VALIDATORS</code>, although no test currently exercises that export.</p>
+<h5 id="validation-flow-2" class="doc-h"><a class="anchor" href="#validation-flow-2" aria-label="Link to this section">#</a>Validation flow</h5>
+<pre data-lang="text"><code>definition + record
+        ↓
+iterate definition.fields in order
+        ↓
+read record[field.name]
+        ↓
+check presence / required
+        ↓
+select validator from TYPE_VALIDATORS
+        ↓
+append zero or more { field, message } errors
+        ↓
+{ valid: errors.length === 0, errors }</code></pre>
+<p>Absent optional values skip both type checking and unknown-type checking.</p>
+<h5 id="existing-validators-2" class="doc-h"><a class="anchor" href="#existing-validators-2" aria-label="Link to this section">#</a>Existing validators</h5>
+<ul><li><code>text</code>, <code>long_text</code><ul><li>string type</li><li><code>min_length</code></li><li><code>max_length</code></li><li>regular-expression <code>pattern</code></li></ul></li><li><code>number</code><ul><li>JavaScript number type</li><li>excludes <code>NaN</code></li><li><code>min</code> and <code>max</code></li></ul></li><li><code>boolean</code><ul><li>strict Boolean type</li></ul></li><li><code>date</code><ul><li>string matching <code>YYYY-MM-DD</code></li><li>then parsed using JavaScript <code>Date</code></li></ul></li><li><code>choice</code><ul><li>string included in <code>options</code></li></ul></li><li><code>multi_choice</code><ul><li>array</li><li>every value included in <code>options</code></li><li><code>min_selected</code> and <code>max_selected</code></li></ul></li><li><code>file</code><ul><li>object with a string <code>filename</code></li><li>accepted filename extension</li></ul></li></ul>
+<p>Unknown present field types return an error rather than crashing.</p>
+<h5 id="error-representation-2" class="doc-h"><a class="anchor" href="#error-representation-2" aria-label="Link to this section">#</a>Error representation</h5>
+<p>Errors contain only:</p>
+<pre data-lang="js"><code>{ field: &quot;field_name&quot;, message: &quot;Human-readable message&quot; }</code></pre>
+<p>There is no error code, rule identifier, dependency metadata, or distinction between invalid user input and an invalid definition.</p>
+<p>Errors are ordered by field definition order and then by validator check order. Multiple errors for one field are possible.</p>
+<h5 id="type-and-presence-handling" class="doc-h"><a class="anchor" href="#type-and-presence-handling" aria-label="Link to this section">#</a>Type and presence handling</h5>
+<p>Considered absent:</p>
+<ul><li><code>undefined</code></li><li><code>null</code></li><li>blank or whitespace-only strings</li><li>empty arrays</li></ul>
+<p>Considered present:</p>
+<ul><li><code>false</code></li><li><code>0</code></li><li>empty objects</li><li><code>Infinity</code></li></ul>
+<p>Unknown properties in the submitted record are ignored.</p>
+<h5 id="natural-cross-field-extension-point" class="doc-h"><a class="anchor" href="#natural-cross-field-extension-point" aria-label="Link to this section">#</a>Natural cross-field extension point</h5>
+<p>The natural runtime extension point is a second validation phase after ordinary field validation, operating on the complete record and the per-field validation outcome.</p>
+<p>The declaration could naturally live at definition level because it relates multiple fields. That is only an extension-point finding—not yet an accepted rule format.</p>
+<h5 id="constraints-and-currently-undefined-behavior" class="doc-h"><a class="anchor" href="#constraints-and-currently-undefined-behavior" aria-label="Link to this section">#</a>Constraints and currently undefined behavior</h5>
+<p>Direct exploratory calls confirmed:</p>
+<ul><li><code>2027-02-30</code> is accepted because JavaScript normalizes the date.</li><li><code>Infinity</code> is accepted as a number.</li><li>duplicate multi-choice values are accepted.</li><li>a null definition validates any record successfully.</li><li>an optional absent field with an unknown type produces no configuration error.</li><li>an invalid regex pattern throws a <code>SyntaxError</code>.</li><li>malformed definitions are not consistently distinguished from invalid records.</li></ul>
+<p>These behaviors are outside the current tests. They should not be silently changed while adding cross-field validation without an explicit compatibility decision.</p>
+<h3 id="4-current-test-architecture-2" class="doc-h"><a class="anchor" href="#4-current-test-architecture-2" aria-label="Link to this section">#</a>4. Current Test Architecture</h3>
+<p>Relevant test file: test/validate.test.js [REDACTED — local file link].</p>
+<ul><li>Framework: Node’s built-in <code>node:test</code>.</li><li>Assertions: <code>node:assert/strict</code>.</li><li>Organization: one test file, grouped by Client A, B, C, then generic behavior.</li><li>Helper: <code>loadClient(filename)</code> synchronously loads JSON from <code>clients/</code>.</li><li>Fixture strategy: the three supplied client definitions are realistic integration fixtures; records are constructed inline in each test.</li><li>Testing level: black-box tests through <code>validateRecord</code>.</li></ul>
+<p>Existing coverage includes:</p>
+<ul><li>valid records for all three clients;</li><li>missing required data;</li><li>optional omitted data;</li><li>regex mismatch;</li><li>invalid choice;</li><li>negative number minimum;</li><li>too many multi-choice selections;</li><li>unknown multi-choice selection;</li><li>malformed date format;</li><li>disallowed file extension;</li><li>unknown field type.</li></ul>
+<p>Not currently covered:</p>
+<ul><li>Boolean fields.</li><li>Number <code>max</code>, <code>NaN</code>, or <code>Infinity</code>.</li><li>Text length failures.</li><li>true calendar-date validity.</li><li>invalid file shapes.</li><li>duplicate multi-choice values.</li><li>exact error messages or ordering.</li><li>multiple simultaneous errors.</li><li>malformed definitions or records.</li><li>invalid regex configuration.</li><li>duplicate/missing field names.</li><li>unknown submitted properties.</li><li>cross-field behavior.</li><li><code>TYPE_VALIDATORS</code>.</li></ul>
+<p>The tests usually assert <code>valid</code> and the existence of an error for a field. They do not currently establish an exact error-message compatibility contract.</p>
+<h3 id="5-baseline-test-typecheck-build-status-2" class="doc-h"><a class="anchor" href="#5-baseline-test-typecheck-build-status-2" aria-label="Link to this section">#</a>5. Baseline Test / Typecheck / Build Status</h3>
+<p>The baseline was run before any workspace edits and rerun after adding only ignored private scaffolding.</p>
+<div class="table-wrap"><table><thead><tr><th>Check</th><th>Actual result</th></tr></thead><tbody><tr><td>Tests</td><td><strong>16 passing, 0 failing</strong></td></tr><tr><td>Typecheck</td><td><strong>Not configured</strong> — <code>npm run typecheck</code> returned <code>Missing script</code></td></tr><tr><td>Lint</td><td><strong>Not configured</strong> — <code>npm run lint</code> returned <code>Missing script</code></td></tr><tr><td>Build</td><td><strong>Not configured</strong> — <code>npm run build</code> returned <code>Missing script</code></td></tr></tbody></table></div>
+<p>Environment used:</p>
+<ul><li>Node <code>v23.9.0</code></li><li>npm <code>10.9.2</code></li><li>Package requires Node 18 or later.</li><li>No dependency installation was required.</li></ul>
+<p>The missing scripts are absent quality gates, not failing TypeScript/lint/build implementations.</p>
+<h3 id="6-handover-architecture-findings-2" class="doc-h"><a class="anchor" href="#6-handover-architecture-findings-2" aria-label="Link to this section">#</a>6. Handover Architecture Findings</h3>
+<p>These are discovery findings, not finalized Part 1 submission answers. Source: handover-architecture.md [REDACTED — local file link].</p>
+<h5 id="likely-real-problems" class="doc-h"><a class="anchor" href="#likely-real-problems" aria-label="Link to this section">#</a>Likely real problems</h5>
+<div class="table-wrap"><table><thead><tr><th>Problem</th><th>Real-world consequence</th><th style="text-align:right">Severity</th><th>Potential remedy</th></tr></thead><tbody><tr><td>Clinic records are returned through a shared <code>SELECT *</code> handler, while RLS provides row—not field—visibility.</td><td>Reception could receive <code>clinical_notes</code> or national IDs despite lacking permission, creating a direct sensitive-data leak and audit/legal exposure.</td><td style="text-align:right">Critical</td><td>Enforce role-aware server-side projections/serialization and independently test every sensitive field. Consider restricted views or column privileges as an additional backstop.</td></tr><tr><td>All tenants use the shared pool, but Client C requires infrastructure under clinic control.</td><td>The current platform may be unable to meet the regulator’s stated control requirement, regardless of logical RLS isolation.</td><td style="text-align:right">Critical</td><td>Do not represent the current deployment as compliant. Resolve the exact meaning of “control,” then make the required single Part 3 choice and explicitly accept the clients that choice loses.</td></tr><tr><td>Tenant context is set using interpolated, session-scoped SQL.</td><td>A controllable tenant value could become SQL injection; a pooled connection can also retain the previous tenant context and expose data if any path queries before resetting it.</td><td style="text-align:right">Critical</td><td>Use parameterized <code>set_config</code>, transaction-local context, guaranteed cleanup, fail-closed middleware, and cross-tenant integration tests.</td></tr><tr><td>The audit log has no <code>tenant_id</code>, uses an application helper, and has no stated immutability, access, or retention controls.</td><td>Missing helper calls or manual updates can produce incomplete history; tenant-specific audit extraction is unreliable; payloads could expose sensitive data across clients.</td><td style="text-align:right">Critical</td><td>Add tenant context, transactional audit writes, restricted access, append-only controls, retention/redaction rules, and explicit coverage for system actors and administrative changes.</td></tr><tr><td>Client B’s scoring architecture is absent.</td><td>Registry outages, revised formulas, changing weights, or updated historical records could make automatic rejection incorrect or impossible to reproduce later.</td><td style="text-align:right">Serious</td><td>Version formulas, weights, thresholds, and input snapshots per funding round. Store provenance and treat unavailable external data as a retry/manual-review state rather than a rejection score.</td></tr><tr><td>Notifications occur after a durable insert but before the HTTP response.</td><td>Provider failure can return an error after the record already exists; callers may retry and create duplicates while notification state remains uncertain.</td><td style="text-align:right">Serious</td><td>Use the existing transactional outbox for state-triggered notifications and return success once the durable record/event commit succeeds.</td></tr><tr><td>Outbox consumers deduplicate on <code>(event_type, entity_id)</code>.</td><td>A second legitimate event of the same type for the same record can be mistaken for a duplicate—for example, later status changes may never trigger their work.</td><td style="text-align:right">Serious</td><td>Give every logical event a stable event ID/idempotency key and deduplicate that event, not every event of that type for the entity.</td></tr><tr><td>Core tables and status enums are organized around today’s three clients.</td><td>An unknown fourth client may require schema, code, and deployment changes, contradicting the configuration-first goal and same-day onboarding expectation.</td><td style="text-align:right">Serious</td><td>Define the supported product/domain boundary. Make fields, workflow states, transitions, messages, and permissions configurable where requirements genuinely vary; retain explicit domain tables where invariants justify them.</td></tr><tr><td>Mutable field/workflow configuration has no described versioning.</td><td>Renaming or removing fields/statuses can make historical records render differently or lose the exact rules under which they were accepted.</td><td style="text-align:right">Serious</td><td>Introduce immutable configuration versions/effective dates and associate records or decisions with the version used.</td></tr><tr><td>No tenant-specific traffic protection or backpressure exists.</td><td>One tenant can exhaust API workers, database connections, queue capacity, or third-party quotas and degrade every tenant.</td><td style="text-align:right">Serious at projected growth</td><td>Add bounded request sizes, concurrency controls, per-tenant quotas/rate limits, queue fairness, and observable saturation metrics.</td></tr></tbody></table></div>
+<p>Client-specific implications:</p>
+<ul><li>Client A’s 4,000 reports over an afternoon are not intrinsically difficult for PostgreSQL. The more immediate risks are notification duplication, authorization of status transitions, and noisy-neighbor protection.</li><li>Resident identity should not be automatically merged on name or phone because both are explicitly inconsistent. Preserve report-time contact snapshots; any identity linking needs confidence/manual review.</li><li>Client B needs deterministic, versioned, auditable scoring. External API failure must not accidentally become automatic rejection.</li><li>Client C requires field-level authorization, controlled infrastructure, complete auditability, and reliable cancelable four-hour alerts—not generic “security best practices.”</li></ul>
+<h5 id="possibly-suspicious-but-actually-reasonable" class="doc-h"><a class="anchor" href="#possibly-suspicious-but-actually-reasonable" aria-label="Link to this section">#</a>Possibly suspicious but actually reasonable</h5>
+<ul><li>A shared-schema RLS pool is a conventional, cost-effective default for Clients A and B. It becomes unacceptable only where Client C’s infrastructure requirement overrides it.</li><li>JSONB for sparse custom fields is reasonable and avoids migrations for every small field addition. It needs definition versioning and targeted indexes, not an automatic rewrite.</li><li>The transactional outbox, broker acknowledgement, retries, backoff, and dead-letter handling form a sound reliability pattern.</li><li>PostgreSQL list queries are sufficient at the stated current volumes; a separate search service would be premature.</li><li>Offset pagination is acceptable for today’s shallow lists. It should still add bounded limits, stable ordering such as <code>(created_at, id)</code>, and tenant-aware indexes.</li><li>A single API used by both the UI and external clients reduces duplicated authorization surfaces.</li><li>A mature JWT library is preferable to custom authentication. Nothing supplied proves its configuration is defective.</li><li>Separate application and administrative database roles are appropriate if credentials, usage, and administrative actions are tightly controlled.</li><li>Missing commercial feature flags is not urgent while all three clients genuinely receive the same functionality.</li><li>The storm volume is modest enough that “write scalability” alone is not currently the main risk.</li></ul>
+<h5 id="uncertain-requires-more-evidence" class="doc-h"><a class="anchor" href="#uncertain-requires-more-evidence" aria-label="Link to this section">#</a>Uncertain / requires more evidence</h5>
+<ul><li>Whether <code>${table}</code> is selected from a hard-coded server mapping or can be influenced by request input. The latter would be SQL injection; the former is normal identifier handling.</li><li>Whether all tenant tables and commands actually have correct RLS policies, and whether ownership/<code>FORCE ROW LEVEL SECURITY</code> behavior has been tested.</li><li>Whether authorization checks enforce individual actions and state transitions rather than coarse route-level roles.</li><li>Attachment storage, malware scanning, download authorization, encryption, retention, and data residency.</li><li>Audit-log read permissions, tamper controls, and whether <code>logAction()</code> shares the business transaction.</li><li>JWT claim validation, key rotation, revocation, token lifetime, and API-key storage.</li><li>Backup isolation, restore testing, encryption-key ownership, and administrative access.</li><li>How four-hour alerts are scheduled and canceled when a referral is triaged.</li><li>External registry timeout, retry, caching, provenance, and outage behavior.</li><li>Actual query plans, tenant-aware indexes, pool limits, queue throughput, and operational metrics.</li></ul>
+<h3 id="7-potential-clarification-questions-2" class="doc-h"><a class="anchor" href="#7-potential-clarification-questions-2" aria-label="Link to this section">#</a>7. Potential Clarification Questions</h3>
+<ol><li><strong>Question:</strong> Should the handover snippets be treated as exact production behavior or illustrative pseudocode? <strong>Why it matters:</strong> It affects whether issues such as interpolated tenant context, <code>SELECT *</code>, and non-transactional notification sending should be reported as existing defects or evidence gaps. <strong>Default assumption if unanswered:</strong> Treat explicit snippets and accompanying claims as representative of production, while labeling missing implementation details as uncertain.</li><li><strong>Question:</strong> Should malformed cross-field rule definitions throw configuration errors or be returned inside the normal <code>{ valid, errors }</code> record result? <strong>Why it matters:</strong> The current API has no definition-validation channel, and hidden tests may exercise unknown operators, missing field references, or type-incompatible comparisons. <strong>Default assumption if unanswered:</strong> Use deterministic configuration errors distinct from user-record validation failures and document them precisely.</li><li><strong>Question:</strong> Is the vocabulary documented in our README the complete hidden-test contract, or is a minimum family of comparison operators expected? <strong>Why it matters:</strong> This determines whether a deliberately narrow comparison design is sufficient or risks mismatching unstated expectations. <strong>Default assumption if unanswered:</strong> The documented vocabulary is authoritative; implement a small client-agnostic comparison set and reject unsupported rules predictably.</li><li><strong>Question:</strong> Does infrastructure “under the clinic’s own control” include a dedicated deployment in the clinic’s cloud account? <strong>Why it matters:</strong> This materially changes which single Part 3 isolation choice complies and which customers that choice excludes. <strong>Default assumption if unanswered:</strong> The clinic must control the account/environment, access policy, data stores, and keys; ordinary vendor-managed dedicated infrastructure is insufficient.</li><li><strong>Question:</strong> For the 300-client decision, should we assume today’s client-volume mix and the handover’s current deployment topology? <strong>Why it matters:</strong> Without a workload/deployment assumption, “what fails first” could be driven arbitrarily by traffic, connection count, storage, or third-party limits. <strong>Default assumption if unanswered:</strong> Extrapolate the stated workloads across 300 clients without assuming unmentioned re-architecture, then state that assumption explicitly.</li></ol>
+<h3 id="8-recommended-final-repository-structure-2" class="doc-h"><a class="anchor" href="#8-recommended-final-repository-structure-2" aria-label="Link to this section">#</a>8. Recommended Final Repository Structure</h3>
+<p>Preserve the starter and add only purpose-driven files:</p>
+<pre data-lang="text"><code>starterpackage/
+├── .gitignore
+├── README.md
+├── package.json
+├── clients/
+│   └── supplied fixtures unchanged where practical
+├── lib/
+│   └── validate.js
+├── test/
+│   ├── validate.test.js
+│   └── cross-field-validation.test.js
+├── review/
+│   ├── handover-architecture.md
+│   └── architecture-review.md
+├── docs/
+│   ├── clarifications.md              # Only if Benoz provides answers
+│   ├── decisions/
+│   │   ├── isolation.md
+│   │   ├── eligibility-scoring.md
+│   │   └── scaling.md
+│   └── ai-usage.md
+├── submission/
+│   └── minimal hosted-page source
+└── private/                           # Ignored
+    ├── AI-WORKLOG.md
+    ├── INTERVIEW-NOTES.md
+    └── BENOZ-QUESTIONS.md</code></pre>
+<p>Recommendations:</p>
+<ul><li>Make <code>starterpackage/</code> the eventual repository root rather than initializing all of <code>Workplace/</code>.</li><li>Keep the supplied JavaScript/CommonJS design. TypeScript conversion is unnecessary for this exercise.</li><li>Add a separate cross-field test file, but update <code>npm test</code> so it actually discovers both files.</li><li>Keep public submission prose separate from private interview preparation.</li><li>Do not add a framework for the hosted page unless the selected hosting method genuinely requires it.</li><li>The private templates now exist at private/ [REDACTED — private local directory link].</li></ul>
+<h3 id="9-recommended-execution-order-2" class="doc-h"><a class="anchor" href="#9-recommended-execution-order-2" aria-label="Link to this section">#</a>9. Recommended Execution Order</h3>
+<ol><li><strong>Part 1:</strong> Draft and challenge the architecture-review findings; agree on severity and fix-first priority before writing the public answer.</li><li><strong>Part 2 design:</strong> Compare two or three minimal declaration formats. Explicitly decide operators, dependency validity, error attachment, configuration errors, and stopping boundary.</li><li><strong>Part 2 implementation:</strong> Implement only the accepted design without unrelated validator cleanup.</li><li><strong>Tests:</strong> Add focused happy-path, equality/boundary, missing dependency, invalid dependency, malformed rule, type mismatch, and multiple-rule cases.</li><li><strong>README:</strong> Document the format as an executable contract and verify examples directly against the implementation.</li><li><strong>Part 3:</strong> Decide each architecture question separately, including strongest alternative, sacrifice, and failure mode.</li><li><strong>Claude independent review:</strong> Ask Claude to review the completed artifacts independently, then evaluate its findings rather than accepting them automatically. Preserve the real transcript.</li><li><strong>AI documentation:</strong> Finalize actual tool use, genuine rejected suggestions, limitations, omissions, and transcript links/exports.</li><li><strong>Submission website:</strong> Build the smallest clean public page that presents all four parts and links to accessible code.</li><li><strong>Final QA:</strong> Run tests; validate README examples; scan secrets; verify public links/no-login access; check mobile/desktop rendering; review every claim for evidence.</li><li><strong>Interview preparation:</strong> Convert accepted decisions into the private decision template and rehearse alternatives, tradeoffs, failure modes, and assumption changes.</li></ol>
+<h3 id="10-risks-to-avoid-2" class="doc-h"><a class="anchor" href="#10-risks-to-avoid-2" aria-label="Link to this section">#</a>10. Risks to Avoid</h3>
+<ul><li>Building a general expression language when a small comparison vocabulary is enough.</li><li>Silently fixing unrelated behavior such as invalid dates or <code>Infinity</code> during Part 2.</li><li>Letting README examples drift from executable behavior.</li><li>Treating invalid dependencies as ordinary values and producing confusing duplicate errors.</li><li>Failing to define malformed-rule behavior.</li><li>Adding client names or field names inside <code>lib/</code>.</li><li>Mutating supplied tests simply to obtain green output.</li><li>Treating the existing 16 tests as comprehensive coverage.</li><li>Reporting absent scripts as successful checks.</li><li>Making vague architecture claims such as “does not scale” without a failure mode.</li><li>Claiming legal compliance without authoritative evidence.</li><li>Accidentally proposing a hybrid for Part 3 Decision 1.</li><li>Publishing <code>private/</code>, local environment files, credentials, or unreviewed AI transcripts.</li><li>Initializing Git at the broad <code>Workplace/</code> root or committing <code>._*</code> metadata.</li><li>Manufacturing commit history, pushing, publishing, or deploying without instruction.</li><li>Spending assessment time on website frameworks or visual polish before the reasoning is complete.</li></ul>
+<p>The hygiene scan found no environment files, API keys, tokens, credentials, or private keys. No Git history exists to inspect, and no repository was initialized.</p>
+<h3 id="11-interview-knowledge-gaps-2" class="doc-h"><a class="anchor" href="#11-interview-knowledge-gaps-2" aria-label="Link to this section">#</a>11. Interview Knowledge Gaps</h3>
+<p>These are areas to verify and be ready to explain; they are not claims about your existing experience.</p>
+<ul><li>PostgreSQL RLS, role bypass behavior, connection pooling, <code>SET LOCAL</code>, and fail-closed tenant context.</li><li>Row isolation versus field-level authorization and response projection.</li><li>Transactional outbox delivery guarantees and correct idempotency keys.</li><li>Shared-pool versus clinic-controlled deployment tradeoffs.</li><li>Immutable configuration/formula versioning and reproducible automated decisions.</li><li>External API failure semantics—especially why “unavailable” must not become “ineligible.”</li><li>Stable/keyset pagination and tenant-aware composite indexes.</li><li>JSONB configuration benefits, versioning limitations, and targeted indexing.</li><li>Audit-log completeness, system actors, administrative actions, retention, and sensitive payloads.</li><li>The exact infrastructure and privacy implications of Client C’s Israeli regulatory requirement; use authoritative sources before making final legal claims.</li><li>Designing a small cross-field contract that remains precise under missing, invalid, and type-incompatible dependencies.</li></ul>
+<h3 id="12-recommended-next-prompt-2" class="doc-h"><a class="anchor" href="#12-recommended-next-prompt-2" aria-label="Link to this section">#</a>12. Recommended Next Prompt</h3>
+<p>The next Codex phase should be a Part 1 decision workshop:</p>
+<blockquote><p>Proceed to Phase 2: Architecture Review Decision Workshop. Use the Phase 1 discovery findings to produce a concise candidate Part 1 review, challenge each severity, identify false positives, compare the strongest fix-first candidates, and pause for my approval before writing <code>review/architecture-review.md</code>. Do not implement cross-field validation, finalize Part 3, or build the submission website.</p></blockquote>
+<p>Stopped at discovery as requested.</p>
+  </div>
+</article></section>
+<section class="turn"><h2 class="turn-head" id="turn-2"><span>Turn 2</span></h2>
+<article class="msg msg--user" id="turn-2-user-1">
+  <header class="msg-head">
+    <span class="msg-role">User</span>
+    <a class="msg-anchor" href="#turn-2-user-1" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<h3 id="benoz-ai-take-home-phase-2-architecture-review-decision-work" class="doc-h"><a class="anchor" href="#benoz-ai-take-home-phase-2-architecture-review-decision-work" aria-label="Link to this section">#</a>Benoz.AI Take-Home — Phase 2: Architecture Review Decision Workshop</h3>
+<p>Continue from the Phase 1 discovery work.</p>
+<p>Do not restart the repository analysis from scratch.</p>
+<p>Use the actual starter package, the supplied architecture handover, the official take-home exercise, the existing tests, and your Phase 1 findings as the source of truth.</p>
+<p>This phase focuses <strong>only on Part 1 — Review the handover</strong>.</p>
+<p>Do NOT:</p>
+<ul><li>implement cross-field validation;</li><li>modify <code>lib/validate.js</code>;</li><li>add Part 2 tests;</li><li>finalize Part 3;</li><li>build the submission website;</li><li>deploy anything;</li><li>push anything;</li><li>create the final <code>review/architecture-review.md</code> yet.</li></ul>
+<p>This is a decision workshop first.</p>
+<hr>
+<h3 id="important-correction-from-phase-1" class="doc-h"><a class="anchor" href="#important-correction-from-phase-1" aria-label="Link to this section">#</a>IMPORTANT CORRECTION FROM PHASE 1</h3>
+<p>Your Phase 1 report stated:</p>
+<blockquote><p>Deadline: August 22, 2026, 11:59 PM PHT.</p></blockquote>
+<p>That is incorrect.</p>
+<p>The official Benoz.AI take-home states:</p>
+<p><strong>Friday, August 21, 2026, 11:59 PM Philippine Time (PHT / UTC+8).</strong></p>
+<p>Correct this in any working notes where the incorrect date appears.</p>
+<p>Also record this in <code>private/AI-WORKLOG.md</code> as a real example of an AI-generated factual error that was caught through source verification.</p>
+<p>Do not exaggerate the significance of the mistake.</p>
+<p>Record simply:</p>
+<ul><li>Codex initially reported the wrong deadline.</li><li>The original exercise was checked.</li><li>The source document showed August 21.</li><li>The working assumption was corrected.</li></ul>
+<p>This is a useful example of why primary-source verification matters.</p>
+<hr>
+<h3 id="primary-objective" class="doc-h"><a class="anchor" href="#primary-objective" aria-label="Link to this section">#</a>PRIMARY OBJECTIVE</h3>
+<p>Turn the broad Phase 1 architecture audit into a <strong>small number of high-confidence, submission-worthy findings</strong>.</p>
+<p>Benoz.AI is not asking for a general security audit or an exhaustive list of everything that could theoretically go wrong.</p>
+<p>They want to see:</p>
+<ul><li>what we notice;</li><li>whether the problem is real;</li><li>what happens in practice;</li><li>appropriate severity;</li><li>what we would do;</li><li>prioritization;</li><li>recognition of things that are actually fine.</li></ul>
+<p>Quality of judgment matters more than quantity.</p>
+<hr>
+<h3 id="step-1-re-read-the-relevant-sources" class="doc-h"><a class="anchor" href="#step-1-re-read-the-relevant-sources" aria-label="Link to this section">#</a>STEP 1 — RE-READ THE RELEVANT SOURCES</h3>
+<p>Re-read:</p>
+<ul><li>the official Part 1 instructions;</li><li><code>review/handover-architecture.md</code>;</li><li>the relevant Client A/B/C requirements from the exercise.</li></ul>
+<p>Do not rely exclusively on the Phase 1 summary.</p>
+<p>Every candidate finding must be traceable to something actually stated or shown in the supplied materials.</p>
+<hr>
+<h3 id="step-2-audit-your-own-phase-1-findings" class="doc-h"><a class="anchor" href="#step-2-audit-your-own-phase-1-findings" aria-label="Link to this section">#</a>STEP 2 — AUDIT YOUR OWN PHASE 1 FINDINGS</h3>
+<p>Review every Phase 1 &quot;likely real problem.&quot;</p>
+<p>For each one classify it as:</p>
+<h4 id="a-high-confidence-submission-candidate" class="doc-h"><a class="anchor" href="#a-high-confidence-submission-candidate" aria-label="Link to this section">#</a>A — High-confidence submission candidate</h4>
+<p>The handover provides enough evidence that the problem genuinely exists.</p>
+<h4 id="b-valid-concern-but-insufficient-evidence" class="doc-h"><a class="anchor" href="#b-valid-concern-but-insufficient-evidence" aria-label="Link to this section">#</a>B — Valid concern but insufficient evidence</h4>
+<p>The architecture could have the problem, but the supplied handover doesn't prove it strongly enough.</p>
+<h4 id="c-correct-observation-but-lower-priority" class="doc-h"><a class="anchor" href="#c-correct-observation-but-lower-priority" aria-label="Link to this section">#</a>C — Correct observation but lower priority</h4>
+<p>True, but probably not worth spending limited Part 1 space on.</p>
+<h4 id="d-overstated-should-be-removed" class="doc-h"><a class="anchor" href="#d-overstated-should-be-removed" aria-label="Link to this section">#</a>D — Overstated / should be removed</h4>
+<p>The Phase 1 conclusion went beyond what the source supports.</p>
+<p>Be willing to downgrade or reject your own previous findings.</p>
+<p>This is important.</p>
+<hr>
+<h3 id="step-3-verify-severity-carefully" class="doc-h"><a class="anchor" href="#step-3-verify-severity-carefully" aria-label="Link to this section">#</a>STEP 3 — VERIFY SEVERITY CAREFULLY</h3>
+<p>Benoz.AI gives exact severity definitions:</p>
+<h5 id="critical" class="doc-h"><a class="anchor" href="#critical" aria-label="Link to this section">#</a>Critical</h5>
+<p>Data loss, data leak, or legal exposure.</p>
+<h5 id="serious" class="doc-h"><a class="anchor" href="#serious" aria-label="Link to this section">#</a>Serious</h5>
+<p>Breaks under real load or real-world use.</p>
+<h5 id="minor" class="doc-h"><a class="anchor" href="#minor" aria-label="Link to this section">#</a>Minor</h5>
+<p>Worth fixing but not urgent.</p>
+<p>Do not assign &quot;Critical&quot; merely because something relates to security.</p>
+<p>For every candidate marked Critical, answer:</p>
+<blockquote><p>What specific data loss, data leak, or legal exposure occurs?</p></blockquote>
+<p>If that cannot be stated concretely from the supplied architecture, downgrade it or classify it as uncertain.</p>
+<p>For every Serious issue, answer:</p>
+<blockquote><p>What concrete real-world behavior fails?</p></blockquote>
+<p>Avoid vague descriptions such as:</p>
+<ul><li>&quot;doesn't scale&quot;;</li><li>&quot;not secure&quot;;</li><li>&quot;not production ready&quot;;</li><li>&quot;bad practice&quot;.</li></ul>
+<hr>
+<h3 id="step-4-pay-special-attention-to-these-phase-1-claims" class="doc-h"><a class="anchor" href="#step-4-pay-special-attention-to-these-phase-1-claims" aria-label="Link to this section">#</a>STEP 4 — PAY SPECIAL ATTENTION TO THESE PHASE 1 CLAIMS</h3>
+<p>Re-evaluate these findings particularly carefully.</p>
+<h4 id="candidate-a-select-and-client-c-sensitive-fields" class="doc-h"><a class="anchor" href="#candidate-a-select-and-client-c-sensitive-fields" aria-label="Link to this section">#</a>Candidate A — <code>SELECT *</code> and Client C sensitive fields</h4>
+<p>Determine from the supplied architecture whether the API genuinely returns sensitive columns to users who should not see them.</p>
+<p>Distinguish:</p>
+<ul><li>database row-level security;</li><li>application role authorization;</li><li>field/column visibility;</li><li>response serialization.</li></ul>
+<p>If the handover clearly demonstrates that reception can receive <code>clinical_notes</code> or national ID, this may be Critical.</p>
+<p>If the handover doesn't prove the actual response behavior, phrase the issue more carefully.</p>
+<hr>
+<h4 id="candidate-b-tenant-context-and-pooled-connections" class="doc-h"><a class="anchor" href="#candidate-b-tenant-context-and-pooled-connections" aria-label="Link to this section">#</a>Candidate B — Tenant context and pooled connections</h4>
+<p>Verify exactly how tenant context is set.</p>
+<p>Separate two possible issues:</p>
+<h5 id="sql-injection" class="doc-h"><a class="anchor" href="#sql-injection" aria-label="Link to this section">#</a>SQL injection</h5>
+<p>Only claim this if the interpolated value is actually controllable in a dangerous way.</p>
+<h5 id="connection-state-leakage" class="doc-h"><a class="anchor" href="#connection-state-leakage" aria-label="Link to this section">#</a>Connection-state leakage</h5>
+<p>Examine whether session-scoped tenant context combined with connection pooling can allow tenant context to persist unexpectedly.</p>
+<p>Do not combine them into one Critical finding merely because both are theoretically possible.</p>
+<p>If necessary, split or downgrade.</p>
+<hr>
+<h4 id="candidate-c-client-c-infrastructure-requirement" class="doc-h"><a class="anchor" href="#candidate-c-client-c-infrastructure-requirement" aria-label="Link to this section">#</a>Candidate C — Client C infrastructure requirement</h4>
+<p>Be careful not to accidentally answer Part 3 inside Part 1.</p>
+<p>Determine whether the current architecture directly conflicts with the clinic-controlled infrastructure requirement.</p>
+<p>If yes, explain the incompatibility.</p>
+<p>However, do not solve the Part 3 forced isolation decision yet.</p>
+<p>Part 1 may note the incompatibility without prematurely committing to the eventual platform strategy.</p>
+<hr>
+<h4 id="candidate-d-audit-logging" class="doc-h"><a class="anchor" href="#candidate-d-audit-logging" aria-label="Link to this section">#</a>Candidate D — Audit logging</h4>
+<p>Determine what the handover actually guarantees and omits.</p>
+<p>Avoid assuming:</p>
+<ul><li>logs are mutable;</li><li>log reads are cross-tenant;</li><li>helpers are definitely skipped;</li></ul>
+<p>unless the handover supports those conclusions.</p>
+<p>Focus on the strongest concrete defect.</p>
+<hr>
+<h4 id="candidate-e-notifications-versus-transactional-outbox" class="doc-h"><a class="anchor" href="#candidate-e-notifications-versus-transactional-outbox" aria-label="Link to this section">#</a>Candidate E — Notifications versus transactional outbox</h4>
+<p>This may be an especially useful practical reliability finding.</p>
+<p>Trace the exact described sequence.</p>
+<p>If the architecture performs:</p>
+<ol><li>durable state write;</li><li>external notification;</li><li>HTTP response;</li></ol>
+<p>then explain exactly how provider failure can create retry ambiguity or duplicate records.</p>
+<p>Check whether the existing outbox architecture could already solve this.</p>
+<hr>
+<h4 id="candidate-f-outbox-deduplication-key" class="doc-h"><a class="anchor" href="#candidate-f-outbox-deduplication-key" aria-label="Link to this section">#</a>Candidate F — Outbox deduplication key</h4>
+<p>Verify the exact deduplication mechanism described by the handover.</p>
+<p>If <code>(event_type, entity_id)</code> genuinely collapses multiple valid events, construct one concrete realistic example.</p>
+<p>Do not keep the issue if the handover provides another unique event identifier that resolves it.</p>
+<hr>
+<h4 id="candidate-g-configuration-versioning" class="doc-h"><a class="anchor" href="#candidate-g-configuration-versioning" aria-label="Link to this section">#</a>Candidate G — Configuration versioning</h4>
+<p>Test this against the stated product requirement:</p>
+<blockquote><p>client differences should become configuration rather than code.</p></blockquote>
+<p>Consider:</p>
+<ul><li>renamed fields;</li><li>changed statuses;</li><li>workflow changes;</li><li>historical records.</li></ul>
+<p>Explain whether unversioned mutable configuration could make past records impossible to interpret accurately.</p>
+<hr>
+<h4 id="candidate-h-client-b-scoring-architecture" class="doc-h"><a class="anchor" href="#candidate-h-client-b-scoring-architecture" aria-label="Link to this section">#</a>Candidate H — Client B scoring architecture</h4>
+<p>Determine whether this properly belongs in:</p>
+<ul><li>Part 1 handover review;</li><li>Part 3 Decision 2;</li><li>or both.</li></ul>
+<p>Avoid duplicating the entire argument.</p>
+<p>If the handover truly fails to account for the scoring requirement, that can be noted in Part 1.</p>
+<p>But reserve the full design decision for Part 3.</p>
+<hr>
+<h4 id="candidate-i-300-client-noisy-neighbor-backpressure-concerns" class="doc-h"><a class="anchor" href="#candidate-i-300-client-noisy-neighbor-backpressure-concerns" aria-label="Link to this section">#</a>Candidate I — 300-client noisy-neighbor / backpressure concerns</h4>
+<p>Do not prematurely answer Decision 3.</p>
+<p>Determine whether this is a concrete current architecture defect or mainly future-scale reasoning that belongs in Part 3.</p>
+<hr>
+<h3 id="step-5-find-false-positives" class="doc-h"><a class="anchor" href="#step-5-find-false-positives" aria-label="Link to this section">#</a>STEP 5 — FIND FALSE POSITIVES</h3>
+<p>Benoz.AI explicitly says recognizing something suspicious that is actually correct is valuable.</p>
+<p>Choose <strong>2–4 strong examples</strong>, not a giant list.</p>
+<p>Potential Phase 1 examples included:</p>
+<ul><li>JSONB for sparse configurable fields;</li><li>transactional outbox architecture;</li><li>PostgreSQL without adding a search engine;</li><li>shared-schema RLS for tenants without infrastructure-isolation requirements;</li><li>offset pagination at current shallow depths.</li></ul>
+<p>For each selected example explain:</p>
+<h5 id="why-it-initially-looks-suspicious" class="doc-h"><a class="anchor" href="#why-it-initially-looks-suspicious" aria-label="Link to this section">#</a>Why it initially looks suspicious</h5>
+<h5 id="why-it-is-acceptable-under-the-actual-requirements" class="doc-h"><a class="anchor" href="#why-it-is-acceptable-under-the-actual-requirements" aria-label="Link to this section">#</a>Why it is acceptable under the actual requirements</h5>
+<h5 id="what-future-condition-would-make-us-revisit-it" class="doc-h"><a class="anchor" href="#what-future-condition-would-make-us-revisit-it" aria-label="Link to this section">#</a>What future condition would make us revisit it</h5>
+<p>This demonstrates judgment better than saying simply:</p>
+<blockquote><p>This is fine.</p></blockquote>
+<hr>
+<h3 id="step-6-reduce-to-the-strongest-findings" class="doc-h"><a class="anchor" href="#step-6-reduce-to-the-strongest-findings" aria-label="Link to this section">#</a>STEP 6 — REDUCE TO THE STRONGEST FINDINGS</h3>
+<p>After auditing everything, recommend approximately:</p>
+<p><strong>4–6 Part 1 issues maximum</strong></p>
+<p>unless the handover clearly justifies more.</p>
+<p>Rank them by:</p>
+<ol><li>severity;</li><li>confidence;</li><li>relevance to the supplied clients;</li><li>architectural consequence;</li><li>usefulness in demonstrating engineering judgment.</li></ol>
+<p>Do NOT select issues merely because they sound sophisticated.</p>
+<hr>
+<h3 id="step-7-structure-each-finalist" class="doc-h"><a class="anchor" href="#step-7-structure-each-finalist" aria-label="Link to this section">#</a>STEP 7 — STRUCTURE EACH FINALIST</h3>
+<p>For every recommended submission finding, produce:</p>
+<h4 id="finding-title" class="doc-h"><a class="anchor" href="#finding-title" aria-label="Link to this section">#</a>Finding title</h4>
+<p>One precise sentence.</p>
+<h5 id="problem" class="doc-h"><a class="anchor" href="#problem" aria-label="Link to this section">#</a>Problem</h5>
+<p>What specifically is wrong.</p>
+<h5 id="what-happens-in-practice" class="doc-h"><a class="anchor" href="#what-happens-in-practice" aria-label="Link to this section">#</a>What happens in practice</h5>
+<p>Concrete production failure.</p>
+<h5 id="severity" class="doc-h"><a class="anchor" href="#severity" aria-label="Link to this section">#</a>Severity</h5>
+<p>Critical / Serious / Minor.</p>
+<h5 id="why-this-severity" class="doc-h"><a class="anchor" href="#why-this-severity" aria-label="Link to this section">#</a>Why this severity</h5>
+<p>Tie directly to Benoz.AI's severity definition.</p>
+<h5 id="what-i-would-do" class="doc-h"><a class="anchor" href="#what-i-would-do" aria-label="Link to this section">#</a>What I would do</h5>
+<p>Smallest reasonable remediation.</p>
+<h5 id="tradeoff-limitation" class="doc-h"><a class="anchor" href="#tradeoff-limitation" aria-label="Link to this section">#</a>Tradeoff / limitation</h5>
+<p>What the fix costs or does not solve.</p>
+<h5 id="evidence-confidence" class="doc-h"><a class="anchor" href="#evidence-confidence" aria-label="Link to this section">#</a>Evidence confidence</h5>
+<p>High / Medium.</p>
+<p>Explain why.</p>
+<p>This last field is for our workshop only and does not necessarily belong in the final submission.</p>
+<hr>
+<h3 id="step-8-choose-the-fix-first-candidate" class="doc-h"><a class="anchor" href="#step-8-choose-the-fix-first-candidate" aria-label="Link to this section">#</a>STEP 8 — CHOOSE THE FIX-FIRST CANDIDATE</h3>
+<p>Benoz.AI asks:</p>
+<blockquote><p>Which one would you fix first, and why that one before the others?</p></blockquote>
+<p>Select the strongest <strong>two candidates</strong> for first fix.</p>
+<p>Compare them head-to-head.</p>
+<p>For each consider:</p>
+<ul><li>blast radius;</li><li>confidentiality/integrity risk;</li><li>regulatory consequences;</li><li>cross-tenant consequences;</li><li>likelihood;</li><li>whether other work is safe before it is corrected;</li><li>remediation complexity;</li><li>whether it blocks onboarding or production operation.</li></ul>
+<p>Then recommend exactly ONE.</p>
+<p>Do not simply choose the issue with the scariest label.</p>
+<p>Explain why it precedes the runner-up.</p>
+<hr>
+<h3 id="step-9-don-t-over-solve" class="doc-h"><a class="anchor" href="#step-9-don-t-over-solve" aria-label="Link to this section">#</a>STEP 9 — DON'T OVER-SOLVE</h3>
+<p>The proposed fixes should demonstrate direction, not become detailed implementation projects.</p>
+<p>For example, prefer:</p>
+<blockquote><p>Use transaction-local tenant context and parameterized configuration, fail closed when tenant context is absent, and add cross-tenant integration tests.</p></blockquote>
+<p>over twenty paragraphs of PostgreSQL implementation detail.</p>
+<p>Part 1 is an architecture review.</p>
+<hr>
+<h3 id="step-10-legal-and-regulatory-claims" class="doc-h"><a class="anchor" href="#step-10-legal-and-regulatory-claims" aria-label="Link to this section">#</a>STEP 10 — LEGAL AND REGULATORY CLAIMS</h3>
+<p>Do not claim exact Israeli legal requirements unless stated in the exercise or supported by an authoritative source.</p>
+<p>The exercise tells us that:</p>
+<ul><li>Client C is subject to Israeli privacy law;</li><li>it expects audits;</li><li>the regulator imposes an infrastructure-control requirement.</li></ul>
+<p>Use those facts.</p>
+<p>Do not invent statutory requirements.</p>
+<p>Phrase architectural risk rather than pretending to give legal advice.</p>
+<hr>
+<h3 id="step-11-output-for-this-workshop" class="doc-h"><a class="anchor" href="#step-11-output-for-this-workshop" aria-label="Link to this section">#</a>STEP 11 — OUTPUT FOR THIS WORKSHOP</h3>
+<p>Return exactly these sections:</p>
+<h3 id="1-phase-1-self-critique" class="doc-h"><a class="anchor" href="#1-phase-1-self-critique" aria-label="Link to this section">#</a>1. Phase 1 Self-Critique</h3>
+<p>Table:</p>
+<p>| Previous finding | Classification A/B/C/D | Reason |</p>
+<hr>
+<h3 id="2-recommended-part-1-findings" class="doc-h"><a class="anchor" href="#2-recommended-part-1-findings" aria-label="Link to this section">#</a>2. Recommended Part 1 Findings</h3>
+<p>Limit to the strongest candidates.</p>
+<p>Use the detailed structure requested above.</p>
+<hr>
+<h3 id="3-findings-i-recommend-dropping" class="doc-h"><a class="anchor" href="#3-findings-i-recommend-dropping" aria-label="Link to this section">#</a>3. Findings I Recommend Dropping</h3>
+<p>Explain briefly why each one should not appear in the final submission.</p>
+<p>This is important because omission demonstrates prioritization.</p>
+<hr>
+<h3 id="4-suspicious-but-actually-reasonable" class="doc-h"><a class="anchor" href="#4-suspicious-but-actually-reasonable" aria-label="Link to this section">#</a>4. Suspicious but Actually Reasonable</h3>
+<p>Select the strongest 2–4 examples.</p>
+<hr>
+<h3 id="5-fix-first-comparison" class="doc-h"><a class="anchor" href="#5-fix-first-comparison" aria-label="Link to this section">#</a>5. Fix-First Comparison</h3>
+<p>Compare the top two candidates.</p>
+<hr>
+<h3 id="6-recommended-fix-first" class="doc-h"><a class="anchor" href="#6-recommended-fix-first" aria-label="Link to this section">#</a>6. Recommended Fix First</h3>
+<p>Choose exactly one.</p>
+<hr>
+<h3 id="7-remaining-uncertainties" class="doc-h"><a class="anchor" href="#7-remaining-uncertainties" aria-label="Link to this section">#</a>7. Remaining Uncertainties</h3>
+<p>Only include ambiguities that genuinely affect Part 1.</p>
+<hr>
+<h3 id="8-proposed-public-part-1-structure" class="doc-h"><a class="anchor" href="#8-proposed-public-part-1-structure" aria-label="Link to this section">#</a>8. Proposed Public Part 1 Structure</h3>
+<p>Show the recommended order and approximate length.</p>
+<p>Do NOT write the final polished prose yet.</p>
+<p>Example:</p>
+<pre data-lang="text"><code>Part 1
+
+Finding 1 — ...
+~120 words
+
+Finding 2 — ...
+~100 words
+
+...
+
+Looks suspicious but is reasonable
+~150 words
+
+Fix first
+~120 words</code></pre>
+<p>Keep the eventual answer concise.</p>
+<hr>
+<h3 id="9-ai-worklog-update" class="doc-h"><a class="anchor" href="#9-ai-worklog-update" aria-label="Link to this section">#</a>9. AI Worklog Update</h3>
+<p>Show what should be added to <code>AI-WORKLOG.md</code>, including the corrected deadline.</p>
+<p>Do not invent any rejected suggestion.</p>
+<p>If this phase creates a genuine disagreement with Phase 1, record that honestly.</p>
+<hr>
+<h3 id="10-recommended-next-step" class="doc-h"><a class="anchor" href="#10-recommended-next-step" aria-label="Link to this section">#</a>10. Recommended Next Step</h3>
+<p>Recommend what we should do after I review this workshop.</p>
+<p>Do not proceed automatically.</p>
+<hr>
+<h3 id="stop-condition-2" class="doc-h"><a class="anchor" href="#stop-condition-2" aria-label="Link to this section">#</a>STOP CONDITION</h3>
+<p>After returning the Phase 2 workshop:</p>
+<p>STOP.</p>
+<p>Do not write <code>review/architecture-review.md</code>.</p>
+<p>Do not modify the validation library.</p>
+<p>Do not implement Part 2.</p>
+<p>Do not start Part 3.</p>
+<p>Do not invoke Claude.</p>
+<p>Do not build the submission site.</p>
+<p>Wait for my approval.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-2-codex-commentary-2">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-2-codex-commentary-2" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>I’m re-reading only the Part 1 source material and auditing the Phase 1 claims against the handover’s exact wording. One source discrepancy needs to remain explicit: the local PDF currently visible in the workspace says “Saturday, August 22, 2026,” while you’ve supplied the authoritative correction to Friday, August 21. I’ll use August 21 as the working deadline, but I won’t falsely record that this particular local PDF shows August 21; the worklog will distinguish the superseding correction from the stale PDF.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-2-codex-commentary-3">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-2-codex-commentary-3" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>I’m using the PDF review workflow because Part 1’s client requirements and severity definitions come from the exercise document. I’ll verify the relevant pages visually and by extraction, then update only the private worklog; no public submission file or implementation code will be touched.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-2-codex-commentary-4">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-2-codex-commentary-4" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>Because the workspace PDF conflicts with your corrected date, I’m also checking the connected Benoz.AI email thread read-only. This uses the Gmail workflow solely to verify the authoritative deadline; I will not draft, send, label, or alter any mail.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-2-codex-commentary-5">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-2-codex-commentary-5" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The mailbox verification confirms the discrepancy rather than resolving it in favor of August 21: Benoz.AI’s later “extended deadline” email says Saturday, August 22, and the workspace PDF says the same. I’ll still treat your explicit instruction as a revised working assumption if you want, but the honest worklog entry must say the connected primary sources showed August 22—not August 21. I’m checking the earlier invitation once to determine whether August 21 was the pre-extension date.</p>
+  </div>
+</article>
+<article class="msg msg--commentary" id="turn-2-codex-commentary-6">
+  <header class="msg-head">
+    <span class="msg-role">Codex — commentary</span>
+    <a class="msg-anchor" href="#turn-2-codex-commentary-6" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<p>The original attached DOCX does show Friday, August 21, while a later Benoz extension email and the workspace PDF show Saturday, August 22. Per your instruction, I’m setting the working assumption to August 21 and recording the original-attachment verification in the private worklog. I’m also recording a genuine Phase 2 correction in judgment: several Phase 1 “likely” findings were too strong for the handover evidence and should be omitted.</p>
+  </div>
+</article>
+<article class="msg msg--assistant" id="turn-2-codex-final-response-7">
+  <header class="msg-head">
+    <span class="msg-role">Codex — final response</span>
+    <a class="msg-anchor" href="#turn-2-codex-final-response-7" aria-label="Link to this message">#</a>
+  </header>
+  <div class="msg-body">
+<h3 id="1-phase-1-self-critique-2" class="doc-h"><a class="anchor" href="#1-phase-1-self-critique-2" aria-label="Link to this section">#</a>1. Phase 1 Self-Critique</h3>
+<p>I re-read the Part 1 instructions, client scenarios, and complete handover rather than relying on the Phase 1 summary. :codex-file-citation{path=&quot;[REDACTED — local workspace path]/Benoz.AI - Take-Home Exercise.docx.pdf&quot; purpose=&quot;source&quot;}</p>
+<div class="table-wrap"><table><thead><tr><th>Previous finding</th><th>Classification A/B/C/D</th><th>Reason</th></tr></thead><tbody><tr><td><code>SELECT *</code> exposes Client C’s sensitive fields</td><td><strong>A</strong></td><td>The shown list handler immediately returns every selected column. RLS limits rows by tenant but does not remove <code>clinical_notes</code> for reception.</td></tr><tr><td>Shared infrastructure conflicts with Client C’s control requirement</td><td><strong>A</strong></td><td>The handover explicitly says every client is in one shared pool and nothing is siloed; the exercise explicitly requires Client C’s data to remain under clinic-controlled infrastructure.</td></tr><tr><td>Interpolated tenant context enables SQL injection</td><td><strong>B</strong></td><td>Interpolation is poor practice, but <code>tenantId</code> is resolved from an authenticated session/API key. The handover does not prove an attacker can control the raw value.</td></tr><tr><td>Session-scoped tenant context is already leaking between pooled requests</td><td><strong>D</strong></td><td><code>SET</code> does persist on a connection, but the handover says every request resets it before any query. Persistence is fragile, not proof that leakage currently occurs.</td></tr><tr><td>Audit logging is Critical</td><td><strong>B</strong></td><td>Missing <code>tenant_id</code> is a genuine auditability concern, but the handover does not prove cross-tenant log exposure, mutability, or skipped writes. “Critical” was overstated.</td></tr><tr><td>Client B scoring is missing or unsafe</td><td><strong>B</strong></td><td>The handover does not explain scoring, but omission from the document does not prove the live implementation is absent. Full scoring design explicitly belongs in Part 3.</td></tr><tr><td>Inline notifications create retry ambiguity</td><td><strong>A</strong></td><td>The handover gives the exact sequence: durable insert, external notification, then HTTP response. Provider failure leaves a record behind while the caller sees failure.</td></tr><tr><td><code>(event_type, entity_id)</code> incorrectly deduplicates valid events</td><td><strong>A</strong></td><td>The handover explicitly names this key and shows the same generic event type for status changes. Multiple valid transitions for one entity collide.</td></tr><tr><td>Per-client tables and status enums undermine configuration-first onboarding</td><td><strong>C</strong></td><td>The concern is supported, particularly for new workflows, but it is broader and less immediate than the four strongest failures.</td></tr><tr><td>Configuration is definitely mutable and unversioned</td><td><strong>B</strong></td><td>No versioning is described, but the handover does not show the update schema or prove definitions are overwritten in place.</td></tr><tr><td>Missing rate limiting/noisy-neighbor protection</td><td><strong>C</strong></td><td>The contractor already acknowledges it, and the current storm load held. It is more useful as future-scale reasoning for Part 3 than as a leading Part 1 finding.</td></tr></tbody></table></div>
+<p>The main correction from Phase 1 is that potential high-impact failure is not enough. The handover must demonstrate the condition that causes it.</p>
+<h3 id="2-recommended-part-1-findings-2" class="doc-h"><a class="anchor" href="#2-recommended-part-1-findings-2" aria-label="Link to this section">#</a>2. Recommended Part 1 Findings</h3>
+<h4 id="finding-1-the-referral-list-can-return-clinical-notes-to-rec" class="doc-h"><a class="anchor" href="#finding-1-the-referral-list-can-return-clinical-notes-to-rec" aria-label="Link to this section">#</a>Finding 1 — The referral list can return clinical notes to reception</h4>
+<h5 id="problem-2" class="doc-h"><a class="anchor" href="#problem-2" aria-label="Link to this section">#</a>Problem</h5>
+<p>The shared list handler runs <code>SELECT *</code> and immediately returns the result. Tenant RLS restricts which clinic’s rows are visible, but it does not enforce field-level visibility within those rows.</p>
+<h5 id="what-happens-in-practice-2" class="doc-h"><a class="anchor" href="#what-happens-in-practice-2" aria-label="Link to this section">#</a>What happens in practice</h5>
+<p>Reception must be able to list referrals to see patient and appointment information. Through this handler, the same response can include <code>clinical_notes</code>, which the exercise explicitly says reception must not see.</p>
+<h5 id="severity-2" class="doc-h"><a class="anchor" href="#severity-2" aria-label="Link to this section">#</a>Severity</h5>
+<p><strong>Critical</strong></p>
+<h5 id="why-this-severity-2" class="doc-h"><a class="anchor" href="#why-this-severity-2" aria-label="Link to this section">#</a>Why this severity</h5>
+<p>This is a concrete disclosure of sensitive patient information to an unauthorized role, matching Benoz.AI’s “data leak” definition.</p>
+<h5 id="what-i-would-do-2" class="doc-h"><a class="anchor" href="#what-i-would-do-2" aria-label="Link to this section">#</a>What I would do</h5>
+<p>Replace <code>SELECT *</code> responses with explicit, role-aware response projections. Sensitive fields should be denied by default, and tests should verify the exact fields visible to reception and clinical roles.</p>
+<h5 id="tradeoff-limitation-2" class="doc-h"><a class="anchor" href="#tradeoff-limitation-2" aria-label="Link to this section">#</a>Tradeoff / limitation</h5>
+<p>Explicit projections require maintenance when fields change. They also do not replace tenant RLS; row isolation and field visibility solve different problems.</p>
+<h5 id="evidence-confidence-2" class="doc-h"><a class="anchor" href="#evidence-confidence-2" aria-label="Link to this section">#</a>Evidence confidence</h5>
+<p><strong>High.</strong> The handover shows both <code>SELECT *</code> and immediate <code>res.json(rows)</code>, while the client requirement explicitly forbids reception access to clinical notes.</p>
+<hr>
+<h4 id="finding-2-the-current-shared-deployment-cannot-satisfy-clien" class="doc-h"><a class="anchor" href="#finding-2-the-current-shared-deployment-cannot-satisfy-clien" aria-label="Link to this section">#</a>Finding 2 — The current shared deployment cannot satisfy Client C’s infrastructure requirement</h4>
+<h5 id="problem-3" class="doc-h"><a class="anchor" href="#problem-3" aria-label="Link to this section">#</a>Problem</h5>
+<p>The handover says all clients share one database and infrastructure pool and that dedicated isolation is not implemented. The exercise says Client C’s regulator requires its data to remain on infrastructure under the clinic’s control.</p>
+<h5 id="what-happens-in-practice-3" class="doc-h"><a class="anchor" href="#what-happens-in-practice-3" aria-label="Link to this section">#</a>What happens in practice</h5>
+<p>Client C cannot be truthfully represented as meeting that requirement while operating in the described pool. Continuing to process clinic data there creates regulatory/legal exposure and could prevent the clinic from using the platform.</p>
+<h5 id="severity-3" class="doc-h"><a class="anchor" href="#severity-3" aria-label="Link to this section">#</a>Severity</h5>
+<p><strong>Critical</strong></p>
+<h5 id="why-this-severity-3" class="doc-h"><a class="anchor" href="#why-this-severity-3" aria-label="Link to this section">#</a>Why this severity</h5>
+<p>The failure is not merely a preference for stronger isolation: it is a direct conflict with an explicitly stated regulatory constraint, which fits Benoz.AI’s “legal exposure” definition.</p>
+<h5 id="what-i-would-do-3" class="doc-h"><a class="anchor" href="#what-i-would-do-3" aria-label="Link to this section">#</a>What I would do</h5>
+<p>Treat the current deployment as unsupported for Client C, confirm the precise control boundary, and require the eventual single Part 3 platform choice to address it before clinic data continues there.</p>
+<h5 id="tradeoff-limitation-3" class="doc-h"><a class="anchor" href="#tradeoff-limitation-3" aria-label="Link to this section">#</a>Tradeoff / limitation</h5>
+<p>Resolving this may be operationally expensive and conflict with low-cost, same-day onboarding. Choosing that tradeoff belongs in Part 3, not this review.</p>
+<h5 id="evidence-confidence-3" class="doc-h"><a class="anchor" href="#evidence-confidence-3" aria-label="Link to this section">#</a>Evidence confidence</h5>
+<p><strong>High.</strong> Both sides of the incompatibility are explicit. The exact compliant replacement remains undecided.</p>
+<hr>
+<h4 id="finding-3-inline-notifications-make-successful-writes-look-l" class="doc-h"><a class="anchor" href="#finding-3-inline-notifications-make-successful-writes-look-l" aria-label="Link to this section">#</a>Finding 3 — Inline notifications make successful writes look like failed requests</h4>
+<h5 id="problem-4" class="doc-h"><a class="anchor" href="#problem-4" aria-label="Link to this section">#</a>Problem</h5>
+<p>The create flow inserts the record, then waits for an external SMS/email provider, and only afterward sends the <code>201</code> response.</p>
+<h5 id="what-happens-in-practice-4" class="doc-h"><a class="anchor" href="#what-happens-in-practice-4" aria-label="Link to this section">#</a>What happens in practice</h5>
+<p>If the insert succeeds but the provider times out, the record remains stored while the caller receives an error. A retry can create a duplicate record and may send duplicate notifications. The caller cannot tell whether the original write succeeded.</p>
+<h5 id="severity-4" class="doc-h"><a class="anchor" href="#severity-4" aria-label="Link to this section">#</a>Severity</h5>
+<p><strong>Serious</strong></p>
+<h5 id="why-this-severity-4" class="doc-h"><a class="anchor" href="#why-this-severity-4" aria-label="Link to this section">#</a>Why this severity</h5>
+<p>This breaks normal production behavior whenever an external notification provider fails or becomes slow. It creates inconsistent records and retry ambiguity without requiring exceptional scale.</p>
+<h5 id="what-i-would-do-4" class="doc-h"><a class="anchor" href="#what-i-would-do-4" aria-label="Link to this section">#</a>What I would do</h5>
+<p>Write the record and notification event in one database transaction using the existing outbox. Return success after that durable commit and process delivery asynchronously with retries and observable failure state.</p>
+<h5 id="tradeoff-limitation-4" class="doc-h"><a class="anchor" href="#tradeoff-limitation-4" aria-label="Link to this section">#</a>Tradeoff / limitation</h5>
+<p>A <code>201</code> would confirm durable acceptance, not completed delivery. The system must expose delivery status and monitor dead-letter events.</p>
+<h5 id="evidence-confidence-4" class="doc-h"><a class="anchor" href="#evidence-confidence-4" aria-label="Link to this section">#</a>Evidence confidence</h5>
+<p><strong>High.</strong> The handover explicitly describes insert → external call → response, and separately provides an outbox that can solve the problem.</p>
+<hr>
+<h4 id="finding-4-the-outbox-deduplication-key-collapses-distinct-st" class="doc-h"><a class="anchor" href="#finding-4-the-outbox-deduplication-key-collapses-distinct-st" aria-label="Link to this section">#</a>Finding 4 — The outbox deduplication key collapses distinct status changes</h4>
+<h5 id="problem-5" class="doc-h"><a class="anchor" href="#problem-5" aria-label="Link to this section">#</a>Problem</h5>
+<p>Consumers deduplicate using <code>(event_type, entity_id)</code>, while the example publishes the generic event type <code>application.status_changed</code>.</p>
+<h5 id="what-happens-in-practice-5" class="doc-h"><a class="anchor" href="#what-happens-in-practice-5" aria-label="Link to this section">#</a>What happens in practice</h5>
+<p>Suppose one application moves to <code>under_review</code> and later to <code>approved</code>. Both events have the same event type and application ID. After processing the first, the consumer can treat the approval event as a duplicate, potentially suppressing the decision email or other required work.</p>
+<h5 id="severity-5" class="doc-h"><a class="anchor" href="#severity-5" aria-label="Link to this section">#</a>Severity</h5>
+<p><strong>Serious</strong></p>
+<h5 id="why-this-severity-5" class="doc-h"><a class="anchor" href="#why-this-severity-5" aria-label="Link to this section">#</a>Why this severity</h5>
+<p>Legitimate workflow events are skipped during ordinary use. Client B’s required decision email can therefore fail even though the queue and consumer are operating as designed.</p>
+<h5 id="what-i-would-do-5" class="doc-h"><a class="anchor" href="#what-i-would-do-5" aria-label="Link to this section">#</a>What I would do</h5>
+<p>Assign every outbox row a stable event ID and have consumers deduplicate that event ID. Business-specific side effects may additionally use their own idempotency keys.</p>
+<h5 id="tradeoff-limitation-5" class="doc-h"><a class="anchor" href="#tradeoff-limitation-5" aria-label="Link to this section">#</a>Tradeoff / limitation</h5>
+<p>Consumers need durable idempotency storage. A unique event ID prevents duplicate event processing but does not automatically make every external provider call idempotent.</p>
+<h5 id="evidence-confidence-5" class="doc-h"><a class="anchor" href="#evidence-confidence-5" aria-label="Link to this section">#</a>Evidence confidence</h5>
+<p><strong>High.</strong> The key and generic event type are both stated explicitly; no separate unique event identifier is described.</p>
+<h3 id="3-findings-i-recommend-dropping-2" class="doc-h"><a class="anchor" href="#3-findings-i-recommend-dropping-2" aria-label="Link to this section">#</a>3. Findings I Recommend Dropping</h3>
+<ul><li><strong>Tenant-context SQL injection:</strong> Parameterization should be improved, but the handover does not establish that the authenticated tenant identifier is attacker-controlled.</li><li><strong>Connection-state leakage as an existing Critical failure:</strong> Session persistence is fragile and deserves hardening, but the stated request flow resets context before every request query. We cannot claim an actual leak from the supplied evidence.</li><li><strong>Audit log as Critical:</strong> Missing <code>tenant_id</code> may make tenant-scoped auditing and deleted-entity history awkward, but Phase 1 assumed unproven permissions, mutability, and skipped writes.</li><li><strong>Client B scoring as a full Part 1 finding:</strong> The missing explanation is worth noting as a handover gap, but claiming the implementation is absent would overreach. The substantive design belongs in Part 3 Decision 2.</li><li><strong>Configuration versioning:</strong> Important if definitions are overwritten, but the handover does not show how updates are stored.</li><li><strong>Configuration-first mismatch:</strong> Status enums, coded role checks, and client-specific object types deserve later discussion, but the finding is broader and less immediately demonstrable than the selected four.</li><li><strong>Rate limiting/noisy-neighbor risk:</strong> It is explicitly acknowledged and has not yet caused failure. It is better evidence for the 300-client Part 3 decision.</li><li><strong>Dynamic <code>${table}</code> SQL injection:</strong> This depends entirely on whether <code>table</code> comes from a trusted server-side mapping. The handover does not establish the trust boundary.</li><li><strong>Pagination/search limitations:</strong> Current volumes do not justify treating either as a leading production defect.</li></ul>
+<h3 id="4-suspicious-but-actually-reasonable-2" class="doc-h"><a class="anchor" href="#4-suspicious-but-actually-reasonable-2" aria-label="Link to this section">#</a>4. Suspicious but Actually Reasonable</h3>
+<h4 id="shared-schema-rls" class="doc-h"><a class="anchor" href="#shared-schema-rls" aria-label="Link to this section">#</a>Shared-schema RLS</h4>
+<p><strong>Why it looks suspicious:</strong> All tenants share tables and a database, so one missing application filter could expose another tenant’s data.</p>
+<p><strong>Why it is acceptable:</strong> PostgreSQL RLS provides a database-level backstop, and the unprivileged API role is stated to be subject to it. For cost-sensitive Clients A and B, this is a conventional design.</p>
+<p><strong>When to revisit:</strong> A contractual infrastructure-control requirement—such as Client C’s—or evidence that RLS policies/context are incomplete.</p>
+<h4 id="jsonb-custom-fields" class="doc-h"><a class="anchor" href="#jsonb-custom-fields" aria-label="Link to this section">#</a>JSONB custom fields</h4>
+<p><strong>Why it looks suspicious:</strong> JSONB can appear weakly typed and harder to query than normal columns.</p>
+<p><strong>Why it is acceptable:</strong> Sparse, tenant-specific fields change frequently. JSONB avoids a migration for every small field addition while stable domain fields remain relational columns.</p>
+<p><strong>When to revisit:</strong> Heavy filtering/reporting over particular custom fields, relational constraints, or historical interpretation requirements.</p>
+<h4 id="transactional-outbox" class="doc-h"><a class="anchor" href="#transactional-outbox" aria-label="Link to this section">#</a>Transactional outbox</h4>
+<p><strong>Why it looks suspicious:</strong> A relay, broker, retries, idempotency storage, and dead-letter handling add operational complexity.</p>
+<p><strong>Why it is acceptable:</strong> Committing the state change and outbox event together prevents the classic failure where the database changes but the event is never published. Retries and dead-letter handling are appropriate.</p>
+<p><strong>When to revisit:</strong> The pattern itself does not need replacement; the deduplication key and operational monitoring do.</p>
+<h4 id="postgresql-list-queries-at-current-volume" class="doc-h"><a class="anchor" href="#postgresql-list-queries-at-current-volume" aria-label="Link to this section">#</a>PostgreSQL list queries at current volume</h4>
+<p><strong>Why it looks suspicious:</strong> Offset pagination and the lack of a dedicated search service can be criticized as unscalable.</p>
+<p><strong>Why it is acceptable:</strong> Client A’s largest stated burst is 4,000 reports in an afternoon, and Clients B/C are much smaller. PostgreSQL can comfortably serve these ordinary lists.</p>
+<p><strong>When to revisit:</strong> Deep pages, unstable ordering, expensive tenant filtering, required free-text search, or measured query degradation.</p>
+<h3 id="5-fix-first-comparison-2" class="doc-h"><a class="anchor" href="#5-fix-first-comparison-2" aria-label="Link to this section">#</a>5. Fix-First Comparison</h3>
+<div class="table-wrap"><table><thead><tr><th>Consideration</th><th>Referral field exposure</th><th>Infrastructure-control incompatibility</th></tr></thead><tbody><tr><td>Blast radius</td><td>Reception users viewing clinic referrals</td><td>All Client C data and operation</td></tr><tr><td>Confidentiality/integrity</td><td>Direct disclosure of clinical notes</td><td>No demonstrated cross-tenant disclosure, but data is hosted in a prohibited control boundary</td></tr><tr><td>Regulatory consequence</td><td>Sensitive-data access contradicts an explicit clinic rule and creates audit exposure</td><td>The entire deployment conflicts with an explicit regulator condition</td></tr><tr><td>Cross-tenant consequence</td><td>Primarily within Client C</td><td>Shared infrastructure is central to the conflict</td></tr><tr><td>Likelihood</td><td>Potentially occurs on every reception list request</td><td>Certain architectural incompatibility while C remains in the pool</td></tr><tr><td>Safety of other work</td><td>The affected response should not remain available while broader work continues</td><td>Other clients can continue, but C cannot be considered compliant</td></tr><tr><td>Remediation complexity</td><td>Relatively contained: projection, authorization policy, tests</td><td>High: requires the forced platform decision and potentially migration/deployment changes</td></tr><tr><td>Operational blocker</td><td>Requires immediate endpoint restriction or correction</td><td>Blocks compliant operation of Client C</td></tr></tbody></table></div>
+<p>Both are Critical, but for different reasons: one is a repeatable sensitive-data disclosure; the other is a platform-level regulatory incompatibility.</p>
+<h3 id="6-recommended-fix-first-2" class="doc-h"><a class="anchor" href="#6-recommended-fix-first-2" aria-label="Link to this section">#</a>6. Recommended Fix First</h3>
+<p><strong>Fix the referral field-level exposure first.</strong></p>
+<p>It is the clearest active data leak in the supplied architecture: an authorized reception user can receive information that the exercise explicitly says they must not see. The mitigation is also narrow and independent of the future isolation strategy—explicit projections and field-level authorization remain necessary whether the platform ultimately uses shared or dedicated infrastructure.</p>
+<p>The infrastructure-control incompatibility is the runner-up. It may have greater program-level impact, but resolving it requires the forced strategic choice reserved for Part 3. Removing the direct clinical-notes exposure is an immediate containment step that can be completed without prejudging that decision.</p>
+<h3 id="7-remaining-uncertainties-2" class="doc-h"><a class="anchor" href="#7-remaining-uncertainties-2" aria-label="Link to this section">#</a>7. Remaining Uncertainties</h3>
+<ul><li>Whether the snippets are exact production code or simplified examples. The handover says they should match but was written from memory.</li><li>Whether another serializer or database view removes sensitive fields after the shown <code>SELECT *</code>. None is described, and the shown handler returns the rows directly.</li><li>What “under the clinic’s own control” includes—for example, whether a clinic-controlled cloud account qualifies. This affects remediation, not the existence of the current incompatibility.</li><li>Whether real outbox event types are more specific than the shown <code>application.status_changed</code>, or whether an unmentioned event ID exists.</li><li>Whether create endpoints have uniqueness/idempotency controls that reduce duplicate records. Such controls would reduce impact but would not remove the misleading failed response.</li></ul>
+<h3 id="8-proposed-public-part-1-structure-2" class="doc-h"><a class="anchor" href="#8-proposed-public-part-1-structure-2" aria-label="Link to this section">#</a>8. Proposed Public Part 1 Structure</h3>
+<pre data-lang="text"><code>Part 1 — Architecture Review
+
+Short framing
+~30 words
+
+Finding 1 — Referral responses expose clinical notes
+~120–140 words
+
+Finding 2 — Shared deployment conflicts with clinic-controlled infrastructure
+~100–120 words
+
+Finding 3 — Inline notifications create retry ambiguity
+~110–130 words
+
+Finding 4 — Outbox deduplication drops distinct events
+~100–120 words
+
+Looks suspicious but is reasonable
+- Shared-schema RLS
+- JSONB custom fields
+- Transactional outbox
+- PostgreSQL at current volume
+~160–190 words total
+
+Fix first — Referral field visibility
+~100–120 words
+
+Estimated total
+~750–850 words</code></pre>
+<p>This is long enough to demonstrate judgment but short enough to avoid becoming a general security audit.</p>
+<h3 id="9-ai-worklog-update-2" class="doc-h"><a class="anchor" href="#9-ai-worklog-update-2" aria-label="Link to this section">#</a>9. AI Worklog Update</h3>
+<p>The private AI-WORKLOG.md [REDACTED — private local file link] now records:</p>
+<ul><li>Codex initially reported August 22.</li><li>The original exercise attachment was checked.</li><li>It showed Friday, August 21, 2026.</li><li>The working assumption was corrected to August 21.</li><li>The mistake is treated as a small example of why primary-source verification matters.</li><li>Phase 2 also records the genuine disagreement with Phase 1: several initially “likely” findings were downgraded because the handover did not prove them strongly enough or because they belong in Part 3.</li></ul>
+<p>For completeness, source versions conflict: the original attachment says August 21, while the later extension email and workspace PDF say August 22. Per your instruction, the working date is August 21. This does not affect the Part 1 workshop.</p>
+<p>No other working file contained the incorrect deadline, and no supplied/public file was modified.</p>
+<h3 id="10-recommended-next-step-2" class="doc-h"><a class="anchor" href="#10-recommended-next-step-2" aria-label="Link to this section">#</a>10. Recommended Next Step</h3>
+<p>Review and approve or challenge:</p>
+<ol><li>the four-finding shortlist;</li><li>the two Critical severity assignments;</li><li>dropping tenant-context and audit-log claims;</li><li>field visibility as the fix-first choice.</li></ol>
+<p>After approval, the next phase should draft the concise public Part 1 prose and perform one evidence/severity pass before creating <code>review/architecture-review.md</code>.</p>
+<p>No Part 1 submission file, validation code, Part 2 test, Part 3 answer, or website work has been started.</p>
+  </div>
+</article></section>
+        <p class="doc-foot-raw"><a href="./codex-session-01.md">View the raw <code>codex-session-01.md</code></a> · <a href="../../">Back to the submission</a></p>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <p class="footer-title">Benoz.AI Take-Home Exercise</p>
+          <p>Senior Full Stack Developer · Philippine Time</p>
+        </div>
+        <div class="footer-links">
+          <a href="#doc-main">Back to top</a>
+          <a href="../../">Submission</a>
+          <a href="./codex-session-01.md">Raw source</a>
+        </div>
+      </div>
+    </footer>
+    <script src="../../submission/doc.js" defer></script>
+  </body>
+</html>

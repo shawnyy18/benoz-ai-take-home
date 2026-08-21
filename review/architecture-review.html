@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Part 1 — Architecture Handover Review — Benoz.AI take-home submission.">
+    <title>Part 1 — Architecture Handover Review · Benoz.AI Take-Home</title>
+    <link rel="stylesheet" href="../submission/styles.css">
+    <link rel="stylesheet" href="../submission/doc.css">
+  </head>
+  <body class="doc-page">
+    <a class="skip-link" href="#doc-main">Skip to content</a>
+
+    <nav class="section-nav" aria-label="Submission">
+      <div class="shell nav-inner">
+        <a href="../">← Submission</a>
+        <a href="../#part-1">Part 1</a>
+        <a href="../#part-2">Part 2</a>
+        <a href="../#part-3">Part 3</a>
+        <a href="../#part-4">Part 4</a>
+      </div>
+    </nav>
+
+    <header class="doc-header">
+      <div class="shell">
+        <p class="doc-crumb">Part 1 · Source</p>
+        <h1>Part 1 — Architecture Handover Review</h1>
+        <ul class="doc-facts"><li>58 lines</li><li>879 words</li><li>6 KB</li></ul>
+        <p class="doc-raw">
+          <a class="raw-link" href="./architecture-review.md">View raw <code>architecture-review.md</code></a>
+          <span>This page is generated from that file at build time. Nothing is hidden, summarised, or reordered.</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="shell doc-layout">
+      <aside class="doc-nav" aria-label="Contents"><p class="doc-nav-title">Contents</p><ol class="toc"><li class="toc-l2"><a href="#1-sensitive-clinic-fields-can-be-returned-to-reception">1. Sensitive clinic fields can be returned to reception</a></li><li class="toc-l2"><a href="#2-the-shared-deployment-conflicts-with-client-c-s-infrastruc">2. The shared deployment conflicts with Client C's infrastructure requirement</a></li><li class="toc-l2"><a href="#3-the-audit-log-is-not-tenant-scoped">3. The audit log is not tenant-scoped</a></li><li class="toc-l2"><a href="#4-inline-notification-delivery-creates-retry-ambiguity">4. Inline notification delivery creates retry ambiguity</a></li><li class="toc-l2"><a href="#5-outbox-deduplication-can-suppress-legitimate-events">5. Outbox deduplication can suppress legitimate events</a></li><li class="toc-l2"><a href="#what-looks-suspicious-but-is-reasonable">What looks suspicious but is reasonable</a></li><li class="toc-l2"><a href="#what-i-would-fix-first">What I would fix first</a></li></ol></aside>
+      <main id="doc-main" class="doc-main">
+        
+        <div class="prose"><p>I reviewed the handover against the three live-client scenarios, prioritizing failures demonstrated by the described behavior over risks that are only possible. Five issues warrant action; several other choices are proportionate at the current scale.</p>
+<h2 id="1-sensitive-clinic-fields-can-be-returned-to-reception" class="doc-h"><a class="anchor" href="#1-sensitive-clinic-fields-can-be-returned-to-reception" aria-label="Link to this section">#</a>1. Sensitive clinic fields can be returned to reception</h2>
+<p><strong>Severity: Critical</strong></p>
+<p>The shared list handler selects every column and returns the result directly. Row-Level Security limits which tenant's rows a caller can access, but it does not control which fields within an authorized row are returned. Client C requires reception to see patient and appointment details but not clinical notes. As described, an authorized reception user listing referrals can therefore receive sensitive clinical information they are not permitted to view. This is Critical because it is a direct data disclosure, not merely missing defense in depth.</p>
+<p>I would replace <code>SELECT *</code> responses with explicit server-side projections or serializers that apply role-aware field visibility, with sensitive fields denied by default. Tests should assert exact response shapes for reception and clinical roles. RLS should remain because tenant isolation and field authorization protect different boundaries.</p>
+<h2 id="2-the-shared-deployment-conflicts-with-client-c-s-infrastruc" class="doc-h"><a class="anchor" href="#2-the-shared-deployment-conflicts-with-client-c-s-infrastruc" aria-label="Link to this section">#</a>2. The shared deployment conflicts with Client C's infrastructure requirement</h2>
+<p><strong>Severity: Critical</strong></p>
+<p>All clients currently share one database and nothing is siloed, while Client C's regulator requires clinic-controlled infrastructure. Logical row isolation cannot meet an infrastructure-control requirement. Even moving the clinic to a database dedicated inside Benoz-controlled infrastructure would not necessarily transfer control to the clinic. The current deployment therefore creates stated regulatory exposure.</p>
+<p>I would treat this deployment as unsupported for Client C until the Part 3 platform decision resolves the requirement. That decision and its commercial tradeoff do not belong in this review.</p>
+<h2 id="3-the-audit-log-is-not-tenant-scoped" class="doc-h"><a class="anchor" href="#3-the-audit-log-is-not-tenant-scoped" aria-label="Link to this section">#</a>3. The audit log is not tenant-scoped</h2>
+<p><strong>Severity: Serious</strong></p>
+<p>The centralized <code>audit_log</code> schema has actor, action, entity identifiers, and an optional JSON payload, but no <code>tenant_id</code>. The handover intentionally treats it as an administrative store outside the tenant-facing model. Consequently, a tenant-specific audit query or access policy cannot scope a log row directly; it must resolve each entity through operational tables. That is a concrete auditability and isolation gap for Client C, which expects audits. The handover does not establish what <code>payload</code> contains or any tenant-facing log read path, so I would not claim a proven data leak.</p>
+<p>I would add and backfill <code>tenant_id</code>, apply explicit access policy, and define payload minimization/redaction rules. Audit writes should remain coupled to the business write. Migration and historical backfill are the main costs.</p>
+<h2 id="4-inline-notification-delivery-creates-retry-ambiguity" class="doc-h"><a class="anchor" href="#4-inline-notification-delivery-creates-retry-ambiguity" aria-label="Link to this section">#</a>4. Inline notification delivery creates retry ambiguity</h2>
+<p><strong>Severity: Serious</strong></p>
+<p>The create path performs the database insert, calls an external provider, and only then returns success. If the insert succeeds but the provider fails or times out, the record exists while the caller receives an error; retrying can duplicate the record or notification. The example also sends Client A's SMS on creation, although the requirement says to send it when the report becomes <code>Resolved</code>.</p>
+<p>I would commit the record or status transition and its notification event atomically through the existing outbox, then return durable acceptance. Delivery should be asynchronous and observable. This changes the response from “message delivered” to “work accepted,” but removes the ambiguous partial success.</p>
+<h2 id="5-outbox-deduplication-can-suppress-legitimate-events" class="doc-h"><a class="anchor" href="#5-outbox-deduplication-can-suppress-legitimate-events" aria-label="Link to this section">#</a>5. Outbox deduplication can suppress legitimate events</h2>
+<p><strong>Severity: Serious</strong></p>
+<p>Consumers deduplicate on <code>(event_type, entity_id)</code>, while the example publishes <code>application.status_changed</code>. Two valid transitions for one application—such as <code>under_review</code> and later <code>approved</code>—share that key. The approval event can be mistaken for a retry and skipped, suppressing the required decision email.</p>
+<p>I would give each logical outbox event a stable unique event ID and use it for delivery idempotency. External side effects may also need a business idempotency key. A unique event ID prevents distinct events from collapsing; it does not guarantee an external provider never duplicates an action.</p>
+<h2 id="what-looks-suspicious-but-is-reasonable" class="doc-h"><a class="anchor" href="#what-looks-suspicious-but-is-reasonable" aria-label="Link to this section">#</a>What looks suspicious but is reasonable</h2>
+<p>The RLS policy shows <code>USING</code> without an explicit <code>WITH CHECK</code>, but for an all-commands PostgreSQL policy an omitted <code>WITH CHECK</code> inherits the <code>USING</code> expression. That omission alone is not a write-isolation defect. I would still verify role ownership, policy coverage, tenant-context lifecycle, and integration tests rather than infer that the snippet proves the entire implementation safe.</p>
+<p>JSONB for sparse custom fields is proportionate because all clients request frequent field changes and a fourth client's shape is unknown. Stable domain fields remain relational; frequently queried custom values may later need targeted indexes or promotion to columns.</p>
+<p>The transactional outbox is also sound: committing the state change and event together prevents lost work across the database/broker boundary. The defects are its incomplete use and overly broad consumer key, not the pattern.</p>
+<p>Finally, Client A's burst of about 4,000 reports in an afternoon does not by itself justify a distributed datastore or search service. PostgreSQL with appropriate indexes is a reasonable baseline until measurements or actual search requirements show otherwise.</p>
+<h2 id="what-i-would-fix-first" class="doc-h"><a class="anchor" href="#what-i-would-fix-first" aria-label="Link to this section">#</a>What I would fix first</h2>
+<p>I would fix referral field visibility first. It is a direct, repeatable disclosure of sensitive patient data, and the narrow server-side projection can be deployed immediately. It is required regardless of the eventual platform-isolation choice and need not wait for Part 3. The infrastructure conflict has broader strategic impact, and the audit-log gap requires schema migration, backfill, and a payload policy; both remain urgent, but neither should delay containing the active response-level exposure.</p></div>
+        <p class="doc-foot-raw"><a href="./architecture-review.md">View the raw <code>architecture-review.md</code></a> · <a href="../">Back to the submission</a></p>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <p class="footer-title">Benoz.AI Take-Home Exercise</p>
+          <p>Senior Full Stack Developer · Philippine Time</p>
+        </div>
+        <div class="footer-links">
+          <a href="#doc-main">Back to top</a>
+          <a href="../">Submission</a>
+          <a href="./architecture-review.md">Raw source</a>
+        </div>
+      </div>
+    </footer>
+    <script src="../submission/doc.js" defer></script>
+  </body>
+</html>
